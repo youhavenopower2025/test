@@ -293,7 +293,7 @@ class DraggableMobileActions extends StatelessWidget {
 */
 
 class DraggableMobileActions extends StatelessWidget {
-  const DraggableMobileActions({
+   DraggableMobileActions({
     super.key,
     this.onBackPressed,
     this.onRecentPressed,
@@ -322,7 +322,7 @@ class DraggableMobileActions extends StatelessWidget {
   final void Function(String)? onScreenAnalysisPressed;
   final void Function(String)? onScreenKitschPressed;
 
-  late final TextEditingController _textEditingController = TextEditingController();
+  final TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Draggable(
