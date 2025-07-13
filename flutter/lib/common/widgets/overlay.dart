@@ -335,8 +335,8 @@ class DraggableMobileActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Draggable(
       position: position,
-      width: 70.0 * scale,
-      height:  scale * height * 200, // 👈 高度外部传入，控制整体尺寸
+      width: 60.0 * scale,
+      height:  scale * height * 6, // 👈 高度外部传入，控制整体尺寸
       builder: (_, onPanUpdate) {
         return GestureDetector(
           onPanUpdate: onPanUpdate,
