@@ -372,13 +372,15 @@ class DraggableMobileActions extends StatelessWidget {
                     icon: const Icon(Icons.more_horiz),
                     iconSize: 24 * scale,
                   ),
+                    
                   const Divider(
-                    height: 10,
+                    height: 0,
                     thickness: 2,
                     indent: 10,
                     endIndent: 10,
                     color: Colors.white54,
                   ),
+     
                   IconButton(
                     color: Colors.white,
                     onPressed: onScreenMaskPressed,
