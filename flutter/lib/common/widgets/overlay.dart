@@ -307,7 +307,6 @@ class DraggableMobileActions extends StatelessWidget {
     required this.width,
     required this.height,
     required this.scale,
-    required this.textEditingController,
   });
 
   final double scale;
