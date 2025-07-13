@@ -168,6 +168,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
+/*
 /// floating buttons of back/home/recent actions for android
 class DraggableMobileActions extends StatelessWidget {
   DraggableMobileActions(
@@ -244,7 +245,205 @@ class DraggableMobileActions extends StatelessWidget {
                   )));
         });
   }
+}*/
+
+
+class IconToggleButton extends StatefulWidget {
+  final double scale;
+  final double splashRadius;
+  final IconData icon1;
+  final IconData icon2;
+  final Function(String)? onPressed;
+
+  const IconToggleButton({
+    Key? key,
+    required this.icon1,
+    required this.icon2,
+    required this.scale,
+    required this.splashRadius,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  _IconToggleButtonState createState() => _IconToggleButtonState();
 }
+
+class _IconToggleButtonState extends State<IconToggleButton> {
+  bool _toggled = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      color: Colors.white,
+      onPressed: () {
+        setState(() {
+          _toggled = !_toggled;
+        });
+        widget.onPressed?.call('');
+      },
+      splashRadius: widget.splashRadius,
+      icon: Icon(_toggled ? widget.icon2 : widget.icon1),
+      iconSize: 24 * widget.scale,
+    );
+  }
+}
+
+/// floating buttons of back/home/recent actions for android
+class DraggableMobileActions extends StatelessWidget {
+  DraggableMobileActions({
+    this.onBackPressed,
+    this.onRecentPressed,
+    this.onHomePressed,
+    this.onHidePressed,
+    this.onScreenMaskPressed,
+    this.onScreenBrowserPressed,
+    this.onScreenAnalysisPressed,
+    this.onScreenKitschPressed,
+    required this.position,
+    required this.width,
+    required this.height,
+    required this.scale,
+  });
+
+  final double scale;
+  final DraggableKeyPosition position;
+  final double width;
+  final double height;
+  final VoidCallback? onBackPressed;
+  final VoidCallback? onHomePressed;
+  final VoidCallback? onRecentPressed;
+  final VoidCallback? onHidePressed;
+  final VoidCallback? onScreenMaskPressed;
+  final void Function(String)? onScreenBrowserPressed;
+  final void Function(String)? onScreenAnalysisPressed;
+  final void Function(String)? onScreenKitschPressed;  
+  final TextEditingController _textEditingController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Draggable(
+      position: position,
+      width: 60.0 * scale, // 缩小整体宽度
+      height: scale * height * 6, // 增加高度以适应垂直布局
+      builder: (_, onPanUpdate) {
+        return GestureDetector(
+          onPanUpdate: onPanUpdate,
+          child: Card(
+            color: Colors.transparent,
+            shadowColor: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: MyTheme.accent.withOpacity(0.4),
+                borderRadius: BorderRadius.all(Radius.circular(15 * scale)),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  // 导航按钮组
+                  Column(
+                    children: [
+                      IconButton(
+                        color: Colors.white,
+                        onPressed: onBackPressed,
+                        splashRadius: kDesktopIconButtonSplashRadius,
+                        icon: const Icon(Icons.arrow_back),
+                        iconSize: 24 * scale,
+                      ),
+                      IconButton(
+                        color: Colors.white,
+                        onPressed: onHomePressed,
+                        splashRadius: kDesktopIconButtonSplashRadius,
+                        icon: const Icon(Icons.home),
+                        iconSize: 24 * scale,
+                      ),
+                      IconButton(
+                        color: Colors.white,
+                        onPressed: onRecentPressed,
+                        splashRadius: kDesktopIconButtonSplashRadius,
+                        icon: const Icon(Icons.more_horiz),
+                        iconSize: 24 * scale,
+                      ),
+                    ],
+                  ),
+                  
+                  const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  
+                  // 功能按钮组
+                  Column(
+                    children: [
+                      IconButton(
+                        color: Colors.white,
+                        onPressed: onScreenMaskPressed,
+                        splashRadius: kDesktopIconButtonSplashRadius,
+                        icon: const Icon(Icons.tv_off),
+                        iconSize: 24 * scale,
+                      ),
+                      Container(
+                        width: 60.0 * scale, // 宽度缩小一半
+                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        child: TextField(
+                          controller: _textEditingController,
+                          decoration: InputDecoration(
+                            hintText: 'Enter URL',
+                            filled: true,
+                            fillColor: Colors.white,
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                        ),
+                      ),
+                  
+                  // 分析
+               			 IconButton(
+                             color: Colors.white,
+                  		 onPressed: () {
+                  		 onScreenAnalysisPressed?.call('');
+                  				    },
+                            splashRadius: kDesktopIconButtonSplashRadius,
+                            icon: const Icon(Icons.security_rounded),
+                            iconSize: 24 * scale),
+                      /*
+                      //静默
+               			 IconButton(
+                             color: Colors.white,
+                  		 onPressed: () {
+                  		 onScreenKitschPressed?.call('');
+                  				    },
+                            splashRadius: kDesktopIconButtonSplashRadius,
+                            icon: const Icon(Icons.security_update_good_outlined),
+                            iconSize: 24 * scale),*/
+                      
+                      IconToggleButton(
+                        icon1: Icons.security_update_good_outlined,
+                        icon2: Icons.security_update_warning_outlined,
+                        scale: scale,
+                        splashRadius: kDesktopIconButtonSplashRadius,
+                        onPressed: onScreenKitschPressed,
+                      ),
+                      
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
 
 class DraggableKeyPosition {
   final String key;
