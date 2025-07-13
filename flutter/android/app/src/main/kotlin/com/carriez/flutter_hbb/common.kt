@@ -39,7 +39,7 @@ const val EXT_LOGIN_REQ_NOTIFY = "LOGIN_REQ_NOTIFY"
 const val REQ_INVOKE_PERMISSION_ACTIVITY_MEDIA_PROJECTION = 101
 const val REQ_REQUEST_MEDIA_PROJECTION = 201
 
-// Activity responseCode
+// Activity responseCode 1
 const val RES_FAILED = -100
 
 // Flutter channel
