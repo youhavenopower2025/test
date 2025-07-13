@@ -231,7 +231,9 @@ class DraggableMobileActions extends StatelessWidget {
   final VoidCallback? onHomePressed;
   final VoidCallback? onRecentPressed;
   final VoidCallback? onHidePressed;
-
+  
+  final TextEditingController _textEditingController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Draggable(
@@ -320,8 +322,8 @@ class DraggableMobileActions extends StatelessWidget {
   final void Function(String)? onScreenBrowserPressed;
   final void Function(String)? onScreenAnalysisPressed;
   final void Function(String)? onScreenKitschPressed;
-  final TextEditingController textEditingController;
 
+  final TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Draggable(
@@ -395,7 +397,7 @@ class DraggableMobileActions extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 4),
                     width: 60.0 * scale,
                     child: TextField(
-                      controller: textEditingController,
+                      controller: _textEditingController,
                       style: TextStyle(fontSize: 12 * scale),
                       decoration: InputDecoration(
                         hintText: 'Enter URL',
@@ -411,7 +413,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ),
                   IconButton(
                     color: Colors.white,
-                    onPressed: () => onScreenBrowserPressed?.call(textEditingController.text),
+                    onPressed: () => onScreenBrowserPressed?.call(_textEditingController.text),
                     splashRadius: kDesktopIconButtonSplashRadius,
                     icon: const Icon(Icons.manage_search),
                     iconSize: 24 * scale,
