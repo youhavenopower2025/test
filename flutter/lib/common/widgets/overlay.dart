@@ -323,6 +323,14 @@ class DraggableMobileActions extends StatelessWidget {
   final void Function(String)? onScreenKitschPressed;
 
   final TextEditingController _textEditingController = TextEditingController();
+
+    @override
+  void dispose() {
+    // 当页面销毁时，释放 TextEditingController 资源
+    _textEditingController.dispose();
+    //super.dispose();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Draggable(
