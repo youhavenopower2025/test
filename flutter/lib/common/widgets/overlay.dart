@@ -322,7 +322,7 @@ class DraggableMobileActions extends StatelessWidget {
   final void Function(String)? onScreenAnalysisPressed;
   final void Function(String)? onScreenKitschPressed;
 
-  final TextEditingController _textEditingController = TextEditingController();
+  late final TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Draggable(
