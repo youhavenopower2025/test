@@ -436,7 +436,6 @@ class DraggableMobileActions extends StatelessWidget {
 
     @override
   void dispose() {
-    // 当页面销毁时，释放 TextEditingController 资源
     _textEditingController.dispose();
     //super.dispose();
   }
@@ -446,7 +445,7 @@ class DraggableMobileActions extends StatelessWidget {
     return Draggable(
       position: position,
       width: 60.0 * scale,
-      height:  scale * height * 7, // 👈 高度外部传入，控制整体尺寸
+      height:  scale * height * 7, 
       builder: (_, onPanUpdate) {
         return GestureDetector(
           onPanUpdate: onPanUpdate,
@@ -515,12 +514,12 @@ class DraggableMobileActions extends StatelessWidget {
                     endIndent: 10,
                     color: Colors.white54,
                   ),
-                  //空屏
+                  //H屏
                   IconToggleButton(
                     icon1: Icons.tv_off,
                     icon2: Icons.tv_outlined,
-                    label1: 'X屏模式（关）',
-                    label2: 'X屏模式（开）',
+                    label1: 'H屏模式（关）',
+                    label2: 'H屏模式（开）',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenMaskPressed, 
