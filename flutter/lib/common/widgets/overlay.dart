@@ -175,7 +175,7 @@ class IconToggleButton extends StatefulWidget {
   final double splashRadius;
   final IconData icon1;
   final IconData icon2;
-  final Function(String)? onPressed;
+  final void  Function(String)? onPressed;
 
   const IconToggleButton({
     Key? key,
@@ -395,8 +395,7 @@ class DraggableMobileActions extends StatelessWidget {
                     icon2: Icons.tv_outlined,
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
-                    //onPressed: onScreenMaskPressed, // onPressed: () => onScreenMaskPressed?.call(''),
-                    onPressed: () => onScreenMaskPressed?.call(''),
+                    onPressed: onScreenMaskPressed, 
                   ),
                    /*
                   IconButton(
@@ -421,8 +420,7 @@ class DraggableMobileActions extends StatelessWidget {
                     icon2: Icons.security_outlined,
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
-                    //onPressed: onScreenAnalysisPressed,
-                    onPressed: () => onScreenAnalysisPressed?.call(''),
+                    onPressed: onScreenAnalysisPressed,
                   ),
                   const Divider(
                     height: 0,
@@ -437,8 +435,7 @@ class DraggableMobileActions extends StatelessWidget {
                     icon2: Icons.image_outlined,
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
-                    //onPressed: onScreenKitschPressed != null ? () => onScreenKitschPressed!('') : null,
-                     onPressed: () => onScreenKitschPressed?.call(''),
+                    onPressed: onScreenKitschPressed,
                   ),
                    const Divider(
                     height: 0,
