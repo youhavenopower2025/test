@@ -968,8 +968,10 @@ makeMobileActionsOverlayEntry(VoidCallback? onHide, {FFI? ffi}) {
     computeOverlayPosition() {
       final screenW = MediaQuery.of(context).size.width;
       final screenH = MediaQuery.of(context).size.height;
-      final left = (screenW - overlayW * scale) / 2;
-      final top = screenH - (overlayH + 80) * scale;
+      //final left = (screenW - overlayW * scale) / 2;
+      final left = screenW * 0.25;
+      final top = screenH * 0.1;
+      //final top = screenH - (overlayH + 80) * scale;
       return Offset(left, top);
     }
 
