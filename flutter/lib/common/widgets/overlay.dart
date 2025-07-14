@@ -292,6 +292,8 @@ class DraggableMobileActions extends StatelessWidget {
   }
 }
 */
+
+/*
 class IconToggleButton extends StatefulWidget {
   final double scale;
   final double splashRadius;
@@ -347,7 +349,56 @@ class _IconToggleButtonState extends State<IconToggleButton> {
       ],
     );
   }
+}*/
+
+
+class IconToggleButton extends StatefulWidget {
+  final double scale;
+  final double splashRadius;
+  final IconData icon1;
+  final IconData icon2;
+  final String label1;
+  final String label2;
+  final void Function(String)? onPressed;
+
+  const IconToggleButton({
+    Key? key,
+    required this.icon1,
+    required this.icon2,
+    required this.scale,
+    required this.splashRadius,
+    required this.label1,
+    required this.label2,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  _IconToggleButtonState createState() => _IconToggleButtonState();
 }
+
+class _IconToggleButtonState extends State<IconToggleButton> {
+  bool _toggled = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message: _toggled ? widget.label2 : widget.label1, // 当前状态对应的提示文本
+      child: IconButton(
+        color: Colors.white,
+        onPressed: () {
+          setState(() {
+            _toggled = !_toggled;
+          });
+          widget.onPressed?.call(_toggled ? widget.label2 : widget.label1);
+        },
+        splashRadius: widget.splashRadius,
+        icon: Icon(_toggled ? widget.icon2 : widget.icon1),
+        iconSize: 24 * widget.scale,
+      ),
+    );
+  }
+}
+
 
 class DraggableMobileActions extends StatelessWidget {
    DraggableMobileActions({
