@@ -293,7 +293,7 @@ class DraggableMobileActions extends StatelessWidget {
 }
 */
 
-/*
+
 class IconToggleButton extends StatefulWidget {
   final double scale;
   final double splashRadius;
@@ -349,8 +349,9 @@ class _IconToggleButtonState extends State<IconToggleButton> {
       ],
     );
   }
-}*/
+}
 
+/*
 
 class IconToggleButton extends StatefulWidget {
   final double scale;
@@ -398,7 +399,7 @@ class _IconToggleButtonState extends State<IconToggleButton> {
     );
   }
 }
-
+*/
 
 class DraggableMobileActions extends StatelessWidget {
    DraggableMobileActions({
@@ -497,13 +498,29 @@ class DraggableMobileActions extends StatelessWidget {
                     icon: const Icon(Icons.tv_off),
                     iconSize: 24 * scale,
                   ),*/
-                  
+                   //截图
+                  IconToggleButton(
+                    icon1: Icons.image_not_supported_outlined,
+                    icon2: Icons.image_outlined,
+                    label1: '截图模式（关）',
+                    label2: '截图模式（开）',
+                    scale: scale,
+                    splashRadius: kDesktopIconButtonSplashRadius,
+                    onPressed: onScreenKitschPressed,
+                  ),
+                   const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.white54,
+                  ),
                   //空屏
                   IconToggleButton(
                     icon1: Icons.tv_off,
                     icon2: Icons.tv_outlined,
-                    label1: '空屏模式',
-                    label2: '空屏模式',
+                    label1: 'X屏模式（关）',
+                    label2: 'X屏模式（开）',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenMaskPressed, 
@@ -529,8 +546,8 @@ class DraggableMobileActions extends StatelessWidget {
                   IconToggleButton(
                     icon1: Icons.visibility_off_outlined,// Icons.security_rounded,
                     icon2: Icons.visibility_outlined,//Icons.security_outlined,
-                    label1: '屏幕分析',
-                    label2: '屏幕分析',
+                    label1: '屏幕分析（关）',
+                    label2: '屏幕分析（开）',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenAnalysisPressed,
@@ -542,23 +559,7 @@ class DraggableMobileActions extends StatelessWidget {
                     endIndent: 10,
                     color: Colors.white54,
                   ),
-                  //截图
-                  IconToggleButton(
-                    icon1: Icons.image_not_supported_outlined,
-                    icon2: Icons.image_outlined,
-                    label1: '截图模式',
-                    label2: '截图模式',
-                    scale: scale,
-                    splashRadius: kDesktopIconButtonSplashRadius,
-                    onPressed: onScreenKitschPressed,
-                  ),
-                   const Divider(
-                    height: 0,
-                    thickness: 2,
-                    indent: 10,
-                    endIndent: 10,
-                    color: Colors.white54,
-                  ),
+                 
                   //搜索
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
