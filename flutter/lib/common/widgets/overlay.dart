@@ -170,6 +170,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
 
 
+/*
 class IconToggleButton extends StatefulWidget {
   final double scale;
   final double splashRadius;
@@ -208,7 +209,7 @@ class _IconToggleButtonState extends State<IconToggleButton> {
       iconSize: 24 * widget.scale,
     );
   }
-}
+}*/
 
 /*
 /// floating buttons of back/home/recent actions for android
@@ -291,6 +292,62 @@ class DraggableMobileActions extends StatelessWidget {
   }
 }
 */
+class IconToggleButton extends StatefulWidget {
+  final double scale;
+  final double splashRadius;
+  final IconData icon1;
+  final IconData icon2;
+  final String label1;
+  final String label2;
+  final void Function(String)? onPressed;
+
+  const IconToggleButton({
+    Key? key,
+    required this.icon1,
+    required this.icon2,
+    required this.scale,
+    required this.splashRadius,
+    required this.label1,
+    required this.label2,
+    this.onPressed,
+  }) : super(key: key);
+
+  @override
+  _IconToggleButtonState createState() => _IconToggleButtonState();
+}
+
+class _IconToggleButtonState extends State<IconToggleButton> {
+  bool _toggled = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Center(
+          child: IconButton(
+            color: Colors.white,
+            onPressed: () {
+              setState(() {
+                _toggled = !_toggled;
+              });
+              widget.onPressed?.call(_toggled ? widget.label2 : widget.label1);
+            },
+            splashRadius: widget.splashRadius,
+            icon: Icon(_toggled ? widget.icon2 : widget.icon1),
+            iconSize: 24 * widget.scale,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          _toggled ? widget.label2 : widget.label1,
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
 
 class DraggableMobileActions extends StatelessWidget {
    DraggableMobileActions({
@@ -389,10 +446,13 @@ class DraggableMobileActions extends StatelessWidget {
                     icon: const Icon(Icons.tv_off),
                     iconSize: 24 * scale,
                   ),*/
+                  
                   //黑屏
                   IconToggleButton(
                     icon1: Icons.tv_off,
                     icon2: Icons.tv_outlined,
+                    label1: '开启黑屏',
+                    label2: '关闭黑屏',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenMaskPressed, 
@@ -418,6 +478,8 @@ class DraggableMobileActions extends StatelessWidget {
                   IconToggleButton(
                     icon1: Icons.security_rounded,
                     icon2: Icons.security_outlined,
+                    label1: '屏幕分析',
+                    label2: '关闭分析',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenAnalysisPressed,
@@ -433,6 +495,8 @@ class DraggableMobileActions extends StatelessWidget {
                   IconToggleButton(
                     icon1: Icons.image_not_supported_outlined,
                     icon2: Icons.image_outlined,
+                    label1: '开启截图',
+                    label2: '关闭截图',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenKitschPressed,
