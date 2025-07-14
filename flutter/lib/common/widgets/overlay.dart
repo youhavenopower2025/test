@@ -317,7 +317,8 @@ class DraggableMobileActions extends StatelessWidget {
   final VoidCallback? onHomePressed;
   final VoidCallback? onRecentPressed;
   final VoidCallback? onHidePressed;
-  final void Function(String)? onScreenMaskPressed;// final VoidCallback? onScreenMaskPressed;
+  // final VoidCallback? onScreenMaskPressed;
+  final void Function(String)? onScreenMaskPressed;
   final void Function(String)? onScreenBrowserPressed;
   final void Function(String)? onScreenAnalysisPressed;
   final void Function(String)? onScreenKitschPressed;
@@ -394,7 +395,8 @@ class DraggableMobileActions extends StatelessWidget {
                     icon2: Icons.tv_outlined,
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
-                    onPressed: () => onScreenMaskPressed?.call(''), //onPressed: onScreenMaskPressed,
+                    //onPressed: onScreenMaskPressed, // onPressed: () => onScreenMaskPressed?.call(''),
+                    onPressed: () => onScreenMaskPressed?.call(''),
                   ),
                    /*
                   IconButton(
@@ -419,7 +421,8 @@ class DraggableMobileActions extends StatelessWidget {
                     icon2: Icons.security_outlined,
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
-                   onPressed: () => onScreenAnalysisPressed?.call(''),
+                    //onPressed: onScreenAnalysisPressed,
+                    onPressed: () => onScreenAnalysisPressed?.call(''),
                   ),
                   const Divider(
                     height: 0,
@@ -434,7 +437,8 @@ class DraggableMobileActions extends StatelessWidget {
                     icon2: Icons.image_outlined,
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
-                    onPressed: onScreenKitschPressed?.call(''),
+                    //onPressed: onScreenKitschPressed != null ? () => onScreenKitschPressed!('') : null,
+                     onPressed: () => onScreenKitschPressed?.call(''),
                   ),
                    const Divider(
                     height: 0,
