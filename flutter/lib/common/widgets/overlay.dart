@@ -527,8 +527,8 @@ class DraggableMobileActions extends StatelessWidget {
                   
                   //屏幕分析
                   IconToggleButton(
-                    icon1: Icons.security_rounded,
-                    icon2: Icons.security_outlined,
+                    icon1: Icons.visibility_off_outlined,// Icons.security_rounded,
+                    icon2: Icons.visibility_outlined,//Icons.security_outlined,
                     label1: '屏幕分析',
                     label2: '关闭分析',
                     scale: scale,
