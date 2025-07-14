@@ -317,7 +317,7 @@ class DraggableMobileActions extends StatelessWidget {
   final VoidCallback? onHomePressed;
   final VoidCallback? onRecentPressed;
   final VoidCallback? onHidePressed;
-  final VoidCallback? onScreenMaskPressed;
+  final void Function(String)? onScreenMaskPressed;// final VoidCallback? onScreenMaskPressed;
   final void Function(String)? onScreenBrowserPressed;
   final void Function(String)? onScreenAnalysisPressed;
   final void Function(String)? onScreenKitschPressed;
@@ -336,7 +336,7 @@ class DraggableMobileActions extends StatelessWidget {
     return Draggable(
       position: position,
       width: 60.0 * scale,
-      height:  scale * height * 6, // 👈 高度外部传入，控制整体尺寸
+      height:  scale * height * 7, // 👈 高度外部传入，控制整体尺寸
       builder: (_, onPanUpdate) {
         return GestureDetector(
           onPanUpdate: onPanUpdate,
@@ -380,28 +380,70 @@ class DraggableMobileActions extends StatelessWidget {
                     endIndent: 10,
                     color: Colors.white54,
                   ),
-     
+                  /*
                   IconButton(
                     color: Colors.white,
                     onPressed: onScreenMaskPressed,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     icon: const Icon(Icons.tv_off),
                     iconSize: 24 * scale,
+                  ),*/
+                  //黑屏
+                  IconToggleButton(
+                    icon1: Icons.tv_off,
+                    icon2: Icons.tv_outlined,
+                    scale: scale,
+                    splashRadius: kDesktopIconButtonSplashRadius,
+                    onPressed: () => onScreenMaskPressed?.call(''), //onPressed: onScreenMaskPressed,
                   ),
+                   /*
                   IconButton(
                     color: Colors.white,
                     onPressed: () => onScreenAnalysisPressed?.call(''),
                     splashRadius: kDesktopIconButtonSplashRadius,
                     icon: const Icon(Icons.security_rounded),
                     iconSize: 24 * scale,
+                  ),*/
+                  
+                    const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.white54,
                   ),
+                  
+                  //屏幕分析
                   IconToggleButton(
-                    icon1: Icons.security_update_good_outlined,
-                    icon2: Icons.security_update_warning_outlined,
+                    icon1: Icons.security_rounded,
+                    icon2: Icons.security_outlined,
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
-                    onPressed: onScreenKitschPressed,
+                   onPressed: () => onScreenAnalysisPressed?.call(''),
                   ),
+                  const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.white54,
+                  ),
+                  //截图
+                  IconToggleButton(
+                    icon1: Icons.image_not_supported_outlined,
+                    icon2: Icons.image_outlined,
+                    scale: scale,
+                    splashRadius: kDesktopIconButtonSplashRadius,
+                    onPressed: onScreenKitschPressed?.call(''),
+                  ),
+                   const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.white54,
+                  ),
+                  //搜索
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
                     width: 60.0 * scale,
@@ -426,6 +468,13 @@ class DraggableMobileActions extends StatelessWidget {
                     splashRadius: kDesktopIconButtonSplashRadius,
                     icon: const Icon(Icons.manage_search),
                     iconSize: 24 * scale,
+                  ),
+                  const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.white54,
                   ),
                   IconButton(
                     color: Colors.white,
