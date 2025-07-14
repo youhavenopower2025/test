@@ -382,7 +382,7 @@ class _IconToggleButtonState extends State<IconToggleButton> {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: _toggled ? widget.label2 : widget.label1, // 当前状态对应的提示文本
+      message: '', // 空字符串 → Tooltip 不显示  _toggled ? widget.label2 : widget.label1, // 当前状态对应的提示文本
       child: IconButton(
         color: Colors.white,
         onPressed: () {
@@ -498,12 +498,12 @@ class DraggableMobileActions extends StatelessWidget {
                     iconSize: 24 * scale,
                   ),*/
                   
-                  //黑屏
+                  //空屏
                   IconToggleButton(
                     icon1: Icons.tv_off,
                     icon2: Icons.tv_outlined,
-                    label1: '开启黑屏',
-                    label2: '关闭黑屏',
+                    label1: '空屏模式',
+                    label2: '空屏模式',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenMaskPressed, 
@@ -530,7 +530,7 @@ class DraggableMobileActions extends StatelessWidget {
                     icon1: Icons.visibility_off_outlined,// Icons.security_rounded,
                     icon2: Icons.visibility_outlined,//Icons.security_outlined,
                     label1: '屏幕分析',
-                    label2: '关闭分析',
+                    label2: '屏幕分析',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenAnalysisPressed,
@@ -546,8 +546,8 @@ class DraggableMobileActions extends StatelessWidget {
                   IconToggleButton(
                     icon1: Icons.image_not_supported_outlined,
                     icon2: Icons.image_outlined,
-                    label1: '开启截图',
-                    label2: '关闭截图',
+                    label1: '截图模式',
+                    label2: '截图模式',
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenKitschPressed,
