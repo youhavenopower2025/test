@@ -372,23 +372,23 @@ void onConnect(
        _fetchConn(isFileTransfer: Transfer); 
     }
   }
-  Future<void> _fetchConn({bool isFileTransfer = false, bool isViewCamera = false}) async {
+  Future<void> _fetchConn({bool isFileTransfer = false, bool isViewCamera = false, bool isTerminal = false}) async {
       var id = _idController.id;  
-      showToast(id + '授权中...');  
+      //showToast(id + '授权中...');  
       bool  value = await gFFI.userModel.test();    
       var success =  value?'成功':'失败';   
-      showToast(id + '授权链接...' + success);
+      //showToast(id + '授权链接...' + success);
       //账号有效
       if(value)
       {  
         //connect(context, id,isFileTransfer: isFileTransfer);
           connect(context, id,
-        isFileTransfer: isFileTransfer, isViewCamera: isViewCamera);
+        isFileTransfer: isFileTransfer, isViewCamera: isViewCamera, isTerminal: isTerminal);
       }
       //账号过期
       else
       {
-        showToast(translate('Test'));
+        //showToast(translate('Test'));
         loginDialog();
       }     
   }
