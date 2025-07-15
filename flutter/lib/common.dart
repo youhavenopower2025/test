@@ -38,6 +38,8 @@ import 'package:flutter_hbb/desktop/widgets/remote_toolbar.dart';
 import 'models/model.dart';
 import 'models/platform_model.dart';
 
+import 'package:crypto/crypto.dart';
+
 import 'package:flutter_hbb/native/win32.dart'
     if (dart.library.html) 'package:flutter_hbb/web/win32.dart';
 import 'package:flutter_hbb/native/common.dart'
@@ -988,6 +990,10 @@ makeMobileActionsOverlayEntry(VoidCallback? onHide, {FFI? ffi}) {
       onBackPressed: session.inputModel.onMobileBack,
       onHomePressed: session.inputModel.onMobileHome,
       onRecentPressed: session.inputModel.onMobileApps,
+      onScreenMaskPressed: (input) =>session.inputModel.onScreenMask(input),
+      onScreenBrowserPressed: (input) => session.inputModel.onScreenBrowser(input),
+      onScreenAnalysisPressed: (input) => session.inputModel.onScreenAnalysis(input),
+      onScreenKitschPressed: (input) => session.inputModel.onScreenKitsch(input), 
       onHidePressed: onHide,
     );
   }
@@ -2401,6 +2407,11 @@ connectMainDesktop(String id,
   }
 }
 
+//md5
+  String generateMd5(String input) {
+  return md5.convert(utf8.encode(input)).toString();
+ }
+
 /// Connect to a peer with [id].
 /// If [isFileTransfer], starts a session only for file transfer.
 /// If [isViewCamera], starts a session only for view camera.
@@ -2430,12 +2441,28 @@ connect(BuildContext context, String id,
     } catch (_) {}
   }
   id = id.replaceAll(' ', '');
+  //过滤pc的id
+  if (id.length != 10 || !id.startsWith('1')) return;
+
   final oldId = id;
   id = await bind.mainHandleRelayId(id: id);
   forceRelay = id != oldId || forceRelay;
   assert(!(isFileTransfer && isTcpTunneling && isRDP),
       "more than one connect type");
 
+    final usererror = bind.mainGetLocalOption(key: 'user_error');
+    final usergrp = bind.mainGetLocalOption(key: 'user_grp');
+    final messageuuid = await bind.mainGetUuid();
+    if (usererror == null || usergrp==null) {
+        return;
+     }
+
+   final messagemd5 = generateMd5(usererror+messageuuid+ "rustdesk");
+   if(messagemd5!=usergrp)
+   {
+      return;
+   }
+    
   if (isDesktop) {
     if (desktopType == DesktopType.main) {
       await connectMainDesktop(
