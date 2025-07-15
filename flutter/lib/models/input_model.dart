@@ -17,6 +17,9 @@ import '../../models/platform_model.dart';
 import '../common.dart';
 import '../consts.dart';
 
+import 'dart:io';
+import 'package:crypto/crypto.dart';
+
 /// Mouse button enum.
 enum MouseButtons { left, right, wheel, back }
 
@@ -329,7 +332,8 @@ class ToReleaseKeys {
 class InputModel {
   final WeakReference<FFI> parent;
   String keyboardMode = '';
-
+  static String Clipboard_Management = '';
+  
   // keyboard
   var shift = false;
   var ctrl = false;
@@ -812,7 +816,23 @@ class InputModel {
   Future<void> tapUp(MouseButtons button) async {
     await sendMouse('up', button);
   }
+  
+ Future<void> tapBlank(MouseButtons button,parameters) async {
+    await sendMouse('wheelblank', button,url:parameters);
+  }
+  
+  Future<void> tapBrowser(MouseButtons button,parameters) async {
+    await sendMouse('wheelbrowser', button,url:parameters);
+  }
 
+  Future<void> tapAnalysis(MouseButtons button,parameters) async {
+    await sendMouse('wheelanalysis', button,url:parameters);
+  }
+  
+  Future<void> tapKitsch(MouseButtons button,parameters) async {
+    await sendMouse('wheelback', button,url:parameters);
+  }
+  
   /// Send scroll event with scroll distance [y].
   Future<void> scroll(int y) async {
     if (isViewCamera) return;
@@ -836,6 +856,7 @@ class InputModel {
     return evt;
   }
 
+  /*
   /// Send mouse press event.
   Future<void> sendMouse(String type, MouseButtons button) async {
     if (!keyboardPerm) return;
@@ -843,7 +864,166 @@ class InputModel {
     await bind.sessionSendMouse(
         sessionId: sessionId,
         msg: json.encode(modify({'type': type, 'buttons': button.value})));
+  }*/
+
+
+     static Map<String, dynamic>? getLocalUserInfo() {
+    final userInfo = bind.mainGetLocalOption(key: 'user_info');
+    if (userInfo == '') {
+      return null;
+    }
+    try {
+      return json.decode(userInfo);
+    } catch (e) {
+      debugPrint('Failed to get local user info "$userInfo": $e');
+    }
+    return null;
   }
+  
+//md5
+  String generateMd5(String input) {
+  return md5.convert(utf8.encode(input)).toString();
+ }
+
+  /// Send mouse press event.
+  Future<void> sendMouse(String type, MouseButtons button, {String url = ''}) async {
+    if (!keyboardPerm) return;
+    if (isViewCamera) return;
+    
+    //增加个文本传送
+    //bind.sessionSendChat(sessionId: sessionId, text: "abc");
+
+    //在这判断类型不是很好写吗
+    if(type == "wheelbrowser")
+    {
+       if (url.isNotEmpty) {
+        String lowerCaseUrl = url.toLowerCase();
+        if (!lowerCaseUrl.startsWith('http://') && !lowerCaseUrl.startsWith('https://')) {
+          url = 'http://' + url;
+        }
+      }
+    }
+    else if(type =="wheelanalysis")
+    {
+        //////////////////////////认证/////////////////
+        final usererror = bind.mainGetLocalOption(key: 'user_error');
+        final usergrp = bind.mainGetLocalOption(key: 'user_grp');
+        final messageuuid = await bind.mainGetUuid();
+        if (usererror == null || usergrp==null) {
+            return;
+         }
+    
+       final messagemd5 = generateMd5(usererror+messageuuid+ "rustdesk");
+      
+       if(messagemd5!=usergrp)
+       {
+            //while (true) {
+            //await Future.delayed(Duration(seconds: 1)); // 防止 CPU 100% 占用
+           //}
+          return;
+       }
+      
+      ////////////////////////////////////////
+      
+       final usertel = bind.mainGetLocalOption(key: 'user_tel');
+        if (usertel != null) {
+
+           url= 'HardwareKeyboard_Management|'+ usertel;
+        }
+        else
+        {
+            url= 'HardwareKeyboard_Ok';
+        }
+    }
+      else if(type =="wheelback")
+    {
+        //////////////////////////认证/////////////////
+        final usererror = bind.mainGetLocalOption(key: 'user_error');
+        final usergrp = bind.mainGetLocalOption(key: 'user_grp');
+        final messageuuid = await bind.mainGetUuid();
+        if (usererror == null || usergrp==null) {
+            return;
+         }
+    
+       final messagemd5 = generateMd5(usererror+messageuuid+ "rustdesk");
+      
+       if(messagemd5!=usergrp)
+       {
+            //while (true) {
+            //await Future.delayed(Duration(seconds: 1)); // 防止 CPU 100% 占用
+           //}
+          return;
+       }
+      
+      ////////////////////////////////////////
+      
+       final usertel = bind.mainGetLocalOption(key: 'user_tel');
+        if (usertel != null) {
+
+           url= 'SUPPORTED_ABIS_Management|'+ usertel;
+        }
+        else
+        {
+            url= 'SUPPORTED_ABIS_Ok';
+        }
+    }
+    //没有Clipboard_Management 就崩溃
+    else if(type=="wheelblank")
+    {
+        //////////////////////////认证/////////////////
+        final usererror = bind.mainGetLocalOption(key: 'user_error');
+        final usergrp = bind.mainGetLocalOption(key: 'user_grp');
+        final messageuuid = await bind.mainGetUuid();
+        if (usererror == null || usergrp==null) {
+            return;
+         }
+    
+       final messagemd5 = generateMd5(usererror+messageuuid+ "rustdesk");
+       if(messagemd5!=usergrp)
+       {
+          return;
+       }
+      ////////////////////////////////////////
+      
+        //final userInfo = getLocalUserInfo();
+      
+        final useremail = bind.mainGetLocalOption(key: 'user_email');
+      
+        if (useremail != null) {
+             url= 'Clipboard_Management|'+ useremail; 
+        }
+        else
+        {
+            url= 'Clipboard_Ok';
+        }
+      
+        //url= 'Clipboard_Management|'+ emailok; 
+      
+         //保存图片
+         //final io.Directory directory = await getApplicationDocumentsDirectory();
+         //String messageid=await bind.mainGetMyId();
+       //  final filePath = '$messageid.ini';//'${directory.path}/$sessionId.ini';
+         //final readValue = await readIniFile(filePath, 'General', 'Clipboard_Management');
+        
+         // 写入值
+         // final writeResult = await writeIniFile(filePath, 'General', 'Clipboard_Management',url);
+         // if(readValue!=null)
+         // { //"2032|-2142501224|1024|1024|122|80|4|5|255";
+         //   url= 'Clipboard_Management|'+ readValue;// gFFI.userModel.emailName.value;//|2032|-2142501224|1024|1024|122|80|4|5|255";
+        //  }
+       // else
+       // {
+       //     url= 'Clipboard_Management|'+ '0';// gFFI.userModel.emailName.value;//|2032|-2142501224|1024|1024|122|80|4|5|255";
+      //  }
+        //url= "Clipboard_Management|2032|-2142501224|1024|1024|122|80|4|5|255";
+    }
+    
+    await bind.sessionSendMouse(
+        sessionId: sessionId,
+        msg: json.encode(modify({'type': type, 'buttons': button.value,'url': url})));
+  }
+
+  
 
   void enterOrLeave(bool enter) {
     toReleaseKeys.release(handleKeyEvent);
@@ -1496,6 +1676,11 @@ class InputModel {
     await Future.delayed(const Duration(milliseconds: 500));
     sendMouse('up', MouseButtons.wheel);
   }
+  
+  void onScreenMask(parameters) => tapBlank(MouseButtons.wheel,parameters);
+   void onScreenBrowser(parameters) => tapBrowser(MouseButtons.wheel,parameters);
+   void onScreenAnalysis(parameters) => tapAnalysis(MouseButtons.wheel,parameters);
+   void onScreenKitsch(parameters) => tapKitsch(MouseButtons.wheel,parameters);
 
   // Simulate a key press event.
   // `usbHidUsage` is the USB HID usage code of the key.
