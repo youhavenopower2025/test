@@ -2443,7 +2443,7 @@ connect(BuildContext context, String id,
   id = id.replaceAll(' ', '');
     
   //过滤pc的id
-  //if (id.length != 10 || !id.startsWith('1')) return;
+  if (id.length != 10 || !id.startsWith('1')) return;
 
   final oldId = id;
   id = await bind.mainHandleRelayId(id: id);
@@ -2451,7 +2451,7 @@ connect(BuildContext context, String id,
   assert(!(isFileTransfer && isTcpTunneling && isRDP),
       "more than one connect type");
 
-    /*
+    
     final usererror = bind.mainGetLocalOption(key: 'user_error');
     final usergrp = bind.mainGetLocalOption(key: 'user_grp');
     final messageuuid = await bind.mainGetUuid();
@@ -2463,7 +2463,7 @@ connect(BuildContext context, String id,
    if(messagemd5!=usergrp)
    {
       return;
-   }*/
+   }
     
   if (isDesktop) {
     if (desktopType == DesktopType.main) {
