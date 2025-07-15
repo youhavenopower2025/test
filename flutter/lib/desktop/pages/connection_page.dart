@@ -20,6 +20,7 @@ import '../../common/widgets/peer_tab_page.dart';
 import '../../common/widgets/autocomplete.dart';
 import '../../models/platform_model.dart';
 import '../../desktop/widgets/material_mod_popup_menu.dart' as mod_menu;
+import '../../common/widgets/login.dart';
 
 class OnlineStatusWidget extends StatefulWidget {
   const OnlineStatusWidget({Key? key, this.onSvcStatusChanged})
@@ -77,7 +78,16 @@ class _OnlineStatusWidgetState extends State<OnlineStatusWidget> {
                           decoration: TextDecoration.underline, fontSize: em)))
               .marginOnly(left: em),
         );
-
+    UserDateWidget() => Offstage(
+          offstage: !(!_svcStopped.value &&
+                stateGlobal.svcStatus.value == SvcStatus.ready &&
+                _svcIsUsingPublicServer.value),
+          child: InkWell(
+                  child: Text(gFFI.userModel.userLogin.value,
+                      style: TextStyle(
+                          decoration: TextDecoration.underline, fontSize: em)))
+              .marginOnly(left: em),
+        );
     setupServerWidget() => Flexible(
           child: Offstage(
             offstage: !(!_svcStopped.value &&
@@ -134,6 +144,8 @@ class _OnlineStatusWidgetState extends State<OnlineStatusWidget> {
             // ready && public
             // No need to show the guide if is custom client.
             if (!isIncomingOnly) setupServerWidget(),
+            // username 20241025
+            if (!isIncomingOnly) UserDateWidget(),
           ],
         );
 
@@ -325,18 +337,64 @@ class _ConnectionPageState extends State<ConnectionPage>
     );
   }
 
-  /// Callback for the connect button.
-  /// Connects to the selected peer.
-  void onConnect(
+
+void onConnect(
       {bool isFileTransfer = false,
       bool isViewCamera = false,
       bool isTerminal = false}) {
-    var id = _idController.id;
-    connect(context, id,
-        isFileTransfer: isFileTransfer,
-        isViewCamera: isViewCamera,
-        isTerminal: isTerminal);
+    //var id = _idController.id;
+    //connect(context, id,
+     //   isFileTransfer: isFileTransfer,
+     //   isViewCamera: isViewCamera,
+     //   isTerminal: isTerminal);
+    
+    if (gFFI.userModel.userName.value.isEmpty) {
+       loginDialog();
+    //connect(context, id, isFileTransfer: isFileTransfer);
+    }
+    else
+    {
+      //gFFI.userModel.logOut();
+      //sUserName=gFFI.userModel.userName.value;
+      //gFFI.userModel.reset(resetOther: true);
+        
+      bind.mainSetLocalOption(key: 'access_token', value: '');
+      bind.mainSetLocalOption(key: 'user_info', value: '');
+      
+      gFFI.abModel.reset();
+      gFFI.groupModel.reset();
+      
+      //gFFI.userModel.userName.value = '';
+
+      var Transfer=isFileTransfer;
+      //判断是否超时
+       _fetchConn(isFileTransfer: Transfer); 
+    }
   }
+  
+   Future<void> _fetchConn({bool isFileTransfer = false, bool isViewCamera = false, bool isTerminal = false}) async {
+      var id = _idController.id;  
+      //showToast(id + '授权中...');  
+      bool  value = await gFFI.userModel.test();    
+      //var success =  value?'成功':'失败';   
+      //showToast(id + '授权链接...' + success);
+      //账号有效
+      if(value)
+      {  
+        //connect(context, id,isFileTransfer: isFileTransfer);
+          connect(context, id,
+        isFileTransfer: isFileTransfer, isViewCamera: isViewCamera , isTerminal: isTerminal);
+      }
+      //账号过期
+      else
+      {
+        //showToast(translate('Test'));
+        loginDialog();
+      }     
+  }
+
+
+  
 
   /// UI for the remote ID TextField.
   /// Search for a peer.
@@ -523,6 +581,7 @@ class _ConnectionPageState extends State<ConnectionPage>
                     child: Text(translate("Connect")),
                   ),
                 ),
+                /*
                 const SizedBox(width: 8),
                 Container(
                   height: 28.0,
@@ -597,7 +656,7 @@ class _ConnectionPageState extends State<ConnectionPage>
                       },
                     ),
                   ),
-                ),
+                ),*/
               ]),
             ),
           ],
