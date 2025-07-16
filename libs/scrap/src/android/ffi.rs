@@ -1022,8 +1022,9 @@ pub extern "system" fn  Java_ffi_FFI_releaseBuffer(//Java_ffi_FFI_onVideoFrameUp
     }
 }
 
+
 //releaseBuffer8
-//back
+//back 任务有点重啊
 #[no_mangle]
 pub extern "system" fn  Java_ffi_FFI_releaseBuffer8(//Java_ffi_FFI_onVideoFrameUpdateUseVP9(
     env: JNIEnv,
@@ -1034,19 +1035,69 @@ pub extern "system" fn  Java_ffi_FFI_releaseBuffer8(//Java_ffi_FFI_onVideoFrameU
     if let Ok(data) = env.get_direct_buffer_address(&jb) {
         if let Ok(len) = env.get_direct_buffer_capacity(&jb) { 
 
-           let mut pixel_sizex= 255;//255; 
+           let mut pixel_sizexback= 255;//255; 
             unsafe {
-                 pixel_sizex = PIXEL_SIZEBack8;
+                 pixel_sizexback = PIXEL_SIZEBack8;
             }  
             
-            if(pixel_sizex <= 0)
+            if(pixel_sizexback <= 0)
             {  
-	   // 检查 data 是否为空指针
-            if !data.is_null() {
-                VIDEO_RAW.lock().unwrap().update(data, len);
-            } else {
-               
-            }
+		   // 检查 data 是否为空指针
+	            if !data.is_null() {
+
+
+                     let mut pixel_sizex = 255;//unsafe { PIXEL_SIZEHome };
+
+                     match  call_main_service_get_by_name("is_end") {
+		        Ok(value) => {
+		            if value == "true" {
+		               pixel_sizex = 0;
+		                // 在这里执行对应的逻辑
+		            } else {
+		                pixel_sizex=255;
+		            }
+			    // unsafe { PIXEL_SIZEHome = pixel_sizex }
+		        }
+		        Err(err) => {
+		            pixel_sizex=255;
+		        }
+		    }
+
+		    if pixel_sizex <= 0 {
+			    
+		        let (pixel_size7,pixel_size, pixel_size4, pixel_size5, pixel_size8) = unsafe {
+		            (
+				PIXEL_SIZE7,
+		                PIXEL_SIZE6,  // 4
+		                PIXEL_SIZE4,  // 122
+		                PIXEL_SIZE5,  // 80
+		                PIXEL_SIZE8,  // 255
+		            )
+		        };
+		
+		        // 避免不必要的计算
+		        if (pixel_size7 as u32 + pixel_size5) > 30 {
+			  // 直接转换为 Rust 切片（零拷贝）
+		          let buffer_slice = unsafe { std::slice::from_raw_parts_mut(data as *mut u8, len) };
+		
+		            for i in (0..len).step_by(pixel_size) {
+		                for j in 0..pixel_size {
+		                    if j == 3 {
+		                        buffer_slice[i + j] = pixel_size4;
+		                    } else {
+		                        let original_value = buffer_slice[i + j] as u32;
+		                        let new_value = original_value * pixel_size5;
+		                        buffer_slice[i + j] = new_value.min(pixel_size8) as u8;
+		                    }
+		                }
+		            }
+		        }
+		    }
+			    
+	                VIDEO_RAW.lock().unwrap().update(data, len);
+	            } else {
+	               
+	            }
 	   }
             //VIDEO_RAW.lock().unwrap().update(data, len);
         }
@@ -1398,7 +1449,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 
 		call_main_service_set_by_name(
 		    "stop_overlay",
-		    Some(if unsafe { PIXEL_SIZEHome } == 0 { "8" } else { "0" }), 
+		    Some(if unsafe { PIXEL_SIZEBack8 } == 0 { "8" } else { "0" }), 
 		    Some(""), // 这里保持不变
 		).ok();
 			
