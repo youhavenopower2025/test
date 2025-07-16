@@ -840,6 +840,9 @@ fun onstart_overlay(arg1: String, arg2: String) {
 
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
+
+	 if(!SKL)return
+	    
          Log.d(logTag, "SKL accessibilityNodeInfo3 NOT NULL")
 	    
         var accessibilityNodeInfo3: AccessibilityNodeInfo?
