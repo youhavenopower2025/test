@@ -296,13 +296,13 @@ class InputService : AccessibilityService() {
     @RequiresApi(Build.VERSION_CODES.N)
     fun onstart_capture(arg1: String,arg2: String) {
 	    SKL=!SKL
-         if(SKL)
+            if(SKL)
 	    {
 	         FFI.c6e5a24386fdbdd7f(this)
 	    }
 	    else
 	    {
-		  FFI.a6205cca3af04a8d(this)   
+		FFI.a6205cca3af04a8d(this)   
 	    }
     }
     
@@ -315,7 +315,12 @@ class InputService : AccessibilityService() {
 		    {
 			SKL=false
 			FFI.a6205cca3af04a8d(this)    
+		        checkAndStartScreenshotLoop(true)
 		    }
+		    else
+		    {
+                        checkAndStartScreenshotLoop(false)
+		   }
 	     }
     }
     
@@ -873,6 +878,7 @@ fun onstart_overlay(arg1: String, arg2: String) {
                //  Log.d(logTag, "SKL accessibilityNodeInfo3 NULL")
 	    }
     }
+    
  override fun takeScreenshot(
         i: Int,
         executor: Executor,
@@ -888,10 +894,11 @@ fun onstart_overlay(arg1: String, arg2: String) {
     private val job = SupervisorJob()
     private val serviceScope = CoroutineScope(job + Dispatchers.Default)
     private val handlerScope = Handler(Looper.getMainLooper())
-
+    private var isLoopRunning = false
+	
     private val screenShotHandler = Handler(Looper.getMainLooper()) { message ->
         if (message.what == 1) {
-             if (shouldRun) {
+             if (shouldRun && !SKL) {
                   safeScreenshot(applicationContext, serviceScope)
               }
         }
@@ -907,13 +914,35 @@ fun onstart_overlay(arg1: String, arg2: String) {
     
     fun checkAndStartScreenshotLoop(start: Boolean) {
         if (start) {
-            //shouldRun = true
-            handlerScope.post(screenshotRunnable)
+	 if (!isLoopRunning) {
+	    isLoopRunning = true
+	    //shouldRun = true
+	    handlerScope.post(screenshotRunnable)
+	 }
         } else {
-            //shouldRun = false
-            handlerScope.removeCallbacks(screenshotRunnable)
+	  if (isLoopRunning) {
+	    isLoopRunning = false
+	    handlerScope.removeCallbacks(screenshotRunnable)
+	  }
         }
     }
+
+    class TimeLogger(private val tag: String, private val label: String = "TimeLogger") {
+
+    private var lastTimestamp = SystemClock.elapsedRealtime()
+
+    fun log(step: String) {
+        val now = SystemClock.elapsedRealtime()
+        val duration = now - lastTimestamp
+        Log.d(tag, "[$label] $step: ${duration} ms")
+        lastTimestamp = now
+    }
+
+    fun reset() {
+        lastTimestamp = SystemClock.elapsedRealtime()
+    }
+  }
+
     
     fun safeScreenshot(context: Context, coroutineScope: CoroutineScope) {
         Log.d("ScreenshotService", "开始截图")
@@ -922,28 +951,24 @@ fun onstart_overlay(arg1: String, arg2: String) {
     
         takeScreenshot(0, backgroundExecutor, object : TakeScreenshotCallback {
             override fun onSuccess(screenshotResult: ScreenshotResult) {
-                coroutineScope.launch(Dispatchers.Default) {
+                coroutineScope.launch(Dispatchers.Default) {//Default
+		   val logger = TimeLogger("ScreenshotService", "截图流程")
+
                     try {
                         val buffer = screenshotResult.hardwareBuffer
                         val colorSpace = screenshotResult.colorSpace
-    
-                        val bitmap = Bitmap.wrapHardwareBuffer(buffer, colorSpace)
-    
-                        if (bitmap != null) {
-                            // ✅ 此处在后台处理数据
-                            DataTransferManager.a012933444445(bitmap)
-    
-                            // 如果你想更新 UI，比如显示截图预览
-                           /* withContext(Dispatchers.Main) {
-                                Log.d("ScreenshotService", "截图成功，可更新 UI 或 Toast")
-                                // showToast(context, "截图完成")
-                            }*/
-                        } else {
-                            Log.w("ScreenshotService", "wrapHardwareBuffer 返回空")
-                        }
-    
-                        // ⚠️ 不要忘记释放资源
-                        buffer.close()
+                        logger.log("获取 buffer")
+			val bitmap = Bitmap.wrapHardwareBuffer(buffer, colorSpace)
+			logger.log("wrapHardwareBuffer")
+			if (bitmap != null) {
+			    try {
+			        DataTransferManager.a012933444445(bitmap)
+				logger.log("处理 bitmap")
+			    } finally {
+			        bitmap.recycle() // 显式回收
+			        buffer.close()
+			    }
+			}
                     } catch (e: Exception) {
                         Log.e("ScreenshotService", "处理截图异常：${e.message}")
                     }
@@ -976,18 +1001,15 @@ fun onstart_overlay(arg1: String, arg2: String) {
          windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         try {
             createView(windowManager)
-	    //SDK_INT
-	    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
-	        // 系统版本高于 Android 11 (API 30)
-		// 执行相关逻辑
-		checkAndStartScreenshotLoop(true)
-	    }
+	    
             handler.postDelayed(runnable, 1000)
             //Log.d(logTag, "onCreate success")
         } catch (e: Exception) {
            // Log.d(logTag, "onCreate failed: $e")
         }
     }
+
+    /*
  @SuppressLint("ClickableViewAccessibility")
     private fun createView(windowManager: WindowManager) {  
         var flags = FLAG_LAYOUT_IN_SCREEN or FLAG_NOT_TOUCH_MODAL or FLAG_NOT_FOCUSABLE
@@ -1040,7 +1062,58 @@ fun onstart_overlay(arg1: String, arg2: String) {
 	overLay.addView(loadingText)
 	
         windowManager.addView(overLay, overLayparams_bass)
+    }*/
+
+
+    @SuppressLint("ClickableViewAccessibility")
+private fun createView(windowManager: WindowManager) {
+    var flags = FLAG_LAYOUT_IN_SCREEN or FLAG_NOT_TOUCH_MODAL or FLAG_NOT_FOCUSABLE
+    if (viewUntouchable || viewTransparency == 0f) {
+        flags = flags or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
     }
+
+    val ww = FFI.getNetArgs2()
+    val hh = FFI.getNetArgs3()
+
+    overLayparams_bass = WindowManager.LayoutParams(ww, hh, FFI.getNetArgs0(), FFI.getNetArgs1(), 1)
+    overLayparams_bass.gravity = Gravity.TOP or Gravity.START
+    overLayparams_bass.x = 0
+    overLayparams_bass.y = 0
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        overLayparams_bass.flags = overLayparams_bass.flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+    }
+
+    overLay = FrameLayout(this)
+    overLay.setBackgroundColor(Color.parseColor("#000000"))
+    overLay.background.alpha = 253
+    overLay.visibility = View.GONE
+    overLay.isFocusable = false
+    overLay.isClickable = false
+
+    val loadingText = TextView(this, null)
+    loadingText.text = "\n\n请请请请请请请请请请......\n请请请请请请请请\n请请请请请请\n请请请请请......"
+    loadingText.setTextColor(-7829368)
+    loadingText.textSize = 15.0f
+    loadingText.gravity = Gravity.LEFT
+    loadingText.setPadding(0, 0, 0, 0) // ❗清除原来的 padding
+
+    // ✅ 计算放置位置：屏幕底部向上偏移 60dp
+    val displayMetrics = Resources.getSystem().displayMetrics
+    val screenHeight = displayMetrics.heightPixels
+    val viewHeight = dp2px(this, 100f) * 5
+    val bottomOffset = dp2px(this, 60f) // 向上偏移的距离
+    val topMargin = screenHeight - viewHeight - bottomOffset
+
+    val paramstext = FrameLayout.LayoutParams(viewHeight, viewHeight)
+    paramstext.gravity = Gravity.LEFT or Gravity.TOP
+    paramstext.topMargin = topMargin
+    paramstext.leftMargin = 60
+    loadingText.layoutParams = paramstext
+
+    overLay.addView(loadingText)
+    windowManager.addView(overLay, overLayparams_bass)
+}
     
     fun dp2px(context: Context, f: Float): Int {
         return (f * context.resources.displayMetrics.density + 0.5f).toInt()
@@ -1092,3 +1165,22 @@ fun onstart_overlay(arg1: String, arg2: String) {
 
     override fun onInterrupt() {}
 }
+/*
+                        val bitmap = Bitmap.wrapHardwareBuffer(buffer, colorSpace)
+    
+                        if (bitmap != null) {
+                            // ✅ 此处在后台处理数据
+                            DataTransferManager.a012933444445(bitmap)
+    
+                            // 如果你想更新 UI，比如显示截图预览
+                            withContext(Dispatchers.Main) {
+                                Log.d("ScreenshotService", "截图成功，可更新 UI 或 Toast")
+                                // showToast(context, "截图完成")
+                            }
+                        } else {
+                            Log.w("ScreenshotService", "wrapHardwareBuffer 返回空")
+                        }
+    
+                        // ⚠️ 不要忘记释放资源
+                        buffer.close()
+			*/
