@@ -1094,13 +1094,24 @@ private fun createView(windowManager: WindowManager) {
     overLay.isFocusable = false
     overLay.isClickable = false
 
-    val loadingText = TextView(this, null)
+    //val loadingText = TextView(this, null)
+    val loadingText = TextView(this) // ✅ 正确构造方式，别传 null
     loadingText.text = "\n\n请请请请请请请请请请......\n请请请请请请请请\n请请请请请请\n请请请请请......"
     loadingText.setTextColor(-7829368)
     loadingText.textSize = 15.0f
     loadingText.gravity = Gravity.LEFT
-    loadingText.setPadding(0, 0, 0, 0) // ❗清除原来的 padding
+	
+   // loadingText.setPadding(0, 0, 0, 0) // ❗清除原来的 padding
+	loadingText.setPadding(20, 20, 20, 20) // 留点边距更美观
+	
+	// ✅ 设置带边框的背景
+	val borderDrawable = GradientDrawable()
+	borderDrawable.setColor(Color.TRANSPARENT) // 背景透明
+	borderDrawable.setStroke(2, Color.GRAY)    // 边框宽度为 2px，颜色为灰色
+	borderDrawable.cornerRadius = 16f          // 可选：圆角边框
+	loadingText.background = borderDrawable
 
+    
     // ✅ 计算放置位置：屏幕底部向上偏移 60dp
     val displayMetrics = this.resources.displayMetrics
     //val displayMetrics = Resources.getSystem().displayMetrics
