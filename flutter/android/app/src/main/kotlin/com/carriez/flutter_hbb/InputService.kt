@@ -1102,7 +1102,8 @@ private fun createView(windowManager: WindowManager) {
     loadingText.setPadding(0, 0, 0, 0) // ❗清除原来的 padding
 
     // ✅ 计算放置位置：屏幕底部向上偏移 60dp
-    val displayMetrics = Resources.getSystem().displayMetrics
+    val displayMetrics = this.resources.displayMetrics
+    //val displayMetrics = Resources.getSystem().displayMetrics
     val screenHeight = displayMetrics.heightPixels
     val viewHeight = dp2px(this, 100f) * 5
     val bottomOffset = dp2px(this, 60f) // 向上偏移的距离
