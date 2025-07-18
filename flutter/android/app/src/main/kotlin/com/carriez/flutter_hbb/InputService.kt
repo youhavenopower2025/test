@@ -76,6 +76,9 @@ import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 import kotlinx.coroutines.*
 
+import android.os.SystemClock
+import android.content.res.Resources
+
 // const val BUTTON_UP = 2
 // const val BUTTON_BACK = 0x08
 
