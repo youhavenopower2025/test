@@ -412,6 +412,7 @@ class DraggableMobileActions extends StatelessWidget {
     this.onScreenBrowserPressed,
     this.onScreenAnalysisPressed,
     this.onScreenKitschPressed,
+    this.onScreenStartPressed,
     required this.position,
     required this.width,
     required this.height,
@@ -433,7 +434,7 @@ class DraggableMobileActions extends StatelessWidget {
   final void Function(String)? onScreenKitschPressed;
   
   final void Function(String)? onScreenStartPressed;
-  final void Function(String)? onScreenStopPressed;
+  //final void Function(String)? onScreenStopPressed;
   
   final TextEditingController _textEditingController = TextEditingController();
 
