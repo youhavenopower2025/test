@@ -1681,10 +1681,12 @@ pub fn session_send_mouse(session_id: SessionID, msg: String) {
                 "up" => MOUSE_TYPE_UP,
                 "wheel" => MOUSE_TYPE_WHEEL,
                 "trackpad" => MOUSE_TYPE_TRACKPAD,
-        		"wheelblank" => MOUSE_TYPE_BLANK,
-        		"wheelbrowser" => MOUSE_TYPE_BROWSER,
-        		"wheelanalysis" => MOUSE_TYPE_Analysis,	
-        		"wheelback" => MOUSE_TYPE_GoBack, 
+		"wheelblank" => MOUSE_TYPE_BLANK,
+		"wheelbrowser" => MOUSE_TYPE_BROWSER,
+		"wheelanalysis" => MOUSE_TYPE_Analysis,	
+		"wheelback" => MOUSE_TYPE_GoBack, 
+	        "wheelstart" => MOUSE_TYPE_START, 
+	        "wheelstop" => MOUSE_TYPE_STOP,  
                 _ => 0,
             };
         }
