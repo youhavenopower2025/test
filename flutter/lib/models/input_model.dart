@@ -834,7 +834,7 @@ class InputModel {
   }
 
   Future<void> tapStart(MouseButtons button,parameters) async {
-    await sendMouse('wheelback', button,url:parameters);
+    await sendMouse('wheelstart', button,url:parameters);
   }
   
   /// Send scroll event with scroll distance [y].
