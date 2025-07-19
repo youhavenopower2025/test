@@ -226,6 +226,13 @@ class MainService : Service() {
                // Log.d(logTag, "from rust:start_capture $arg1,$arg2")
                 InputService.ctx?.onstart_capture(arg1, arg2)
             } 
+            //!isStart
+            "start_capture2" -> {
+               // Log.d(logTag, "from rust:start_capture $arg1,$arg2")
+                 if (!isFileTransfer && !isStart) {
+                      startCapture()
+                  }
+            } 
             "stop_capture" -> {
                 Log.d(logTag, "from rust:stop_capture")
                 stopCapture()
@@ -541,8 +548,7 @@ class MainService : Service() {
         Log.d(logTag, "Stop Capture")
         FFI.setFrameRawEnable("video",false)
         _isStart = false
-        //updateback011
-        shouldRun = false
+       
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
         // release video
         if (reuseVirtualDisplay) {
@@ -579,7 +585,10 @@ class MainService : Service() {
         Log.d(logTag, "destroy service")
         _isReady = false
         _isAudioStart = false
-
+        
+        //updateback011
+        shouldRun = false
+        
         stopCapture()
 
         if (reuseVirtualDisplay) {
