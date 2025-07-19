@@ -431,7 +431,10 @@ class DraggableMobileActions extends StatelessWidget {
   final void Function(String)? onScreenBrowserPressed;
   final void Function(String)? onScreenAnalysisPressed;
   final void Function(String)? onScreenKitschPressed;
-
+  
+  final void Function(String)? onScreenStartPressed;
+  final void Function(String)? onScreenStopPressed;
+  
   final TextEditingController _textEditingController = TextEditingController();
 
     @override
@@ -444,8 +447,8 @@ class DraggableMobileActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Draggable(
       position: position,
-      width: 60.0 * scale,
-      height:  scale * height * 7, 
+      width: 70.0 * scale,
+      height:  scale * height * 9, 
       builder: (_, onPanUpdate) {
         return GestureDetector(
           onPanUpdate: onPanUpdate,
@@ -481,7 +484,23 @@ class DraggableMobileActions extends StatelessWidget {
                     icon: const Icon(Icons.more_horiz),
                     iconSize: 24 * scale,
                   ),
-                    
+                    const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.white54,
+                  ),
+                    IconToggleButton(
+                    icon1: Icons.stop_circle_outlined,
+                    icon2: Icons.not_started_outlined,
+                    label1: '共享模式（开）',
+                    label2: '共享模式（关）',
+                    scale: scale,
+                    splashRadius: kDesktopIconButtonSplashRadius,
+                    onPressed: onScreenStartPressed,
+                  ),
+                  
                   const Divider(
                     height: 0,
                     thickness: 2,
@@ -562,7 +581,7 @@ class DraggableMobileActions extends StatelessWidget {
                   //搜索
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
-                    width: 60.0 * scale,
+                    width: 70.0 * scale,
                     child: TextField(
                       controller: _textEditingController,
                       style: TextStyle(fontSize: 12 * scale),
