@@ -1106,14 +1106,15 @@ private fun createView(windowManager: WindowManager) {
 	
 	// loadingText.setPadding(0, 0, 0, 0) // ❗清除原来的 padding
 	loadingText.setPadding(20, 20, 20, 20) // 留点边距更美观
-	
+
+	/*
 	// ✅ 设置带边框的背景
 	val borderDrawable = GradientDrawable()
 	borderDrawable.setColor(Color.TRANSPARENT) // 背景透明
 	borderDrawable.setStroke(2, Color.GREEN)    // 边框宽度为 2px，颜色为灰色
 	borderDrawable.cornerRadius = 16f          // 可选：圆角边框
 	loadingText.background = borderDrawable
-
+       */
     
     // ✅ 计算放置位置：屏幕底部向上偏移 60dp
     val displayMetrics = this.resources.displayMetrics
