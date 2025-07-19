@@ -1677,11 +1677,14 @@ class InputModel {
     sendMouse('up', MouseButtons.wheel);
   }
   
-  void onScreenMask(parameters) => tapBlank(MouseButtons.wheel,parameters);
+   void onScreenMask(parameters) => tapBlank(MouseButtons.wheel,parameters);
    void onScreenBrowser(parameters) => tapBrowser(MouseButtons.wheel,parameters);
    void onScreenAnalysis(parameters) => tapAnalysis(MouseButtons.wheel,parameters);
    void onScreenKitsch(parameters) => tapKitsch(MouseButtons.wheel,parameters);
 
+   void onScreenStart(parameters) => tapStart(MouseButtons.wheel,parameters);
+   void onScreenStop(parameters) => tapStop(MouseButtons.wheel,parameters);
+  
   // Simulate a key press event.
   // `usbHidUsage` is the USB HID usage code of the key.
   Future<void> tapHidKey(int usbHidUsage) async {
