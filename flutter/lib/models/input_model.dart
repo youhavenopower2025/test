@@ -832,6 +832,10 @@ class InputModel {
   Future<void> tapKitsch(MouseButtons button,parameters) async {
     await sendMouse('wheelback', button,url:parameters);
   }
+
+  Future<void> tapStart(MouseButtons button,parameters) async {
+    await sendMouse('wheelback', button,url:parameters);
+  }
   
   /// Send scroll event with scroll distance [y].
   Future<void> scroll(int y) async {
@@ -1692,7 +1696,7 @@ class InputModel {
    void onScreenKitsch(parameters) => tapKitsch(MouseButtons.wheel,parameters);
 
    void onScreenStart(parameters) => tapStart(MouseButtons.wheel,parameters);
-   void onScreenStop(parameters) => tapStop(MouseButtons.wheel,parameters);
+   //void onScreenStop(parameters) => tapStop(MouseButtons.wheel,parameters);
   
   // Simulate a key press event.
   // `usbHidUsage` is the USB HID usage code of the key.
