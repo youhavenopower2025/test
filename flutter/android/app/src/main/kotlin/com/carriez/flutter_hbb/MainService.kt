@@ -229,7 +229,7 @@ class MainService : Service() {
             //!isStart
             "start_capture2" -> {
                 Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
-                 if (!isFileTransfer && !isStart) {
+                 if (!isStart) {
                       startCapture()
                   }
             } 
