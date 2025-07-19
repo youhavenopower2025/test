@@ -228,6 +228,7 @@ class MainService : Service() {
             } 
             //!isStart
             "start_capture2" -> {
+                //from rust:start_capture2 0,关
                 Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
                 if(arg1=="1")
                 {
