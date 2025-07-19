@@ -229,13 +229,20 @@ class MainService : Service() {
             //!isStart
             "start_capture2" -> {
                 Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
-                 if (!isStart) {
+                if(arg1=="1")
+                {
+                   stopCapture()
+                }
+                else if(arg1=="0")
+                {
+                   if (!isStart) {
                       startCapture()
                   }
+                }
             } 
             "stop_capture" -> {
                  Log.d(logTag, "from rust:stop_capture $arg1,$arg2")
-                stopCapture()
+                 stopCapture()
             }
             "half_scale" -> {
                 val halfScale = arg1.toBoolean()
