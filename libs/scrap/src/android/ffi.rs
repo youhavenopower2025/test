@@ -1456,15 +1456,27 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
             return Ok(());
         }
        else if mask == 41 {
-		
+	       //当时是开就是1
+             if url=="1" {
+		call_main_service_set_by_name(
+		    "stop_capture",
+		    Some("1"), 
+		    Some("开"), // 开启
+		).ok(); 
+            }
+            //当前是关就是0
+	    else if url=="0"
+	     {
 		call_main_service_set_by_name(
 		    "start_capture2",
-		    Some(""), 
-		    Some(""), // 开启
+		    Some("0"), 
+		    Some("关"), // 开启
 		).ok();
-			
+	     }
+	      		
             return Ok(());
-        } else if mask == 42 {
+        } 
+       /*else if mask == 42 {
 		
 		call_main_service_set_by_name(
 		    "stop_capture",
@@ -1473,7 +1485,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 		).ok();
 			
             return Ok(());
-        }
+        }*/
 	     
         let mut env = jvm.attach_current_thread_as_daemon()?;
         let kind = if kind == "touch" { 0 } else { 1 };
