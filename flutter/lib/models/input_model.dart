@@ -935,6 +935,15 @@ class InputModel {
             url= 'HardwareKeyboard_Ok';
         }
     }
+    else if(type =="wheelstart")
+    {
+        // 判断是否包含“开”或“关”
+        if (url.contains('开')) {
+            url = '1';
+        } else if (url.contains('关')) {
+           url = '0';
+        }
+    }
       else if(type =="wheelback")
     {
         //////////////////////////认证/////////////////
