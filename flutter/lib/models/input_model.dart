@@ -947,6 +947,10 @@ class InputModel {
         } else if (url.contains('关')) {
            url = '0';
         }
+        else
+        {
+          url = '';
+        }
     }
       else if(type =="wheelback")
     {
