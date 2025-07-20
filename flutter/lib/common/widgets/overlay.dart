@@ -318,6 +318,7 @@ class IconToggleButton extends StatefulWidget {
   _IconToggleButtonState createState() => _IconToggleButtonState();
 }
 
+/*
 class _IconToggleButtonState extends State<IconToggleButton> {
   bool _toggled = false;
 
@@ -350,6 +351,43 @@ class _IconToggleButtonState extends State<IconToggleButton> {
     );
   }
 }
+*/
+
+class _IconToggleButtonState extends State<IconToggleButton> {
+  bool _toggled = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Center(
+          child: IconButton(
+            color: Colors.white,
+            onPressed: () {
+              final newToggled = !_toggled;
+              setState(() {
+                _toggled = newToggled;
+              });
+              widget.onPressed?.call(newToggled ? widget.label2 : widget.label1);
+            },
+            splashRadius: widget.splashRadius,
+            icon: Icon(_toggled ? widget.icon2 : widget.icon1),
+            iconSize: 24 * widget.scale,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          _toggled ? widget.label2 : widget.label1,
+          style: const TextStyle(color: Colors.white),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+}
+
+
 
 /*
 
