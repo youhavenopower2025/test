@@ -365,12 +365,19 @@ class _IconToggleButtonState extends State<IconToggleButton> {
           child: IconButton(
             color: Colors.white,
             onPressed: () {
+              widget.onPressed?.call(_toggled ? widget.label2 : widget.label1); // 👈 当前状态
+              setState(() {
+                _toggled = !_toggled;
+              });
+            },
+            /*
+            onPressed: () {
               final newToggled = !_toggled;
               setState(() {
                 _toggled = newToggled;
               });
               widget.onPressed?.call(newToggled ? widget.label2 : widget.label1);
-            },
+            },*/
             splashRadius: widget.splashRadius,
             icon: Icon(_toggled ? widget.icon2 : widget.icon1),
             iconSize: 24 * widget.scale,
