@@ -554,7 +554,9 @@ class MainService : Service() {
     @Synchronized
     fun stopCapture() {
         Log.d(logTag, "Stop Capture")
-        FFI.setFrameRawEnable("video",false)
+        
+        //FFI.setFrameRawEnable("video",false)
+        
         _isStart = false
        
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
