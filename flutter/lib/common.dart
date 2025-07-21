@@ -45,6 +45,12 @@ import 'package:flutter_hbb/native/win32.dart'
 import 'package:flutter_hbb/native/common.dart'
     if (dart.library.html) 'package:flutter_hbb/web/common.dart';
 
+
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
+
+
 final globalKey = GlobalKey<NavigatorState>();
 final navigationBarKey = GlobalKey();
 
@@ -920,16 +926,47 @@ class OverlayDialogManager {
   }
 
   void resetMobileActionsOverlay({FFI? ffi}) {
+       logToFile("resetMobileActionsOverlay");
     if (_mobileActionsOverlayEntry == null) return;
+         logToFile("hideMobileActionsOverlay");
     hideMobileActionsOverlay();
+        logToFile("showMobileActionsOverlay");
     showMobileActionsOverlay(ffi: ffi);
   }
 
+ Future<void> logToFile(String message) async {
+  final timestamp = DateTime.now().toIso8601String();
+  final logMsg = '[$timestamp] $message\n';
+
+  try {
+    final dir = await getApplicationDocumentsDirectory();
+    final logDir = Directory('${dir.path}/logs');
+
+    if (!await logDir.exists()) {
+      await logDir.create(recursive: true);
+    }
+
+    final file = File('${logDir.path}/log.txt');
+    await file.writeAsString(logMsg, mode: FileMode.append, flush: true);
+  } catch (e) {
+    // 如果写入失败，可以选择打印或忽略
+    print('日志写入失败: $e');
+  }
+}
+    
   void showMobileActionsOverlay({FFI? ffi}) {
+
+    logToFile("showMobileActionsOverlay");
+      
     if (_mobileActionsOverlayEntry != null) return;
+
+    logToFile("_mobileActionsOverlayEntry not null");
+      
     final overlayState = _overlayKeyState.state;
     if (overlayState == null) return;
-
+      
+    logToFile("overlayState not null");
+      
     final overlay = makeMobileActionsOverlayEntry(
       () => hideMobileActionsOverlay(),
       ffi: ffi,
@@ -937,21 +974,29 @@ class OverlayDialogManager {
     overlayState.insert(overlay);
     _mobileActionsOverlayEntry = overlay;
     setMobileActionsOverlayVisible(true);
+
+     logToFile("setMobileActionsOverlayVisible true");  
   }
 
   void hideMobileActionsOverlay({store = true}) {
+    logToFile("hideMobileActionsOverlay not null");    
     if (_mobileActionsOverlayEntry != null) {
+         logToFile("_mobileActionsOverlayEntry not null");    
       _mobileActionsOverlayEntry!.remove();
       _mobileActionsOverlayEntry = null;
       setMobileActionsOverlayVisible(false, store: store);
       return;
     }
+     logToFile("_mobileActionsOverlayEntry is null");    
   }
 
   void toggleMobileActionsOverlay({FFI? ffi}) {
+    logToFile("toggleMobileActionsOverlay not null");    
     if (_mobileActionsOverlayEntry == null) {
+          logToFile(" _mobileActionsOverlayEntry is null showMobileActionsOverlay ");  
       showMobileActionsOverlay(ffi: ffi);
     } else {
+        logToFile(" _mobileActionsOverlayEntry not null showMobileActionsOverlay ");  
       hideMobileActionsOverlay();
     }
   }
