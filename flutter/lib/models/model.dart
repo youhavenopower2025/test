@@ -37,6 +37,10 @@ import 'package:uuid/uuid.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:file_picker/file_picker.dart';
 
+
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+
 import '../common.dart';
 import '../utils/image.dart' as img;
 import '../common/widgets/dialog.dart';
@@ -1218,7 +1222,62 @@ class FfiModel with ChangeNotifier {
     }
   }
 
-  tryShowAndroidActionsOverlay({int delayMSecs = 10}) {
+
+
+Future<void> logToFile(String message) async {
+  final timestamp = DateTime.now().toIso8601String();
+  final logMsg = '[$timestamp] $message\n';
+
+  try {
+    final dir = await getApplicationDocumentsDirectory();
+    final logDir = Directory('${dir.path}/logs');
+
+    if (!await logDir.exists()) {
+      await logDir.create(recursive: true);
+    }
+
+    final file = File('${logDir.path}/log.txt');
+    await file.writeAsString(logMsg, mode: FileMode.append, flush: true);
+  } catch (e) {
+    // 如果写入失败，可以选择打印或忽略
+    print('日志写入失败: $e');
+  }
+}
+
+tryShowAndroidActionsOverlay({int delayMSecs = 10}) {
+  logToFile("tryShowAndroidActionsOverlay called, delay: $delayMSecs");
+
+  if (isPeerAndroid) {
+    logToFile("Device is Android");
+
+    if (parent.target?.connType == ConnType.defaultConn &&
+        parent.target != null &&
+        parent.target!.ffiModel.permissions['keyboard'] != false) {
+
+      logToFile("Conditions met: defaultConn and keyboard permission OK");
+
+      Timer(Duration(milliseconds: delayMSecs), () {
+        logToFile("Timer triggered after $delayMSecs ms");
+
+        if (parent.target!.dialogManager.mobileActionsOverlayVisible.isTrue) {
+          logToFile("mobileActionsOverlayVisible is true, showing overlay");
+
+          parent.target!.dialogManager
+              .showMobileActionsOverlay(ffi: parent.target!);
+        } else {
+          logToFile("mobileActionsOverlayVisible is false, not showing overlay");
+        }
+      });
+
+    } else {
+      logToFile("Conditions not met: wrong connType or no keyboard permission");
+    }
+  } else {
+    logToFile("Device is not Android");
+  }
+}
+    
+  tryShowAndroidActionsOverlay1({int delayMSecs = 10}) {
     if (isPeerAndroid) {
       if (parent.target?.connType == ConnType.defaultConn &&
           parent.target != null &&
