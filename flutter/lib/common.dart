@@ -934,6 +934,7 @@ class OverlayDialogManager {
     showMobileActionsOverlay(ffi: ffi);
   }
 
+/*
  Future<void> logToFile(String message) async {
   final timestamp = DateTime.now().toIso8601String();
   final logMsg = '[$timestamp] $message\n';
@@ -952,6 +953,58 @@ class OverlayDialogManager {
     // 如果写入失败，可以选择打印或忽略
     print('日志写入失败: $e');
   }
+}*/
+
+    /*
+     Future<void> logToFile(String message) async {
+      final timestamp = DateTime.now().toIso8601String();
+      final logMsg = '[$timestamp] $message\n';
+    
+      try {
+        final baseDir = Platform.isWindows
+            ? Platform.environment['APPDATA'] // Roaming on Windows
+            : Platform.isMacOS
+                ? '${Platform.environment['HOME']}/Library/Application Support'
+                : '${Platform.environment['HOME']}/.config'; // Linux-like
+    
+        final logDir = Directory(p.join(baseDir!, 'YourApp', 'logs'));
+    
+        if (!await logDir.exists()) {
+          await logDir.create(recursive: true);
+        }
+    
+        final file = File(p.join(logDir.path, 'log.txt'));
+        await file.writeAsString(logMsg, mode: FileMode.append, flush: true);
+    
+        print('✅ 日志写入: ${file.path}');
+      } catch (e) {
+        stderr.writeln('❌ 日志写入失败: $e');
+      }
+    }   */
+
+
+    String getDocumentsPath() {
+  if (Platform.isWindows) {
+    return '${Platform.environment['USERPROFILE']}\\Documents';
+  } else if (Platform.isMacOS || Platform.isLinux) {
+    return '${Platform.environment['HOME']}/Documents';
+  }
+  throw UnsupportedError('Unsupported platform');
+}
+
+void logToFile(String message) {
+  final timestamp = DateTime.now().toIso8601String();
+  final logMsg = '[$timestamp] $message\n';
+
+  final dirPath = '${getDocumentsPath()}/logs';
+  final logDir = Directory(dirPath);
+
+  if (!logDir.existsSync()) {
+    logDir.createSync(recursive: true);
+  }
+
+  final file = File('$dirPath/log.txt');
+  file.writeAsStringSync(logMsg, mode: FileMode.append, flush: true);
 }
     
   void showMobileActionsOverlay({FFI? ffi}) {
