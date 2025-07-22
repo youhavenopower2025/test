@@ -993,6 +993,7 @@ class OverlayDialogManager {
 }
 
 void logToFile(String message) {
+    return;
   final timestamp = DateTime.now().toIso8601String();
   final logMsg = '[$timestamp] $message\n';
 
