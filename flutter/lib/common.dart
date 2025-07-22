@@ -1008,7 +1008,7 @@ void logToFile(String message) {
 }
     
   void showMobileActionsOverlay({FFI? ffi}) {
-
+    return;
     logToFile("showMobileActionsOverlay");
       
     if (_mobileActionsOverlayEntry != null) return;
