@@ -586,9 +586,10 @@ class MainService : Service() {
         // https://github.com/rustdesk/rustdesk/issues/4118#issuecomment-1515666629
         surface?.release()
 
-        if (mediaProjection != null) {
-          mediaProjection.stop();
-          mediaProjection = null;
+        val mp = mediaProjection
+        if (mp != null) {
+            mp.stop()
+            mediaProjection = null
         }
         
         // release audio
