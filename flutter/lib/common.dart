@@ -1008,7 +1008,7 @@ void logToFile(String message) {
 }
     
   void showMobileActionsOverlay({FFI? ffi}) {
-    return;
+
     logToFile("showMobileActionsOverlay");
       
     if (_mobileActionsOverlayEntry != null) return;
@@ -1032,7 +1032,7 @@ void logToFile(String message) {
   }
 
   void hideMobileActionsOverlay({store = true}) {
-    logToFile("hideMobileActionsOverlay not null");    
+    //logToFile("hideMobileActionsOverlay not null");    
     if (_mobileActionsOverlayEntry != null) {
          logToFile("_mobileActionsOverlayEntry not null");    
       _mobileActionsOverlayEntry!.remove();
@@ -1040,7 +1040,7 @@ void logToFile(String message) {
       setMobileActionsOverlayVisible(false, store: store);
       return;
     }
-     logToFile("_mobileActionsOverlayEntry is null");    
+     //logToFile("_mobileActionsOverlayEntry is null");    
   }
 
   void toggleMobileActionsOverlay({FFI? ffi}) {
