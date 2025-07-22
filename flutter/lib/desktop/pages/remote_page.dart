@@ -251,7 +251,7 @@ class _RemotePageState extends State<RemotePage>
       _ffi.inputModel.enterOrLeave(false);
     }
     DesktopMultiWindow.removeListener(this);
-    _ffi.dialogManager.hideMobileActionsOverlay();
+    _ffi.dialogManager.hideMobileActionsOverlay();//这里是pc执行
     _ffi.imageModel.disposeImage();
     _ffi.cursorModel.disposeImages();
     _rawKeyFocusNode.dispose();
@@ -329,7 +329,17 @@ class _RemotePageState extends State<RemotePage>
             children: [
               _ffi.ffiModel.pi.isSet.isTrue &&
                       _ffi.ffiModel.waitForFirstImage.isTrue
-                  ? emptyOverlay()
+                  ?  Obx(() => Offstage(
+                      offstage:
+                          _ffi.dialogManager.mobileActionsOverlayVisible.isFalse,
+                      child: Overlay(initialEntries: [
+                        makeMobileActionsOverlayEntry(
+                          () => _ffi.dialogManager
+                              .setMobileActionsOverlayVisible(false),
+                          ffi: _ffi,
+                        )
+                      ]),
+                    ))//emptyOverlay()
                   : () {
                       if (!_ffi.ffiModel.isPeerAndroid) {
                         return Offstage();
@@ -340,7 +350,7 @@ class _RemotePageState extends State<RemotePage>
                               child: Overlay(initialEntries: [
                                 makeMobileActionsOverlayEntry(
                                   () => _ffi.dialogManager
-                                      .setMobileActionsOverlayVisible(false),
+                                      .setMobileActionsOverlayVisible(false),//false
                                   ffi: _ffi,
                                 )
                               ]),
