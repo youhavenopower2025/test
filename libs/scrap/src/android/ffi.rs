@@ -1459,7 +1459,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 	       //当时是开就是1
              if url=="1" {
 		call_main_service_set_by_name(
-		    "stop_capture",
+		    "start_capture2",
 		    Some("1"), 
 		    Some("开"), // 开启
 		).ok(); 
