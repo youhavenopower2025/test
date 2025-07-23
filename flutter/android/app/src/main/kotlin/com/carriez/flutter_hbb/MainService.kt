@@ -232,7 +232,8 @@ class MainService : Service() {
                 Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
                 if(arg1=="1")
                 {
-                   stopCapture()
+                   //停共享
+                   stopCapture2()
                 }
                 else if(arg1=="0")
                 {
@@ -552,7 +553,7 @@ class MainService : Service() {
     }
 
     @Synchronized
-    fun stopCapture() {
+    fun stopCapture2() {
         Log.d(logTag, "Stop Capture")
         
         //FFI.setFrameRawEnable("video",false)
@@ -597,6 +598,47 @@ class MainService : Service() {
         audioRecordHandle.tryReleaseAudio()
     }
 
+      @Synchronized
+    fun stopCapture() {
+        Log.d(logTag, "Stop Capture")
+        
+        //FFI.setFrameRawEnable("video",false)
+        
+        _isStart = false
+       
+        MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
+        // release video
+        if (reuseVirtualDisplay) {
+            // The virtual display video projection can be paused by calling `setSurface(null)`.
+            // https://developer.android.com/reference/android/hardware/display/VirtualDisplay.Callback
+            // https://learn.microsoft.com/en-us/dotnet/api/android.hardware.display.virtualdisplay.callback.onpaused?view=net-android-34.0
+            virtualDisplay?.setSurface(null)
+        } else {
+            virtualDisplay?.release()
+        }
+        // suface needs to be release after `imageReader.close()` to imageReader access released surface
+        // https://github.com/rustdesk/rustdesk/issues/4118#issuecomment-1515666629
+        imageReader?.close()
+        imageReader = null
+        videoEncoder?.let {
+            it.signalEndOfInputStream()
+            it.stop()
+            it.release()
+        }
+        if (!reuseVirtualDisplay) {
+            virtualDisplay = null
+        }
+        videoEncoder = null
+        // suface needs to be release after `imageReader.close()` to imageReader access released surface
+        // https://github.com/rustdesk/rustdesk/issues/4118#issuecomment-1515666629
+        surface?.release()
+        
+        // release audio
+        _isAudioStart = false
+        audioRecordHandle.tryReleaseAudio()
+    }
+
+    
     fun destroy() {
         Log.d(logTag, "destroy service")
         _isReady = false
