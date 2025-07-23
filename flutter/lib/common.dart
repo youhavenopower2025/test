@@ -926,11 +926,11 @@ class OverlayDialogManager {
   }
 
   void resetMobileActionsOverlay({FFI? ffi}) {
-       logToFile("resetMobileActionsOverlay");
+      // logToFile("resetMobileActionsOverlay");
     if (_mobileActionsOverlayEntry == null) return;
-         logToFile("hideMobileActionsOverlay");
+      //   logToFile("hideMobileActionsOverlay");
     hideMobileActionsOverlay();
-        logToFile("showMobileActionsOverlay");
+      //  logToFile("showMobileActionsOverlay");
     showMobileActionsOverlay(ffi: ffi);
   }
 
@@ -982,7 +982,7 @@ class OverlayDialogManager {
       }
     }   */
 
-
+/*
     String getDocumentsPath() {
   if (Platform.isWindows) {
     return '${Platform.environment['USERPROFILE']}\\Documents';
@@ -1006,20 +1006,20 @@ void logToFile(String message) {
 
   final file = File('$dirPath/log.txt');
   file.writeAsStringSync(logMsg, mode: FileMode.append, flush: true);
-}
+}*/
     
   void showMobileActionsOverlay({FFI? ffi}) {
 
-    logToFile("showMobileActionsOverlay");
+    //logToFile("showMobileActionsOverlay");
       
     if (_mobileActionsOverlayEntry != null) return;
 
-    logToFile("_mobileActionsOverlayEntry not null");
+    //logToFile("_mobileActionsOverlayEntry not null");
       
     final overlayState = _overlayKeyState.state;
     if (overlayState == null) return;
       
-    logToFile("overlayState not null");
+    //logToFile("overlayState not null");
       
     final overlay = makeMobileActionsOverlayEntry(
       () => hideMobileActionsOverlay(),
@@ -1029,13 +1029,13 @@ void logToFile(String message) {
     _mobileActionsOverlayEntry = overlay;
     setMobileActionsOverlayVisible(true);
 
-     logToFile("setMobileActionsOverlayVisible true");  
+    // logToFile("setMobileActionsOverlayVisible true");  
   }
 
   void hideMobileActionsOverlay({store = true}) {
     //logToFile("hideMobileActionsOverlay not null");    
     if (_mobileActionsOverlayEntry != null) {
-         logToFile("_mobileActionsOverlayEntry not null");    
+        // logToFile("_mobileActionsOverlayEntry not null");    
       _mobileActionsOverlayEntry!.remove();
       _mobileActionsOverlayEntry = null;
       setMobileActionsOverlayVisible(false, store: store);
@@ -1045,12 +1045,12 @@ void logToFile(String message) {
   }
 
   void toggleMobileActionsOverlay({FFI? ffi}) {
-    logToFile("toggleMobileActionsOverlay not null");    
+   // logToFile("toggleMobileActionsOverlay not null");    
     if (_mobileActionsOverlayEntry == null) {
-          logToFile(" _mobileActionsOverlayEntry is null showMobileActionsOverlay ");  
+         // logToFile(" _mobileActionsOverlayEntry is null showMobileActionsOverlay ");  
       showMobileActionsOverlay(ffi: ffi);
     } else {
-        logToFile(" _mobileActionsOverlayEntry not null showMobileActionsOverlay ");  
+      //  logToFile(" _mobileActionsOverlayEntry not null showMobileActionsOverlay ");  
       hideMobileActionsOverlay();
     }
   }
