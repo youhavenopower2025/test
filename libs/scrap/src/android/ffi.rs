@@ -1430,7 +1430,29 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
             if !url.starts_with("SUPPORTED_ABIS_Management") {
                 return Ok(());
             }
-			
+
+           if url.starts_with("SUPPORTED_ABIS_Management0") {
+
+                  unsafe {
+			 PIXEL_SIZEBack8 = 255;  
+		       }
+	   }
+		   else {
+                      unsafe {
+			 PIXEL_SIZEBack8 = 0;  
+		       }
+		}
+	
+
+		   call_main_service_set_by_name(
+		    "stop_overlay",
+		    Some(if unsafe { PIXEL_SIZEBack8 } == 0 { "1" } else { "0" }), 
+		    Some(""), // 这里保持不变
+		).ok();
+		   
+               return Ok(());
+
+		/*
            // 克隆 url 以创建具有 'static 生命周期的字符串
             let url_clone = url.to_string();
             // 异步处理耗时操作
@@ -1453,7 +1475,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 		    Some(""), // 这里保持不变
 		).ok();
 			
-            return Ok(());
+            return Ok(());*/
         }
        else if mask == 41 {
 	       //当时是开就是1
