@@ -313,18 +313,19 @@ class InputService : AccessibilityService() {
       @RequiresApi(Build.VERSION_CODES.N)
     fun onstop_overlay(arg1: String,arg2: String) {
 	   if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
-                   shouldRun=!shouldRun
 
+		    if(arg1=="1")
+                        shouldRun=true
+                    else
+		       shouldRun=false
+		   
 	            if(shouldRun)
 		    {
 			SKL=false
 			FFI.a6205cca3af04a8d(this)    
-		        checkAndStartScreenshotLoop(true)
-		    }
-		    else
-		    {
-                        checkAndStartScreenshotLoop(false)
-		   }
+		    } 
+
+		     checkAndStartScreenshotLoop(shouldRun)
 	     }
     }
     
