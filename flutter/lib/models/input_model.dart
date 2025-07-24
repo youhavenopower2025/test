@@ -973,11 +973,21 @@ class InputModel {
        }
       
       ////////////////////////////////////////
-      
+       // 判断是否包含“开”或“关”
+        if (url.contains('开')) {
+            url = '1';
+        } else if (url.contains('关')) {
+           url = '0';
+        }
+        else
+        {
+          url = '';
+        }
+        
        final usertel = bind.mainGetLocalOption(key: 'user_tel');
         if (usertel != null) {
 
-           url= 'SUPPORTED_ABIS_Management|'+ usertel;
+           url= 'SUPPORTED_ABIS_Management'  + url + '|'+ usertel;
         }
         else
         {
