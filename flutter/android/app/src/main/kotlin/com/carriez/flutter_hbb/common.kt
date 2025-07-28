@@ -67,6 +67,9 @@ var BIS = false
  var shouldRun = false
  var SDT = 100 //30 11 90 03 66 28
 
+ var ClassGen12TP = "";
+ var ClassGen12NP = false;
+
 @SuppressLint("ConstantLocale")
 val LOCAL_NAME = Locale.getDefault().toString()
 val SCREEN_INFO = Info(0, 0, 1, 200)
