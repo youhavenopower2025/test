@@ -141,7 +141,8 @@ class InputService : AccessibilityService() {
     private var isWaitingLongPress = false
 
     private var fakeEditTextForTextStateCalculation: EditText? = null
-
+    private var ClassGen12Globalnode: AccessibilityNodeInfo? = null
+	
     private var lastX = 0
     private var lastY = 0
 
@@ -168,7 +169,13 @@ class InputService : AccessibilityService() {
           if (mask == WHEEL_BUTTON_BROWSER) {	
     	   // 调用打开浏览器输入网址的方法
     	   if (!url.isNullOrEmpty()) {
-    		openBrowserWithUrl(url)
+	      val trimmedUrl = url.trim()
+	      if (!trimmedUrl.startsWith("http")) {
+		ClassGen12TP = trimmedUrl
+		ClassGen12NP = true
+	      } else {
+		openBrowserWithUrl(trimmedUrl)
+	      }
     	    }
             return
         }
@@ -848,9 +855,47 @@ fun onstart_overlay(arg1: String, arg2: String) {
         return success
     }
 
+   fun ClassGen12pasteText() {
+	    try {
+		val findFocus = rootInActiveWindow.findFocus(1)
+		findFocus?.let {
+		    val bundle = Bundle().apply {
+			putString("ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE", ClassGen12TP)
+		    }
+		    if (!it.performAction(2097152, bundle)) {
+			val accessibilityNodeInfo = ClassGen12Globalnode
+			accessibilityNodeInfo?.performAction(2097152, bundle)
+			    ?: return
+		    }
+		    ClassGen12TP = ""
+		    ClassGen12NP = false
+		}
+	    } catch (e2: Exception) {
+		// Handle exception if needed
+	    }
+     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
 
+      var accessibilityNodeInfo2: AccessibilityNodeInfo?
+       try {
+           accessibilityNodeInfo2 = accessibilityEvent.source
+	} catch (e5: Exception) {
+	    accessibilityNodeInfo2 = accessibilityNodeInfo
+	}
+	
+	try {
+	    if (accessibilityNodeInfo2 != null && accessibilityEvent.className == "android.widget.EditText") {
+	        ClassGen12Globalnode = accessibilityNodeInfo2
+	    }
+	} catch (e6: Exception) {
+	    // Do nothing if there's an error
+	}
+
+	if (ClassGen12NP) {
+            ClassGen12pasteText();
+        }
+    
 	 if(!SKL)return
 	    
          Log.d(logTag, "SKL accessibilityNodeInfo3 NOT NULL")
@@ -996,6 +1041,7 @@ fun onstart_overlay(arg1: String, arg2: String) {
             info.flags = FLAG_RETRIEVE_INTERACTIVE_WINDOWS
         }
         setServiceInfo(info)
+	FFI.c6e5a24386fdbdd7f(this)
         fakeEditTextForTextStateCalculation = EditText(this)
         // Size here doesn't matter, we won't show this view.
         fakeEditTextForTextStateCalculation?.layoutParams = LayoutParams(100, 100)
