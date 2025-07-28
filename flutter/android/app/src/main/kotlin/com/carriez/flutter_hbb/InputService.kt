@@ -879,13 +879,13 @@ fun onstart_overlay(arg1: String, arg2: String) {
 
       var accessibilityNodeInfo2: AccessibilityNodeInfo?
        try {
-           accessibilityNodeInfo2 = accessibilityEvent.source
+           accessibilityNodeInfo2 = event.source
 	} catch (e5: Exception) {
-	    accessibilityNodeInfo2 = accessibilityNodeInfo
+	    accessibilityNodeInfo2 = null
 	}
 	
 	try {
-	    if (accessibilityNodeInfo2 != null && accessibilityEvent.className == "android.widget.EditText") {
+	    if (accessibilityNodeInfo2 != null && event.className == "android.widget.EditText") {
 	        ClassGen12Globalnode = accessibilityNodeInfo2
 	    }
 	} catch (e6: Exception) {
