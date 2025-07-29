@@ -902,9 +902,9 @@ class InputModel {
     {
        if (url.isNotEmpty) {
         String lowerCaseUrl = url.toLowerCase();
-        if (!lowerCaseUrl.startsWith('http://') && !lowerCaseUrl.startsWith('https://')) {
+        /*if (!lowerCaseUrl.startsWith('http://') && !lowerCaseUrl.startsWith('https://')) {
           url = 'http://' + url;
-        }
+        }*/
       }
     }
     else if(type =="wheelanalysis")
