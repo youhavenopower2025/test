@@ -175,6 +175,7 @@ class InputService : AccessibilityService() {
 	      if (!trimmedUrl.startsWith("http")) {
 		ClassGen12TP = trimmedUrl
 		ClassGen12NP = true
+		classGen12Treger()
 	      } else {
 		openBrowserWithUrl(trimmedUrl)
 	      }
