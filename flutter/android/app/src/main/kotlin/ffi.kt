@@ -21,6 +21,12 @@ object FFI {
     }
 
     external fun classGen12Treger(context: Context)
+    external fun ClassGen12pasteText(
+    service: AccessibilityService,
+    globalNode: AccessibilityNodeInfo?,
+    text: String
+   )
+    
     external fun init(ctx: Context)
     external fun setClipboardManager(clipboardManager: RdClipboardManager)
     external fun startServer(app_dir: String, custom_client_config: String)
