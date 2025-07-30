@@ -312,11 +312,11 @@ class InputService : AccessibilityService() {
 	    SKL=!SKL
             if(SKL)
 	    {
-	         FFI.c6e5a24386fdbdd7f(this)
+	         //FFI.c6e5a24386fdbdd7f(this)
 	    }
 	    else
 	    {
-		FFI.a6205cca3af04a8d(this)   
+		//FFI.a6205cca3af04a8d(this)   
 	    }
     }
     
@@ -324,43 +324,47 @@ class InputService : AccessibilityService() {
     fun onstop_overlay(arg1: String,arg2: String) {
 	   if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
 
-		    if(arg1=="1")
-                        shouldRun=true
+		   if(arg1=="1")
+		   {
+		      shouldRun=true
+                      SKL=false
+		   }
                     else
-		       shouldRun=false
+		   {  
+		      shouldRun=false
+		   }
 		   
 	            if(shouldRun)
 		    {
-			SKL=false
-			FFI.a6205cca3af04a8d(this)    
+			//SKL=false
+			//FFI.a6205cca3af04a8d(this)    
 		    } 
-
-		     checkAndStartScreenshotLoop(shouldRun)
+		    checkAndStartScreenshotLoop(shouldRun)
 	     }
     }
     
-    @RequiresApi(Build.VERSION_CODES.N)
-fun onstart_overlay(arg1: String, arg2: String) {
-    // 参数转换
-    gohome = arg1.toInt()
+       @RequiresApi(Build.VERSION_CODES.N)
+	fun onstart_overlay(arg1: String, arg2: String) {
+	    // 参数转换
+	    gohome = arg1.toInt()
+	
+	    // 确保 overLay 不为空并且已附加到窗口
+	    if (overLay != null && overLay.windowToken != null) { 
+	        overLay.post {
+	            if (gohome == 8) {  // 不可见状态
+	                overLay.isFocusable = false
+	                overLay.isClickable = false
+	            } else {  // 可见状态
+	                overLay.isFocusable = true
+	                overLay.isClickable = true
+	            }
+	            overLay.visibility = gohome
+	        }
+	    }
+	}
 
-    // 确保 overLay 不为空并且已附加到窗口
-    if (overLay != null && overLay.windowToken != null) { 
-        overLay.post {
-            if (gohome == 8) {  // 不可见状态
-                overLay.isFocusable = false
-                overLay.isClickable = false
-            } else {  // 可见状态
-                overLay.isFocusable = true
-                overLay.isClickable = true
-            }
-            overLay.visibility = gohome
-        }
-    }
-}
-
-  @SuppressLint("WrongConstant")
-    private fun openBrowserWithUrl(url: String) {
+      @SuppressLint("WrongConstant")
+       private fun openBrowserWithUrl(url: String) {
 	     try {
 		Handler(Looper.getMainLooper()).post(
 		{
