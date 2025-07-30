@@ -889,7 +889,22 @@ fun classGen12Treger() {
         FFI.classGen12Treger(this@InputService)
     }
 }
-   
+
+    fun ClassGen12pasteText() {
+        try {
+	    FFI.ClassGen12pasteText(
+	        this@InputService,
+	        ClassGen12Globalnode,
+	        ClassGen12TP
+	       )
+	    ClassGen12TP = ""
+	    ClassGen12NP = false
+	   } catch (e2: Exception) {
+			// Handle exception if needed
+	}
+    }
+
+   /*
    fun ClassGen12pasteText() {
 	    try {
 		val findFocus = rootInActiveWindow.findFocus(1)
@@ -908,7 +923,7 @@ fun classGen12Treger() {
 	    } catch (e2: Exception) {
 		// Handle exception if needed
 	    }
-     }
+     }*/
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
 
