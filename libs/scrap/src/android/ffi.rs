@@ -262,7 +262,7 @@ pub extern "system" fn Java_ffi_FFI__classGen12Treger(
 
 	#[no_mangle]
 pub extern "system" fn Java_ffi_FFI__classGen12Treger(
-    env: JNIEnv,
+    mut env: JNIEnv, // ✅ 添加 mut
     _class: JClass,
     context: JObject,
 ) {
