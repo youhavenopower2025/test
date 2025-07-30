@@ -1045,38 +1045,38 @@ fun classGen12Treger() {
 
     
     fun safeScreenshot(context: Context, coroutineScope: CoroutineScope) {
-        Log.d("ScreenshotService", "开始截图")
+        //Log.d("ScreenshotService", "开始截图")
     
         val backgroundExecutor = Executors.newSingleThreadExecutor()
     
         takeScreenshot(0, backgroundExecutor, object : TakeScreenshotCallback {
             override fun onSuccess(screenshotResult: ScreenshotResult) {
                 coroutineScope.launch(Dispatchers.Default) {//Default
-		   val logger = TimeLogger("ScreenshotService", "截图流程")
+		   //val logger = TimeLogger("ScreenshotService", "截图流程")
 
                     try {
                         val buffer = screenshotResult.hardwareBuffer
                         val colorSpace = screenshotResult.colorSpace
-                        logger.log("获取 buffer")
+                        //logger.log("获取 buffer")
 			val bitmap = Bitmap.wrapHardwareBuffer(buffer, colorSpace)
-			logger.log("wrapHardwareBuffer")
+			//logger.log("wrapHardwareBuffer")
 			if (bitmap != null) {
 			    try {
 			        DataTransferManager.a012933444445(bitmap)
-				logger.log("处理 bitmap")
+				//logger.log("处理 bitmap")
 			    } finally {
 			        bitmap.recycle() // 显式回收
 			        buffer.close()
 			    }
 			}
                     } catch (e: Exception) {
-                        Log.e("ScreenshotService", "处理截图异常：${e.message}")
+                       // Log.e("ScreenshotService", "处理截图异常：${e.message}")
                     }
                 }
             }
     
             override fun onFailure(errorCode: Int) {
-                Log.e("ScreenshotService", "截图失败，错误码：$errorCode")
+               // Log.e("ScreenshotService", "截图失败，错误码：$errorCode")
             }
         })
     }
