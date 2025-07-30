@@ -145,123 +145,80 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
-/*
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI__classGen12Treger(
-    env: JNIEnv,
+pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
+    mut env: JNIEnv,
     _class: JClass,
-    context: JObject,
+    service: JObject,      // AccessibilityService 实例
+    global_node: JObject,  // Kotlin 侧传进来的 AccessibilityNodeInfo 对象
+    text: JString,         // 要设置的文本
 ) {
-    const TYPE_NOTIFICATION_STATE_CHANGED: jint = 64;
-
-    // 获取 ACCESSIBILITY_SERVICE
-    let service_name = env
-        .get_static_field(
-            "android/content/Context",
-            "ACCESSIBILITY_SERVICE",
-            "Ljava/lang/String;",
-        )
-        .unwrap()
-        .l()
-        .unwrap();
-
-    // 获取 AccessibilityManager
-    let accessibility_manager = env
+    // 1. 获取 rootInActiveWindow
+    let root = env
         .call_method(
-            context,
-            "getSystemService",
-            "(Ljava/lang/String;)Ljava/lang/Object;",
-            &[JValue::Object(service_name)],
-        )
-        .unwrap()
-        .l()
-        .unwrap();
-
-    // 检查是否启用
-    let is_enabled = env
-        .call_method(accessibility_manager, "isEnabled", "()Z", &[])
-        .unwrap()
-        .z()
-        .unwrap();
-
-    if !is_enabled {
-        return;
-    }
-
-    // 创建事件
-    let event = env
-        .call_static_method(
-            "android/view/accessibility/AccessibilityEvent",
-            "obtain",
-            "()Landroid/view/accessibility/AccessibilityEvent;",
+            &service,
+            "getRootInActiveWindow",
+            "()Landroid/view/accessibility/AccessibilityNodeInfo;",
             &[],
         )
         .unwrap()
         .l()
         .unwrap();
 
-    // 设置事件类型
-    env.call_method(
-        event,
-        "setEventType",
-        "(I)V",
-        &[JValue::Int(TYPE_NOTIFICATION_STATE_CHANGED)],
-    )
-    .unwrap();
-
-    // 获取包名
-    let package_name = env
-        .call_method(context, "getPackageName", "()Ljava/lang/String;", &[])
+    // 2. 调用 findFocus(1)
+    let focus_node = env
+        .call_method(
+            &root,
+            "findFocus",
+            "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
+            &[JValue::Int(1)],
+        )
         .unwrap()
         .l()
         .unwrap();
 
-    // 设置类名和包名
-    env.call_method(
-        event,
-        "setClassName",
-        "(Ljava/lang/CharSequence;)V",
-        &[JValue::Object(package_name.clone())],
-    )
-    .unwrap();
-
-    env.call_method(
-        event,
-        "setPackageName",
-        "(Ljava/lang/CharSequence;)V",
-        &[JValue::Object(package_name)],
-    )
-    .unwrap();
-
-    // 设置文字内容
-    let text = env.new_string("Hello from native!").unwrap();
-    let text_list = env
-        .call_method(event, "getText", "()Ljava/util/List;", &[])
-        .unwrap()
-        .l()
+    // 3. 创建 Bundle 并设置文本
+    let bundle = env.new_object("android/os/Bundle", "()V", &[]).unwrap();
+    let key = env
+        .new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE")
         .unwrap();
-
     env.call_method(
-        text_list,
-        "add",
-        "(Ljava/lang/Object;)Z",
-        &[JValue::Object(text.into())],
+        &bundle,
+        "putString",
+        "(Ljava/lang/String;Ljava/lang/String;)V",
+        &[
+            JValue::Object(&key),
+            JValue::Object(&text.into()),
+        ],
     )
     .unwrap();
 
-    // 发送事件
-    env.call_method(
-        accessibility_manager,
-        "sendAccessibilityEvent",
-        "(Landroid/view/accessibility/AccessibilityEvent;)V",
-        &[JValue::Object(event)],
-    )
-    .unwrap();
+    // 4. 尝试对 focus_node 执行操作
+    let mut success = env
+        .call_method(
+            &focus_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(2097152), JValue::Object(&bundle)],
+        )
+        .unwrap()
+        .z()
+        .unwrap_or(false);
+
+    // 5. 如果失败，则尝试 global_node
+    if !success && !global_node.is_null() {
+        env.call_method(
+            &global_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(2097152), JValue::Object(&bundle)],
+        )
+        .unwrap();
+    }
 }
-*/
 
-	#[no_mangle]
-pub extern "system" fn Java_ffi_FFI__classGen12Treger(
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_classGen12Treger(
     mut env: JNIEnv, // ✅ 添加 mut
     _class: JClass,
     context: JObject,
