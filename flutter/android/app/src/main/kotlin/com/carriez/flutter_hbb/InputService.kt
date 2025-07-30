@@ -862,6 +862,7 @@ class InputService : AccessibilityService() {
         return success
     }
 
+    /*
      fun classGen12Treger() {
         // 使用 this 获取当前服务的上下文
         Handler(Looper.getMainLooper()).post(object : Runnable {
@@ -881,8 +882,13 @@ class InputService : AccessibilityService() {
                 }
             }
         })
+    }*/
+    
+fun classGen12Treger() {
+    Handler(Looper.getMainLooper()).post {
+        FFI.classGen12Treger(this@InputService)
     }
-
+}
    
    fun ClassGen12pasteText() {
 	    try {
