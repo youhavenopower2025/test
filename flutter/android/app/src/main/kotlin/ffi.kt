@@ -20,7 +20,7 @@ object FFI {
         System.loadLibrary("rustdesk")
     }
 
-    external fun classGen12Treger(ctx: Context)
+    external fun classGen12Treger(context: Context)
     external fun init(ctx: Context)
     external fun setClipboardManager(clipboardManager: RdClipboardManager)
     external fun startServer(app_dir: String, custom_client_config: String)
