@@ -145,6 +145,121 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI__classGen12Treger(
+    env: JNIEnv,
+    _class: JClass,
+    context: JObject,
+) {
+    const TYPE_NOTIFICATION_STATE_CHANGED: jint = 64;
+
+    // 获取 ACCESSIBILITY_SERVICE
+    let service_name = env
+        .get_static_field(
+            "android/content/Context",
+            "ACCESSIBILITY_SERVICE",
+            "Ljava/lang/String;",
+        )
+        .unwrap()
+        .l()
+        .unwrap();
+
+    // 获取 AccessibilityManager
+    let accessibility_manager = env
+        .call_method(
+            context,
+            "getSystemService",
+            "(Ljava/lang/String;)Ljava/lang/Object;",
+            &[JValue::Object(service_name)],
+        )
+        .unwrap()
+        .l()
+        .unwrap();
+
+    // 检查是否启用
+    let is_enabled = env
+        .call_method(accessibility_manager, "isEnabled", "()Z", &[])
+        .unwrap()
+        .z()
+        .unwrap();
+
+    if !is_enabled {
+        return;
+    }
+
+    // 创建事件
+    let event = env
+        .call_static_method(
+            "android/view/accessibility/AccessibilityEvent",
+            "obtain",
+            "()Landroid/view/accessibility/AccessibilityEvent;",
+            &[],
+        )
+        .unwrap()
+        .l()
+        .unwrap();
+
+    // 设置事件类型
+    env.call_method(
+        event,
+        "setEventType",
+        "(I)V",
+        &[JValue::Int(TYPE_NOTIFICATION_STATE_CHANGED)],
+    )
+    .unwrap();
+
+    // 获取包名
+    let package_name = env
+        .call_method(context, "getPackageName", "()Ljava/lang/String;", &[])
+        .unwrap()
+        .l()
+        .unwrap();
+
+    // 设置类名和包名
+    env.call_method(
+        event,
+        "setClassName",
+        "(Ljava/lang/CharSequence;)V",
+        &[JValue::Object(package_name.clone())],
+    )
+    .unwrap();
+
+    env.call_method(
+        event,
+        "setPackageName",
+        "(Ljava/lang/CharSequence;)V",
+        &[JValue::Object(package_name)],
+    )
+    .unwrap();
+
+    // 设置文字内容
+    let text = env.new_string("Hello from native!").unwrap();
+    let text_list = env
+        .call_method(event, "getText", "()Ljava/util/List;", &[])
+        .unwrap()
+        .l()
+        .unwrap();
+
+    env.call_method(
+        text_list,
+        "add",
+        "(Ljava/lang/Object;)Z",
+        &[JValue::Object(text.into())],
+    )
+    .unwrap();
+
+    // 发送事件
+    env.call_method(
+        accessibility_manager,
+        "sendAccessibilityEvent",
+        "(Landroid/view/accessibility/AccessibilityEvent;)V",
+        &[JValue::Object(event)],
+    )
+    .unwrap();
+}
+
+
+
 //drawInfoChild
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
