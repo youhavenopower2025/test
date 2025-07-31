@@ -154,13 +154,16 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     text: JString,         // 要粘贴的文本
 ) {
     // 安全地将 JString 转为 Rust String
-    let rust_str = match env.get_string(&text) {
-        Ok(s) => s.to_string(),
-        Err(_) => return,
+    let rust_str = match env.get_string(&text)
+        .ok()
+        .and_then(|s| s.to_str().ok().map(|s| s.to_owned()))
+    {
+        Some(s) => s,
+        None => return,
     };
 
     // 转换为 Java 字符串
-    let java_str = match env.new_string(rust_str) {
+    let java_str = match env.new_string(&rust_str) {
         Ok(s) => s,
         Err(_) => return,
     };
@@ -233,7 +236,6 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         );
     }
 }
-
 
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText1(
