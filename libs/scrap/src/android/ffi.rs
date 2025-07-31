@@ -162,27 +162,29 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         Err(_) => return,
     };
 
-    // ✅ 转换为 Java 字符串
+    // ✅ 转换为 Java 字符串对象
     let java_str = match env.new_string(&rust_str) {
         Ok(s) => s,
         Err(_) => return,
     };
 
-    // ✅ 创建 Bundle 并设置 key/value
+    // ✅ 创建 Bundle 对象
     let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
         Ok(b) => b,
         Err(_) => return,
     };
 
+    // ✅ 创建正确的 Key：ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE
     let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
         Ok(k) => k,
         Err(_) => return,
     };
 
+    // ✅ 使用 putCharSequence 而非 putString
     if env.call_method(
         &bundle,
-        "putString",
-        "(Ljava/lang/String;Ljava/lang/String;)V",
+        "putCharSequence",
+        "(Ljava/lang/String;Ljava/lang/CharSequence;)V",
         &[
             JValue::Object(&key),
             JValue::Object(&java_str.into()),
@@ -191,7 +193,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         return;
     }
 
-    // ✅ 获取焦点节点
+    // ✅ 获取当前焦点节点
     let focus_node = match env.call_method(
         &root,
         "findFocus",
@@ -202,29 +204,30 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         Err(_) => JObject::null(),
     };
 
-    // ✅ 先尝试在焦点节点上执行操作
+    // ✅ 尝试使用焦点节点执行操作
     let mut success = false;
     if !focus_node.is_null() {
         if let Ok(result) = env.call_method(
             &focus_node,
             "performAction",
             "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
+            &[JValue::Int(0x200000), JValue::Object(&bundle)], // 2097152 = ACTION_SET_TEXT
         ) {
             success = result.z().unwrap_or(false);
         }
     }
 
-    // ✅ 如果失败，则尝试 global_node
+    // ✅ fallback 到 global_node
     if !success && !global_node.is_null() {
         let _ = env.call_method(
             &global_node,
             "performAction",
             "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
+            &[JValue::Int(0x200000), JValue::Object(&bundle)],
         );
     }
 }
+
 
 /*
 #[no_mangle]
