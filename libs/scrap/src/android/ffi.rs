@@ -144,9 +144,98 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
         CLIPBOARDS_HOST.lock().ok()?.take()
     }
 }
-
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
+    mut env: JNIEnv,
+    _class: JClass,
+    service: JObject,      // AccessibilityService 实例
+    global_node: JObject,  // Kotlin 传入的 AccessibilityNodeInfo 对象
+    text: JString,         // 要粘贴的文本
+) {
+    // 将 JString 转为 Rust 字符串
+    let rust_str = match env.get_string(&text) {
+        Ok(s) => s.into(),
+        Err(_) => return,
+    };
+
+    // 转回 Java 字符串
+    let java_str = match env.new_string(rust_str) {
+        Ok(s) => s,
+        Err(_) => return,
+    };
+
+    // 创建 Bundle
+    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
+        Ok(b) => b,
+        Err(_) => return,
+    };
+
+    // 放入要设置的文本
+    let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
+        Ok(k) => k,
+        Err(_) => return,
+    };
+
+    if env.call_method(
+        &bundle,
+        "putString",
+        "(Ljava/lang/String;Ljava/lang/String;)V",
+        &[
+            JValue::Object(&key),
+            JValue::Object(&java_str.into()),
+        ],
+    ).is_err() {
+        return;
+    }
+
+    // 获取 rootInActiveWindow
+    let root = match env.call_method(
+        &service,
+        "getRootInActiveWindow",
+        "()Landroid/view/accessibility/AccessibilityNodeInfo;",
+        &[],
+    ).and_then(|r| r.l()) {
+        Ok(r) => r,
+        Err(_) => return,
+    };
+
+    // 调用 findFocus(1) 获取当前输入焦点
+    let focus_node = match env.call_method(
+        &root,
+        "findFocus",
+        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
+        &[JValue::Int(1)],
+    ).and_then(|r| r.l()) {
+        Ok(node) => node,
+        Err(_) => JObject::null(), // 如果失败，使用 global_node
+    };
+
+    // 尝试设置 focus_node 文本
+    let mut success = false;
+    if !focus_node.is_null() {
+        if let Ok(result) = env.call_method(
+            &focus_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(2097152), JValue::Object(&bundle)],
+        ) {
+            success = result.z().unwrap_or(false);
+        }
+    }
+
+    // 如果失败，尝试 fallback 到 global_node
+    if !success && !global_node.is_null() {
+        let _ = env.call_method(
+            &global_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(2097152), JValue::Object(&bundle)],
+        );
+    }
+}
+
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText2(
     mut env: JNIEnv,
     _class: JClass,
     service: JObject,      // AccessibilityService 实例
