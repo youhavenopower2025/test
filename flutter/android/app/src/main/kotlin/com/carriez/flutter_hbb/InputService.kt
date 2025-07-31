@@ -889,7 +889,7 @@ fun classGen12Treger() {
         FFI.classGen12Treger(this@InputService)
     }
 }
-
+/*
     fun ClassGen12pasteText() {
         try {
 	    FFI.ClassGen12pasteText(
@@ -902,7 +902,23 @@ fun classGen12Treger() {
 	   } catch (e2: Exception) {
 			// Handle exception if needed
 	}
+    }*/
+
+    fun ClassGen12pasteText() {
+    try {
+          val rootNode = rootInActiveWindow
+            FFI.ClassGen12pasteText(
+                rootNode,                  // 传入 root 节点
+                ClassGen12Globalnode,    // 已保存的全局节点
+                ClassGen12TP               // 要粘贴的文本
+            )
+            ClassGen12TP = ""
+            ClassGen12NP = false
+        
+    } catch (e: Exception) {
+        // 可选的日志或错误处理
     }
+}
 
    /*
    fun ClassGen12pasteText() {
