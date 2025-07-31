@@ -145,7 +145,6 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
-
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     mut env: JNIEnv,
@@ -154,13 +153,9 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     global_node: JObject,
     _text: JString,
 ) {
-    // ✅ 强行构造一个 java.lang.String（固定值测试）
-    let java_str = match env.new_object(
-        "java/lang/String",
-        "(Ljava/lang/String;)V",
-        &[JValue::Object(env.new_string("测试文本 from JNI").unwrap().into())],
-    ) {
-        Ok(s) => s,
+    // ✅ 构造 Java String（CharSequence）
+    let java_str = match env.new_string("测试文本 from JNI") {
+        Ok(s) => JObject::from(s), // 关键：转成 JObject
         Err(_) => return,
     };
 
@@ -170,19 +165,21 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         Err(_) => return,
     };
 
-    // ✅ 传入正确的 key
+    // ✅ 创建正确 key
     let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
-        Ok(k) => k,
+        Ok(k) => JObject::from(k),
         Err(_) => return,
     };
 
-    // ✅ putCharSequence(key, value)
-    let _ = env.call_method(
+    // ✅ 设置 Bundle.putCharSequence(key, value)
+    if env.call_method(
         &bundle,
         "putCharSequence",
         "(Ljava/lang/String;Ljava/lang/CharSequence;)V",
         &[JValue::Object(&key), JValue::Object(&java_str)],
-    );
+    ).is_err() {
+        return;
+    }
 
     // ✅ 获取焦点 node
     let focus_node = match env.call_method(
@@ -195,6 +192,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         Err(_) => JObject::null(),
     };
 
+    // ✅ 尝试在焦点节点设置文本
     let mut success = false;
     if !focus_node.is_null() {
         if let Ok(result) = env.call_method(
@@ -207,6 +205,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         }
     }
 
+    // ✅ fallback 到 global_node
     if !success && !global_node.is_null() {
         let _ = env.call_method(
             &global_node,
