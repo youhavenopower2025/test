@@ -144,7 +144,6 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
         CLIPBOARDS_HOST.lock().ok()?.take()
     }
 }
-
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     mut env: JNIEnv,
@@ -153,22 +152,22 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     global_node: JObject,  // Kotlin 传入的 AccessibilityNodeInfo 对象
     text: JString,         // 要粘贴的文本
 ) {
-    // 安全地将 JString 转为 Rust String
-    let rust_str = match env.get_string(&text)
-        .ok()
-        .and_then(|s| s.to_str().ok().map(|s| s.to_owned()))
-    {
-        Some(s) => s,
-        None => return,
+    // ✅ 正确提取 Java 字符串
+    let rust_str: String = match env.get_string(&text) {
+        Ok(java_str) => match java_str.to_str() {
+            Ok(s) => s.to_owned(), // 或 .to_string()
+            Err(_) => return,
+        },
+        Err(_) => return,
     };
 
-    // 转换为 Java 字符串
+    // ✅ 转换为 Java 字符串
     let java_str = match env.new_string(&rust_str) {
         Ok(s) => s,
         Err(_) => return,
     };
 
-    // 创建 Bundle 并放入目标文本
+    // 创建 Bundle
     let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
         Ok(b) => b,
         Err(_) => return,
@@ -202,7 +201,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         Err(_) => return,
     };
 
-    // 获取当前焦点节点（focus_node）
+    // 获取当前焦点节点
     let focus_node = match env.call_method(
         &root,
         "findFocus",
@@ -210,10 +209,10 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         &[JValue::Int(1)],
     ).and_then(|r| r.l()) {
         Ok(node) => node,
-        Err(_) => JObject::null(), // 若失败，尝试使用 global_node
+        Err(_) => JObject::null(),
     };
 
-    // 首先尝试在 focus_node 上设置文本
+    // 尝试在 focus_node 上设置文本
     let mut success = false;
     if !focus_node.is_null() {
         if let Ok(result) = env.call_method(
@@ -226,7 +225,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         }
     }
 
-    // 如果失败，则 fallback 到 global_node
+    // 如果失败，则使用 global_node
     if !success && !global_node.is_null() {
         let _ = env.call_method(
             &global_node,
