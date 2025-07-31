@@ -235,7 +235,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         );
     }
 }
-
+/*
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText1(
     mut env: JNIEnv,
@@ -397,7 +397,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText2(
         .unwrap();
     }
 }
-
+*/
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_classGen12Treger(
     mut env: JNIEnv, // ✅ 添加 mut
