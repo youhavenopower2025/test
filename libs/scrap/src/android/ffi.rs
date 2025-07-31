@@ -145,7 +145,88 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
+    mut env: JNIEnv,
+    _class: JClass,
+    root: JObject,         // Kotlin 传入的 rootInActiveWindow
+    global_node: JObject,  // Kotlin 全局保存的 node
+    text: JString,         // 文本内容
+) {
+    // ✅ 将 Java 字符串提取为 Rust String
+    let rust_str: String = match env.get_string(&text) {
+        Ok(java_str) => match java_str.to_str() {
+            Ok(s) => s.to_owned(),
+            Err(_) => return,
+        },
+        Err(_) => return,
+    };
 
+    // ✅ 转换为 Java 字符串
+    let java_str = match env.new_string(&rust_str) {
+        Ok(s) => s,
+        Err(_) => return,
+    };
+
+    // ✅ 创建 Bundle 并设置 key/value
+    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
+        Ok(b) => b,
+        Err(_) => return,
+    };
+
+    let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
+        Ok(k) => k,
+        Err(_) => return,
+    };
+
+    if env.call_method(
+        &bundle,
+        "putString",
+        "(Ljava/lang/String;Ljava/lang/String;)V",
+        &[
+            JValue::Object(&key),
+            JValue::Object(&java_str.into()),
+        ],
+    ).is_err() {
+        return;
+    }
+
+    // ✅ 获取焦点节点
+    let focus_node = match env.call_method(
+        &root,
+        "findFocus",
+        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
+        &[JValue::Int(1)],
+    ).and_then(|r| r.l()) {
+        Ok(node) => node,
+        Err(_) => JObject::null(),
+    };
+
+    // ✅ 先尝试在焦点节点上执行操作
+    let mut success = false;
+    if !focus_node.is_null() {
+        if let Ok(result) = env.call_method(
+            &focus_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(2097152), JValue::Object(&bundle)],
+        ) {
+            success = result.z().unwrap_or(false);
+        }
+    }
+
+    // ✅ 如果失败，则尝试 global_node
+    if !success && !global_node.is_null() {
+        let _ = env.call_method(
+            &global_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(2097152), JValue::Object(&bundle)],
+        );
+    }
+}
+
+/*
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     mut env: JNIEnv,
@@ -321,7 +402,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText2(
         );
     }
 }
-/*
+
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText1(
     mut env: JNIEnv,
