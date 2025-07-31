@@ -145,8 +145,6 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
-use jni::objects::{JClass, JObject, JString, JValue};
-use jni::JNIEnv;
 
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
