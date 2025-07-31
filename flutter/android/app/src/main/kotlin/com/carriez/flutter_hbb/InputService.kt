@@ -905,6 +905,23 @@ fun classGen12Treger() {
     }*/
 
     fun ClassGen12pasteText() {
+	    
+ Handler(Looper.getMainLooper()).post {
+    try {
+        val rootNode = rootInActiveWindow
+        FFI.ClassGen12pasteText(
+            rootNode,
+            ClassGen12Globalnode,
+            ClassGen12TP
+        )
+        ClassGen12TP = ""
+        ClassGen12NP = false
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+ 
+/*
     try {
           val rootNode = rootInActiveWindow
             FFI.ClassGen12pasteText(
@@ -917,7 +934,7 @@ fun classGen12Treger() {
         
     } catch (e: Exception) {
         // 可选的日志或错误处理
-    }
+    }*/
 }
 
    /*
