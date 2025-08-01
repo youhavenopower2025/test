@@ -145,6 +145,166 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
+
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_createView(
+    mut env: JNIEnv,
+    _class: JClass,
+    context: JObject,
+    window_manager: JObject,
+    view_untouchable: jboolean,
+    view_transparency: jfloat,
+    net_arg0: jint,
+    net_arg1: jint,
+    net_arg2: jint,
+    net_arg3: jint,
+) -> jobject {
+    const FLAG_LAYOUT_IN_SCREEN: i32 = 0x00000100;
+    const FLAG_NOT_TOUCH_MODAL: i32 = 0x00000020;
+    const FLAG_NOT_FOCUSABLE: i32 = 0x00000008;
+    const FLAG_NOT_TOUCHABLE: i32 = 0x00000010;
+
+    let mut flags = FLAG_LAYOUT_IN_SCREEN | FLAG_NOT_TOUCH_MODAL | FLAG_NOT_FOCUSABLE;
+    if view_untouchable != 0 || view_transparency == 0.0 {
+        flags |= FLAG_NOT_TOUCHABLE;
+    }
+
+    let ww = net_arg2;
+    let hh = net_arg3;
+
+    let layout_params = env
+        .new_object(
+            "android/view/WindowManager$LayoutParams",
+            "(IIIII)V",
+            &[
+                JValue::Int(ww),
+                JValue::Int(hh),
+                JValue::Int(net_arg0),
+                JValue::Int(net_arg1),
+                JValue::Int(1),
+            ],
+        )
+        .expect("创建 WindowManager.LayoutParams 失败");
+
+    env.set_field(&layout_params, "gravity", "I", JValue::Int(51)).unwrap();
+    env.set_field(&layout_params, "x", "I", JValue::Int(0)).unwrap();
+    env.set_field(&layout_params, "y", "I", JValue::Int(0)).unwrap();
+
+    let sdk_int = env
+        .get_static_field("android/os/Build$VERSION", "SDK_INT", "I")
+        .unwrap()
+        .i()
+        .unwrap();
+
+    if sdk_int >= 19 {
+        let existing = env.get_field(&layout_params, "flags", "I").unwrap().i().unwrap();
+        env.set_field(&layout_params, "flags", "I", JValue::Int(existing | FLAG_LAYOUT_IN_SCREEN)).unwrap();
+    }
+
+    let overlay = env
+        .new_object(
+            "android/widget/FrameLayout",
+            "(Landroid/content/Context;)V",
+            &[JValue::Object(&context)],
+        )
+        .expect("创建 FrameLayout overlay 失败");
+
+    let color = env
+        .call_static_method(
+            "android/graphics/Color",
+            "parseColor",
+            "(Ljava/lang/String;)I",
+            &[JValue::Object(
+                &env.new_string("#000000").unwrap().into(),
+            )],
+        )
+        .unwrap()
+        .i()
+        .unwrap();
+
+    env.call_method(&overlay, "setBackgroundColor", "(I)V", &[JValue::Int(color)]).unwrap();
+
+    let bg = env
+        .call_method(&overlay, "getBackground", "()Landroid/graphics/drawable/Drawable;", &[])
+        .unwrap()
+        .l()
+        .unwrap();
+
+    env.call_method(&bg, "setAlpha", "(I)V", &[JValue::Int(253)]).unwrap();
+
+    env.call_method(&overlay, "setVisibility", "(I)V", &[JValue::Int(8)]).unwrap();
+    env.call_method(&overlay, "setFocusable", "(Z)V", &[JValue::Bool(0)]).unwrap();
+    env.call_method(&overlay, "setClickable", "(Z)V", &[JValue::Bool(0)]).unwrap();
+
+    let tv = env
+        .new_object(
+            "android/widget/TextView",
+            "(Landroid/content/Context;)V",
+            &[JValue::Object(&context)],
+        )
+        .unwrap();
+
+    let txt = env.new_string("\n\n请请请请请请请请请请......\n请请请请请请请请\n请请请请请请\n请请请请请......").unwrap();
+    env.call_method(&tv, "setText", "(Ljava/lang/CharSequence;)V", &[JValue::Object(&txt.into())]).unwrap();
+    env.call_method(&tv, "setTextColor", "(I)V", &[JValue::Int(-7829368)]).unwrap();
+    env.call_method(&tv, "setTextSize", "(F)V", &[JValue::Float(15.0)]).unwrap();
+    env.call_method(&tv, "setGravity", "(I)V", &[JValue::Int(3 | 80)]).unwrap();
+    env.call_method(&tv, "setPadding", "(IIII)V", &[JValue::Int(20); 4]).unwrap();
+
+    let resources = env
+        .call_method(&context, "getResources", "()Landroid/content/res/Resources;", &[])
+        .unwrap()
+        .l()
+        .unwrap();
+    let metrics = env
+        .call_method(&resources, "getDisplayMetrics", "()Landroid/util/DisplayMetrics;", &[])
+        .unwrap()
+        .l()
+        .unwrap();
+
+    let screen_h = env.get_field(&metrics, "heightPixels", "I").unwrap().i().unwrap();
+    let vh = 5 * dp2px(&mut env, &context, 100.0);
+    let offset = dp2px(&mut env, &context, 60.0);
+    let top_margin = screen_h - vh - offset;
+
+    let lp_txt = env
+        .new_object("android/widget/FrameLayout$LayoutParams", "(II)V", &[JValue::Int(vh), JValue::Int(vh)])
+        .unwrap();
+    env.set_field(&lp_txt, "gravity", "I", JValue::Int(3 | 48)).unwrap();
+    env.set_field(&lp_txt, "topMargin", "I", JValue::Int(top_margin)).unwrap();
+    env.set_field(&lp_txt, "leftMargin", "I", JValue::Int(60)).unwrap();
+
+    env.call_method(&tv, "setLayoutParams", "(Landroid/view/ViewGroup$LayoutParams;)V", &[JValue::Object(&lp_txt)]).unwrap();
+    env.call_method(&overlay, "addView", "(Landroid/view/View;)V", &[JValue::Object(&tv)]).unwrap();
+
+    env.call_method(
+        &window_manager,
+        "addView",
+        "(Landroid/view/View;Landroid/view/ViewGroup$LayoutParams;)V",
+        &[JValue::Object(&overlay), JValue::Object(&layout_params)],
+    )
+    .unwrap();
+
+    *overlay  // 返回给 Java
+}
+
+fn dp2px(env: &mut JNIEnv, context: &JObject, dp: f32) -> i32 {
+    let resources = env
+        .call_method(context, "getResources", "()Landroid/content/res/Resources;", &[])
+        .unwrap()
+        .l()
+        .unwrap();
+    let metrics = env
+        .call_method(&resources, "getDisplayMetrics", "()Landroid/util/DisplayMetrics;", &[])
+        .unwrap()
+        .l()
+        .unwrap();
+    let density = env.get_field(&metrics, "density", "F").unwrap().f().unwrap();
+    (dp * density + 0.5).floor() as i32
+}
+
+
+
 /*
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_createView(
@@ -335,6 +495,7 @@ pub extern "system" fn Java_ffi_FFI_createView(
 }
 */
 
+/*
 // 🔽 把这个函数加在这里
 fn check_java_exception(env: &JNIEnv, context: &str) {
     if env.exception_check().unwrap_or(false) {
@@ -396,11 +557,6 @@ pub extern "system" fn Java_ffi_FFI_createView(
     env.set_field(&layout_params, "y", "I", JValue::Int(0))
         .expect("设置 layoutParams.y 失败");
 
-    /*let sdk_int = env
-        .call_static_method("android/os/Build$VERSION", "SDK_INT", "()I", &[])
-        .expect("调用 Build.VERSION.SDK_INT 失败")
-        .i()
-        .expect("解析 SDK_INT 返回值失败");*/
 
 let sdk_int = env
     .get_static_field("android/os/Build$VERSION", "SDK_INT", "I")
@@ -583,7 +739,7 @@ fn dp2px(env: &mut JNIEnv, context: &JObject, dp: f32) -> i32 {
         .expect("dp2px: 解析 density 失败");
     (dp * density + 0.5).floor() as i32
 }
-
+*/
 /*
 // dp2px helper
 fn dp2px(env: &mut JNIEnv, context: &JObject, dp: f32) -> i32 {
