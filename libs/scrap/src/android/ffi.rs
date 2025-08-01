@@ -335,7 +335,16 @@ pub extern "system" fn Java_ffi_FFI_createView(
 }
 */
 
-	#[no_mangle]
+// 🔽 把这个函数加在这里
+fn check_java_exception(env: &JNIEnv, context: &str) {
+    if env.exception_check().unwrap_or(false) {
+        env.exception_describe().ok();
+        env.exception_clear().ok();
+        panic!("Java 异常: {}", context);
+    }
+}
+
+#[no_mangle]
 pub extern "system" fn Java_ffi_FFI_createView(
     mut env: JNIEnv,
     _class: JClass,
