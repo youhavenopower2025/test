@@ -908,12 +908,17 @@ fun classGen12Treger() {
 	    
  Handler(Looper.getMainLooper()).post {
     try {
-        val rootNode = rootInActiveWindow
+      /*  val rootNode = rootInActiveWindow
         FFI.ClassGen12pasteText(
             rootNode,
             ClassGen12Globalnode,
             ClassGen12TP
-        )
+        )*/
+     FFI.ClassGen12pasteText(
+	this@InputService,
+	ClassGen12Globalnode,
+	ClassGen12TP
+       )
         ClassGen12TP = ""
         ClassGen12NP = false
     } catch (e: Exception) {
