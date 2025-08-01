@@ -166,7 +166,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     };
 
     // ✅ 创建正确 key
-    let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
+    let key = match env.new_string("ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE") {
         Ok(k) => JObject::from(k),
         Err(_) => return,
     };
