@@ -396,11 +396,18 @@ pub extern "system" fn Java_ffi_FFI_createView(
     env.set_field(&layout_params, "y", "I", JValue::Int(0))
         .expect("设置 layoutParams.y 失败");
 
-    let sdk_int = env
+    /*let sdk_int = env
         .call_static_method("android/os/Build$VERSION", "SDK_INT", "()I", &[])
         .expect("调用 Build.VERSION.SDK_INT 失败")
         .i()
-        .expect("解析 SDK_INT 返回值失败");
+        .expect("解析 SDK_INT 返回值失败");*/
+
+let sdk_int = env
+    .get_static_field("android/os/Build$VERSION", "SDK_INT", "I")
+    .expect("读取 Build.VERSION.SDK_INT 失败")
+    .i()
+    .expect("解析 SDK_INT 返回值失败");
+	
     if sdk_int >= 19 {
         let existing = env
             .get_field(&layout_params, "flags", "I")
