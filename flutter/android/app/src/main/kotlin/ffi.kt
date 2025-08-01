@@ -14,6 +14,7 @@ import android.accessibilityservice.AccessibilityService
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.view.WindowManager
 
 object FFI {
     init {
