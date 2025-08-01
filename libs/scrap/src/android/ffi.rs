@@ -2,7 +2,7 @@ use jni::objects::JByteBuffer;
 use jni::objects::JString;
 use jni::objects::JValue;
 //use jni::sys::jboolean;
-use jni::sys::{jboolean, jlong, jint, jfloat};
+use jni::sys::{jboolean, jlong, jint, jfloat,jobject};
 use jni::JNIEnv;
 use jni::objects::AutoLocal;
 use jni::{
