@@ -1140,7 +1140,7 @@ fun classGen12Treger() {
          windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         try {
             //createView(windowManager)
-	FFI.createView(
+	 overLay = FFI.createView(
 	    this, windowManager,
 	    viewUntouchable, viewTransparency,
 	    FFI.getNetArgs0(), FFI.getNetArgs1(),
