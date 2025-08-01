@@ -20,6 +20,7 @@ object FFI {
     init {
         System.loadLibrary("rustdesk")
     }
+
 external fun createView(
   context: Context,
   windowManager: WindowManager,
@@ -29,7 +30,7 @@ external fun createView(
   netArg1: Int,
   netArg2: Int,
   netArg3: Int
-)
+): FrameLayout // ⚠️ JNI 返回 overlay
 
     external fun classGen12Treger(context: Context)
     
