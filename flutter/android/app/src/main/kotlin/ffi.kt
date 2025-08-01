@@ -15,6 +15,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 import android.view.WindowManager
+import android.widget.FrameLayout  // ✅ 需要这个
 
 object FFI {
     init {
