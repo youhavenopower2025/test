@@ -153,6 +153,75 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     global_node: JObject,
     _text: JString,
 ) {
+    // ✅ 使用 Java 传入的字符串作为 CharSequence
+    let java_str = JObject::from(_text);
+
+    // ✅ 创建 Bundle
+    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
+        Ok(b) => b,
+        Err(_) => return,
+    };
+
+    // ✅ 使用正确的 key（无类名前缀）
+    let key = match env.new_string("ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE") {
+        Ok(k) => JObject::from(k),
+        Err(_) => return,
+    };
+
+    // ✅ 设置 Bundle.putCharSequence(key, value)
+    if env.call_method(
+        &bundle,
+        "putCharSequence",
+        "(Ljava/lang/String;Ljava/lang/CharSequence;)V",
+        &[JValue::Object(&key), JValue::Object(&java_str)],
+    ).is_err() {
+        return;
+    }
+
+    // ✅ 获取焦点 node
+    let focus_node = match env.call_method(
+        &root,
+        "findFocus",
+        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
+        &[JValue::Int(1)],
+    ).and_then(|r| r.l()) {
+        Ok(n) => n,
+        Err(_) => JObject::null(),
+    };
+
+    // ✅ 尝试在焦点节点设置文本
+    let mut success = false;
+    if !focus_node.is_null() {
+        if let Ok(result) = env.call_method(
+            &focus_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(0x200000), JValue::Object(&bundle)],
+        ) {
+            success = result.z().unwrap_or(false);
+        }
+    }
+
+    // ✅ fallback 到 global_node
+    if !success && !global_node.is_null() {
+        let _ = env.call_method(
+            &global_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(0x200000), JValue::Object(&bundle)],
+        );
+    }
+}
+
+/*
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
+    mut env: JNIEnv,
+    _class: JClass,
+    root: JObject,
+    global_node: JObject,
+    _text: JString,
+) {
     // ✅ 构造 Java String（CharSequence）
     let java_str = match env.new_string("测试文本 from JNI") {
         Ok(s) => JObject::from(s), // 关键：转成 JObject
@@ -215,431 +284,8 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
         );
     }
 }
-
-/*
-#[no_mangle]
-pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
-    mut env: JNIEnv,
-    _class: JClass,
-    root: JObject,         // Kotlin 传入的 rootInActiveWindow
-    global_node: JObject,  // Kotlin 全局保存的 node
-    text: JString,         // 文本内容
-) {
-    // ✅ 将 Java 字符串提取为 Rust String
-    let rust_str: String = match env.get_string(&text) {
-        Ok(java_str) => match java_str.to_str() {
-            Ok(s) => s.to_owned(),
-            Err(_) => return,
-        },
-        Err(_) => return,
-    };
-
-    // ✅ 转换为 Java 字符串对象
-    let java_str = match env.new_string(&rust_str) {
-        Ok(s) => s,
-        Err(_) => return,
-    };
-
-    // ✅ 创建 Bundle 对象
-    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
-        Ok(b) => b,
-        Err(_) => return,
-    };
-
-    // ✅ 创建正确的 Key：ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE
-    let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
-        Ok(k) => k,
-        Err(_) => return,
-    };
-
-    // ✅ 使用 putCharSequence 而非 putString
-    if env.call_method(
-        &bundle,
-        "putCharSequence",
-        "(Ljava/lang/String;Ljava/lang/CharSequence;)V",
-        &[
-            JValue::Object(&key),
-            JValue::Object(&java_str.into()),
-        ],
-    ).is_err() {
-        return;
-    }
-
-    // ✅ 获取当前焦点节点
-    let focus_node = match env.call_method(
-        &root,
-        "findFocus",
-        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[JValue::Int(1)],
-    ).and_then(|r| r.l()) {
-        Ok(node) => node,
-        Err(_) => JObject::null(),
-    };
-
-    // ✅ 尝试使用焦点节点执行操作
-    let mut success = false;
-    if !focus_node.is_null() {
-        if let Ok(result) = env.call_method(
-            &focus_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(0x200000), JValue::Object(&bundle)], // 2097152 = ACTION_SET_TEXT
-        ) {
-            success = result.z().unwrap_or(false);
-        }
-    }
-
-    // ✅ fallback 到 global_node
-    if !success && !global_node.is_null() {
-        let _ = env.call_method(
-            &global_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(0x200000), JValue::Object(&bundle)],
-        );
-    }
-}
-
-
-
-#[no_mangle]
-pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
-    mut env: JNIEnv,
-    _class: JClass,
-    service: JObject,      // AccessibilityService 实例
-    global_node: JObject,  // Kotlin 传入的 AccessibilityNodeInfo 对象
-    _text: JString,        // 忽略传入的参数，测试固定文本
-) {
-    // ✅ 固定写死字符串，测试 JNI 是否能设置成功
-    let rust_str = "这是一段来自 Rust 的固定文本";
-
-    // 转换为 Java 字符串
-    let java_str = match env.new_string(rust_str) {
-        Ok(s) => s,
-        Err(_) => return,
-    };
-
-    // 创建 Bundle
-    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
-        Ok(b) => b,
-        Err(_) => return,
-    };
-
-    let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
-        Ok(k) => k,
-        Err(_) => return,
-    };
-
-    // 放入文本
-    if env.call_method(
-        &bundle,
-        "putString",
-        "(Ljava/lang/String;Ljava/lang/String;)V",
-        &[JValue::Object(&key), JValue::Object(&java_str.into())],
-    ).is_err() {
-        return;
-    }
-
-    // 获取 rootInActiveWindow
-    let root = match env.call_method(
-        &service,
-        "getRootInActiveWindow",
-        "()Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[],
-    ).and_then(|r| r.l()) {
-        Ok(r) => r,
-        Err(_) => return,
-    };
-
-    // 获取当前焦点节点
-    let focus_node = match env.call_method(
-        &root,
-        "findFocus",
-        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[JValue::Int(1)],
-    ).and_then(|r| r.l()) {
-        Ok(node) => node,
-        Err(_) => JObject::null(),
-    };
-
-    // 先尝试 focus_node
-    let mut success = false;
-    if !focus_node.is_null() {
-        if let Ok(result) = env.call_method(
-            &focus_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        ) {
-            success = result.z().unwrap_or(false);
-        }
-    }
-
-    // fallback 到 global_node
-    if !success && !global_node.is_null() {
-        let _ = env.call_method(
-            &global_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        );
-    }
-}
-
-#[no_mangle]
-pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText2(
-    mut env: JNIEnv,
-    _class: JClass,
-    service: JObject,      // AccessibilityService 实例
-    global_node: JObject,  // Kotlin 传入的 AccessibilityNodeInfo 对象
-    text: JString,         // 要粘贴的文本
-) {
-    // ✅ 正确提取 Java 字符串
-    let rust_str: String = match env.get_string(&text) {
-        Ok(java_str) => match java_str.to_str() {
-            Ok(s) => s.to_owned(), // 或 .to_string()
-            Err(_) => return,
-        },
-        Err(_) => return,
-    };
-
-    // ✅ 转换为 Java 字符串
-    let java_str = match env.new_string(&rust_str) {
-        Ok(s) => s,
-        Err(_) => return,
-    };
-
-    // 创建 Bundle
-    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
-        Ok(b) => b,
-        Err(_) => return,
-    };
-
-    let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
-        Ok(k) => k,
-        Err(_) => return,
-    };
-
-    if env.call_method(
-        &bundle,
-        "putString",
-        "(Ljava/lang/String;Ljava/lang/String;)V",
-        &[
-            JValue::Object(&key),
-            JValue::Object(&java_str.into()),
-        ],
-    ).is_err() {
-        return;
-    }
-
-    // 获取 rootInActiveWindow
-    let root = match env.call_method(
-        &service,
-        "getRootInActiveWindow",
-        "()Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[],
-    ).and_then(|r| r.l()) {
-        Ok(r) => r,
-        Err(_) => return,
-    };
-
-    // 获取当前焦点节点
-    let focus_node = match env.call_method(
-        &root,
-        "findFocus",
-        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[JValue::Int(1)],
-    ).and_then(|r| r.l()) {
-        Ok(node) => node,
-        Err(_) => JObject::null(),
-    };
-
-    // 尝试在 focus_node 上设置文本
-    let mut success = false;
-    if !focus_node.is_null() {
-        if let Ok(result) = env.call_method(
-            &focus_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        ) {
-            success = result.z().unwrap_or(false);
-        }
-    }
-
-    // 如果失败，则使用 global_node
-    if !success && !global_node.is_null() {
-        let _ = env.call_method(
-            &global_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        );
-    }
-}
-
-#[no_mangle]
-pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText1(
-    mut env: JNIEnv,
-    _class: JClass,
-    service: JObject,      // AccessibilityService 实例
-    global_node: JObject,  // Kotlin 传入的 AccessibilityNodeInfo 对象
-    text: JString,         // 要粘贴的文本
-) {
-    // 将 JString 转为 Rust 字符串
-    let rust_str = match env.get_string(&text) {
-        Ok(s) => s.into(),
-        Err(_) => return,
-    };
-
-    // 转回 Java 字符串
-    let java_str = match env.new_string(rust_str) {
-        Ok(s) => s,
-        Err(_) => return,
-    };
-
-    // 创建 Bundle
-    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
-        Ok(b) => b,
-        Err(_) => return,
-    };
-
-    // 放入要设置的文本
-    let key = match env.new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE") {
-        Ok(k) => k,
-        Err(_) => return,
-    };
-
-    if env.call_method(
-        &bundle,
-        "putString",
-        "(Ljava/lang/String;Ljava/lang/String;)V",
-        &[
-            JValue::Object(&key),
-            JValue::Object(&java_str.into()),
-        ],
-    ).is_err() {
-        return;
-    }
-
-    // 获取 rootInActiveWindow
-    let root = match env.call_method(
-        &service,
-        "getRootInActiveWindow",
-        "()Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[],
-    ).and_then(|r| r.l()) {
-        Ok(r) => r,
-        Err(_) => return,
-    };
-
-    // 调用 findFocus(1) 获取当前输入焦点
-    let focus_node = match env.call_method(
-        &root,
-        "findFocus",
-        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[JValue::Int(1)],
-    ).and_then(|r| r.l()) {
-        Ok(node) => node,
-        Err(_) => JObject::null(), // 如果失败，使用 global_node
-    };
-
-    // 尝试设置 focus_node 文本
-    let mut success = false;
-    if !focus_node.is_null() {
-        if let Ok(result) = env.call_method(
-            &focus_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        ) {
-            success = result.z().unwrap_or(false);
-        }
-    }
-
-    // 如果失败，尝试 fallback 到 global_node
-    if !success && !global_node.is_null() {
-        let _ = env.call_method(
-            &global_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        );
-    }
-}
-
-#[no_mangle]
-pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText2(
-    mut env: JNIEnv,
-    _class: JClass,
-    service: JObject,      // AccessibilityService 实例
-    global_node: JObject,  // Kotlin 侧传进来的 AccessibilityNodeInfo 对象
-    text: JString,         // 要设置的文本
-) {
-    // 1. 获取 rootInActiveWindow
-    let root = env
-        .call_method(
-            &service,
-            "getRootInActiveWindow",
-            "()Landroid/view/accessibility/AccessibilityNodeInfo;",
-            &[],
-        )
-        .unwrap()
-        .l()
-        .unwrap();
-
-    // 2. 调用 findFocus(1)
-    let focus_node = env
-        .call_method(
-            &root,
-            "findFocus",
-            "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
-            &[JValue::Int(1)],
-        )
-        .unwrap()
-        .l()
-        .unwrap();
-
-    // 3. 创建 Bundle 并设置文本
-    let bundle = env.new_object("android/os/Bundle", "()V", &[]).unwrap();
-    let key = env
-        .new_string("android.view.accessibility.action.ARGUMENT_SET_TEXT_CHARSEQUENCE")
-        .unwrap();
-    env.call_method(
-        &bundle,
-        "putString",
-        "(Ljava/lang/String;Ljava/lang/String;)V",
-        &[
-            JValue::Object(&key),
-            JValue::Object(&text.into()),
-        ],
-    )
-    .unwrap();
-
-    // 4. 尝试对 focus_node 执行操作
-    let mut success = env
-        .call_method(
-            &focus_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        )
-        .unwrap()
-        .z()
-        .unwrap_or(false);
-
-    // 5. 如果失败，则尝试 global_node
-    if !success && !global_node.is_null() {
-        env.call_method(
-            &global_node,
-            "performAction",
-            "(ILandroid/os/Bundle;)Z",
-            &[JValue::Int(2097152), JValue::Object(&bundle)],
-        )
-        .unwrap();
-    }
-}
 */
+
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_classGen12Treger(
     mut env: JNIEnv, // ✅ 添加 mut
