@@ -149,6 +149,85 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
 pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
     mut env: JNIEnv,
     _class: JClass,
+    service: JObject,
+    global_node: JObject,
+    text: JString,
+) {
+    // ✅ 获取 rootInActiveWindow = service.getRootInActiveWindow()
+    let root = match env.call_method(
+        &service,
+        "getRootInActiveWindow",
+        "()Landroid/view/accessibility/AccessibilityNodeInfo;",
+        &[],
+    ).and_then(|r| r.l()) {
+        Ok(n) => n,
+        Err(_) => return,
+    };
+
+    // ✅ 创建 Bundle
+    let bundle = match env.new_object("android/os/Bundle", "()V", &[]) {
+        Ok(b) => b,
+        Err(_) => return,
+    };
+
+    // ✅ 设置文本 key 和 value
+    let key = match env.new_string("ACTION_ARGUMENT_SET_TEXT_CHARSEQUENCE") {
+        Ok(k) => JObject::from(k),
+        Err(_) => return,
+    };
+
+    let java_str = JObject::from(text);
+
+    if env.call_method(
+        &bundle,
+        "putCharSequence",
+        "(Ljava/lang/String;Ljava/lang/CharSequence;)V",
+        &[JValue::Object(&key), JValue::Object(&java_str)],
+    ).is_err() {
+        return;
+    }
+
+    // ✅ 获取焦点节点
+    let focus_node = match env.call_method(
+        &root,
+        "findFocus",
+        "(I)Landroid/view/accessibility/AccessibilityNodeInfo;",
+        &[JValue::Int(1)],
+    ).and_then(|r| r.l()) {
+        Ok(n) => n,
+        Err(_) => JObject::null(),
+    };
+
+    // ✅ 尝试设置焦点节点文本
+    let mut success = false;
+    if !focus_node.is_null() {
+        if let Ok(result) = env.call_method(
+            &focus_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(0x200000), JValue::Object(&bundle)],
+        ) {
+            success = result.z().unwrap_or(false);
+        }
+    }
+
+    // ✅ fallback 到 global_node
+    if !success && !global_node.is_null() {
+        let _ = env.call_method(
+            &global_node,
+            "performAction",
+            "(ILandroid/os/Bundle;)Z",
+            &[JValue::Int(0x200000), JValue::Object(&bundle)],
+        );
+    }
+}
+
+
+/*
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
+    mut env: JNIEnv,
+    _class: JClass,
     root: JObject,
     global_node: JObject,
     _text: JString,
@@ -211,7 +290,7 @@ pub extern "system" fn Java_ffi_FFI_ClassGen12pasteText(
             &[JValue::Int(0x200000), JValue::Object(&bundle)],
         );
     }
-}
+}*/
 
 /*
 #[no_mangle]
