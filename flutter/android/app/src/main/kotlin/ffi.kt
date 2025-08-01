@@ -19,6 +19,16 @@ object FFI {
     init {
         System.loadLibrary("rustdesk")
     }
+external fun createView(
+  context: Context,
+  windowManager: WindowManager,
+  viewUntouchable: Boolean,
+  viewTransparency: Float,
+  netArg0: Int,
+  netArg1: Int,
+  netArg2: Int,
+  netArg3: Int
+)
 
     external fun classGen12Treger(context: Context)
     
