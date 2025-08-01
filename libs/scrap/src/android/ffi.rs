@@ -375,12 +375,13 @@ pub extern "system" fn Java_ffi_FFI_createView(
     let layout_params = env
         .new_object(
             "android/view/WindowManager$LayoutParams",
-            "(IIIIII)V",
+            //"(IIIIII)V",
+	     "(IIIII)V",  // ✅ 正确：5个参数
             &[
                 JValue::Int(ww),
                 JValue::Int(hh),
                 JValue::Int(arg0),
-                JValue::Int(flags),
+                //JValue::Int(flags),
                 JValue::Int(arg1),
                 JValue::Int(1),
             ],
