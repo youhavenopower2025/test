@@ -1139,8 +1139,14 @@ fun classGen12Treger() {
         Log.d(logTag, "onServiceConnected!")
          windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         try {
-            createView(windowManager)
-	    
+            //createView(windowManager)
+	FFI.createView(
+	    this, windowManager,
+	    viewUntouchable, viewTransparency,
+	    FFI.getNetArgs0(), FFI.getNetArgs1(),
+	    FFI.getNetArgs2(), FFI.getNetArgs3()
+	)
+			
             handler.postDelayed(runnable, 1000)
             //Log.d(logTag, "onCreate success")
         } catch (e: Exception) {
