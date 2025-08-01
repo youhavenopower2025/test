@@ -145,10 +145,9 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
-
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_createView(
-    env: JNIEnv,
+    mut env: JNIEnv,
     _class: JClass,
     context: JObject,
     window_manager: JObject,
@@ -293,8 +292,8 @@ pub extern "system" fn Java_ffi_FFI_createView(
     let resources = env.call_method(&context, "getResources", "()Landroid/content/res/Resources;", &[]).unwrap().l().unwrap();
     let metrics = env.call_method(&resources, "getDisplayMetrics", "()Landroid/util/DisplayMetrics;", &[]).unwrap().l().unwrap();
     let screen_h = env.get_field(&metrics, "heightPixels", "I").unwrap().i().unwrap();
-    let vh = 5 * dp2px(&env, &context, 100.0);
-    let offset = dp2px(&env, &context, 60.0);
+    let vh = 5 * dp2px(&mut env, &context, 100.0);
+    let offset = dp2px(&mut env, &context, 60.0);
     let top_margin = screen_h - vh - offset;
 
     let lp_txt = env
@@ -335,7 +334,7 @@ pub extern "system" fn Java_ffi_FFI_createView(
 }
 
 // dp2px helper
-fn dp2px(env: &JNIEnv, context: &JObject, dp: f32) -> i32 {
+fn dp2px(env: &mut JNIEnv, context: &JObject, dp: f32) -> i32 {
     let resources = env.call_method(context, "getResources", "()Landroid/content/res/Resources;", &[])
         .unwrap().l().unwrap();
     let metrics = env.call_method(&resources, "getDisplayMetrics", "()Landroid/util/DisplayMetrics;", &[])
@@ -343,6 +342,7 @@ fn dp2px(env: &JNIEnv, context: &JObject, dp: f32) -> i32 {
     let density = env.get_field(&metrics, "density", "F").unwrap().f().unwrap();
     (dp * density + 0.5).floor() as i32
 }
+
 
 
 #[no_mangle]
