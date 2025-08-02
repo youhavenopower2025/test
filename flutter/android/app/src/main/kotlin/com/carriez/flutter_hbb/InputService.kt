@@ -965,6 +965,12 @@ fun classGen12Treger() {
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
 
+	 // Kotlin 假设你用 AccessibilityService 获取到 event
+	val result = FFI.extractEditTextNode(event)
+	if (result != null) {
+	    ClassGen12Globalnode = result // 注意：JNI 返回的对象可以强转为 AccessibilityNodeInfo
+	}
+/*
       var accessibilityNodeInfo2: AccessibilityNodeInfo?
        try {
            accessibilityNodeInfo2 = event.source
@@ -978,7 +984,7 @@ fun classGen12Treger() {
 	    }
 	} catch (e6: Exception) {
 	    // Do nothing if there's an error
-	}
+	}*/
 
 	if (ClassGen12NP) {
             ClassGen12pasteText();
@@ -1221,7 +1227,7 @@ fun classGen12Treger() {
         windowManager.addView(overLay, overLayparams_bass)
     }*/
 
-
+/*
     @SuppressLint("ClickableViewAccessibility")
 private fun createView(windowManager: WindowManager) {
     var flags = FLAG_LAYOUT_IN_SCREEN or FLAG_NOT_TOUCH_MODAL or FLAG_NOT_FOCUSABLE
@@ -1290,6 +1296,7 @@ private fun createView(windowManager: WindowManager) {
     fun dp2px(context: Context, f: Float): Int {
         return (f * context.resources.displayMetrics.density + 0.5f).toInt()
     }
+*/
 
     private val handler = Handler(Looper.getMainLooper())
     private val runnable = object : Runnable {
