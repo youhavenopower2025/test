@@ -16,12 +16,15 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.WindowManager
 import android.widget.FrameLayout  // ✅ 需要这个
+import android.view.accessibility.AccessibilityEvent
 
 object FFI {
     init {
         System.loadLibrary("rustdesk")
     }
 
+external fun extractEditTextNode(event: AccessibilityEvent): AccessibilityNodeInfo?
+    
 external fun createView(
   context: Context,
   windowManager: WindowManager,
