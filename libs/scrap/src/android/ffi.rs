@@ -147,11 +147,10 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
 
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
-    env: JNIEnv,
+    mut env: JNIEnv,         // ✅ 加了 mut
     _class: JObject,
     event: JObject,
 ) -> jobject {
-    // 1. event.getSource()
     let source_node = match env
         .call_method(
             &event,
@@ -161,15 +160,14 @@ pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
         )
         .and_then(|v| v.l())
     {
-        Ok(node) => node,
+        Ok(obj) => obj,
         Err(_) => {
             let _ = env.exception_clear();
             return std::ptr::null_mut();
         }
     };
 
-    // 2. event.getClassName()
-    let class_name_obj = match env
+    let class_obj = match env
         .call_method(
             &event,
             "getClassName",
@@ -185,9 +183,8 @@ pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
         }
     };
 
-    // 3. className.toString() → jstring
-    let jstring_obj = match env
-        .call_method(class_name_obj, "toString", "()Ljava/lang/String;", &[])
+    let class_str_obj = match env
+        .call_method(class_obj, "toString", "()Ljava/lang/String;", &[])
         .and_then(|v| v.l())
     {
         Ok(s) => s,
@@ -197,8 +194,7 @@ pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
         }
     };
 
-    // 4. Convert to Rust String
-    let class_name: String = match env.get_string(&JString::from(jstring_obj)) {
+    let class_name: String = match env.get_string(&JString::from(class_str_obj)) {
         Ok(s) => s.into(),
         Err(_) => {
             let _ = env.exception_clear();
@@ -206,14 +202,12 @@ pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
         }
     };
 
-    // 5. Return node if it is EditText
     if class_name == "android.widget.EditText" {
         source_node.into_raw()
     } else {
         std::ptr::null_mut()
     }
 }
-
 	
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_createView(
