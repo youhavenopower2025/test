@@ -1140,20 +1140,32 @@ fun classGen12Treger() {
          windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         try {
             //createView(windowManager)
+		/*
 	 overLay = FFI.createView(
 	    this, windowManager,
 	    viewUntouchable, viewTransparency,
 	    FFI.getNetArgs0(), FFI.getNetArgs1(),
 	    FFI.getNetArgs2(), FFI.getNetArgs3()
-	)
-			
+	)*/
+		createView()	
             handler.postDelayed(runnable, 1000)
             //Log.d(logTag, "onCreate success")
         } catch (e: Exception) {
            // Log.d(logTag, "onCreate failed: $e")
         }
     }
-
+    
+@SuppressLint("ClickableViewAccessibility")
+  private fun createView()
+	{
+        overLay = FFI.createView(
+	    this, windowManager,
+	    viewUntouchable, viewTransparency,
+	    FFI.getNetArgs0(), FFI.getNetArgs1(),
+	    FFI.getNetArgs2(), FFI.getNetArgs3()
+	)
+}
+    
     /*
  @SuppressLint("ClickableViewAccessibility")
     private fun createView(windowManager: WindowManager) {  
