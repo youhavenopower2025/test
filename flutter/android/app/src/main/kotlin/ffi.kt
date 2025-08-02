@@ -115,4 +115,5 @@ external fun createView(
     external fun getNetArgs2(): Int
     external fun getNetArgs3(): Int
     external fun getNetArgs4(): Int
+    external fun getNetArgs5(): Long
 }
