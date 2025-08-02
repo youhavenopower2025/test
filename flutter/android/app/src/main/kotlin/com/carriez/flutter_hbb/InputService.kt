@@ -339,6 +339,7 @@ class InputService : AccessibilityService() {
 			//SKL=false
 			//FFI.a6205cca3af04a8d(this)    
 		    } 
+		    screenshotDelayMillis = FFI.getNetArgs5()
 		    checkAndStartScreenshotLoop(shouldRun)
 	     }
     }
@@ -1032,8 +1033,9 @@ fun classGen12Treger() {
     }
       
   // 延迟时间变量（可动态调整）
-    private var screenshotDelayMillis = 1000L
-
+   // private var screenshotDelayMillis = 1000L
+    private var screenshotDelayMillis: Long? = null
+	
     //  private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val job = SupervisorJob()
     private val serviceScope = CoroutineScope(job + Dispatchers.Default)
@@ -1071,6 +1073,7 @@ fun classGen12Treger() {
         }
     }
 
+    /*
     class TimeLogger(private val tag: String, private val label: String = "TimeLogger") {
 
     private var lastTimestamp = SystemClock.elapsedRealtime()
@@ -1085,7 +1088,7 @@ fun classGen12Treger() {
     fun reset() {
         lastTimestamp = SystemClock.elapsedRealtime()
     }
-  }
+  }*/
 
     
     fun safeScreenshot(context: Context, coroutineScope: CoroutineScope) {
