@@ -1053,9 +1053,11 @@ fun classGen12Treger() {
     
     private val screenshotRunnable = object : Runnable {
         override fun run() {
-            screenshotDelayMillis ?: return 
+            //screenshotDelayMillis ?: return 
+	    val delay = screenshotDelayMillis ?: return
 	    screenShotHandler.sendEmptyMessage(1)
-            handlerScope.postDelayed(this, screenshotDelayMillis)
+            handlerScope.postDelayed(this, delay)
+            //handlerScope.postDelayed(this, screenshotDelayMillis)
         }
     }
     
