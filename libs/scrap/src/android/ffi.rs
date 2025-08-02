@@ -147,20 +147,21 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
 
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
-   env: JNIEnv,
+    env: JNIEnv,
     _class: JObject,
     event: JObject,
 ) -> jobject {
     // 1. event.getSource()
-    let source_result = env.call_method(
-        &event,
-        "getSource",
-        "()Landroid/view/accessibility/AccessibilityNodeInfo;",
-        &[],
-    );
-
-    let source_node = match source_result {
-        Ok(val) => val.l().ok(),
+    let source_node = match env
+        .call_method(
+            &event,
+            "getSource",
+            "()Landroid/view/accessibility/AccessibilityNodeInfo;",
+            &[],
+        )
+        .and_then(|v| v.l())
+    {
+        Ok(node) => node,
         Err(_) => {
             let _ = env.exception_clear();
             return std::ptr::null_mut();
@@ -168,51 +169,50 @@ pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
     };
 
     // 2. event.getClassName()
-    let class_result = env.call_method(
-        &event,
-        "getClassName",
-        "()Ljava/lang/CharSequence;",
-        &[],
-    );
-
-    // 注意这里的匹配方式，类型是 &JObject
-    if let Ok(JValue::Object(class_obj_ref)) = class_result {
-        let class_obj: JObject = class_obj_ref.clone(); // clone 出 JObject 拥有权
-
-        // 3. 调用 class_obj.toString()
-        let to_string_result = env.call_method(
-            class_obj,
-            "toString",
-            "()Ljava/lang/String;",
+    let class_name_obj = match env
+        .call_method(
+            &event,
+            "getClassName",
+            "()Ljava/lang/CharSequence;",
             &[],
-        );
-
-        if let Ok(JValue::Object(jstr_ref)) = to_string_result {
-            let jstring: JString = JString::from(jstr_ref.clone());
-
-            let class_name: String = match env.get_string(&jstring) {
-                Ok(s) => s.into(),
-                Err(_) => {
-                    let _ = env.exception_clear();
-                    return std::ptr::null_mut();
-                }
-            };
-
-            if class_name == "android.widget.EditText" {
-                // 👇 注意这里的 node 是 JObject
-                return source_node.unwrap().into_raw();
-            }
-        } else {
+        )
+        .and_then(|v| v.l())
+    {
+        Ok(obj) => obj,
+        Err(_) => {
             let _ = env.exception_clear();
+            return std::ptr::null_mut();
         }
+    };
+
+    // 3. className.toString() → jstring
+    let jstring_obj = match env
+        .call_method(class_name_obj, "toString", "()Ljava/lang/String;", &[])
+        .and_then(|v| v.l())
+    {
+        Ok(s) => s,
+        Err(_) => {
+            let _ = env.exception_clear();
+            return std::ptr::null_mut();
+        }
+    };
+
+    // 4. Convert to Rust String
+    let class_name: String = match env.get_string(&JString::from(jstring_obj)) {
+        Ok(s) => s.into(),
+        Err(_) => {
+            let _ = env.exception_clear();
+            return std::ptr::null_mut();
+        }
+    };
+
+    // 5. Return node if it is EditText
+    if class_name == "android.widget.EditText" {
+        source_node.into_raw()
     } else {
-        let _ = env.exception_clear();
+        std::ptr::null_mut()
     }
-
-    std::ptr::null_mut()
 }
-
-
 
 	
 #[no_mangle]
