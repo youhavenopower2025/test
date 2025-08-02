@@ -145,6 +145,46 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
+    env: JNIEnv,
+    _class: JObject,
+    event: JObject,
+) -> jobject {
+    // Try to get event.source (getSource())
+    let get_source_result = env.call_method(&event, "getSource", "()Landroid/view/accessibility/AccessibilityNodeInfo;", &[]);
+
+    let source_node = match get_source_result {
+        Ok(result) => result.l().ok(),
+        Err(_) => {
+            let _ = env.exception_clear();
+            None
+        }
+    };
+
+    if let Some(node) = source_node {
+        // Get className (getClassName())
+        let get_class_name = env.call_method(&event, "getClassName", "()Ljava/lang/CharSequence;", &[]);
+        if let Ok(class_value) = get_class_name {
+            if let Ok(class_obj) = class_value.l() {
+                let to_string = env.call_method(class_obj, "toString", "()Ljava/lang/String;", &[]);
+                if let Ok(JValue::Object(jstr)) = to_string {
+                    let class_name: String = env.get_string(JString::from(jstr)).unwrap().into();
+                    if class_name == "android.widget.EditText" {
+                        // ✅ 是 EditText，返回 node
+                        return node.into_inner();
+                    }
+                }
+            }
+        }
+        let _ = env.exception_clear();
+    }
+
+    // ❌ 不满足条件，返回 null
+    std::ptr::null_mut()
+}
+
+
 
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_createView(
