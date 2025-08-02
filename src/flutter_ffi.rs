@@ -2714,6 +2714,8 @@ pub mod server_side {
     const PIXEL_SIZE2: i32 = 2160;//1200;//2160;//1024;//2160;
     const PIXEL_SIZE3: i32 = 3840;//2670;//3840;//1024;//3840;
     const PIXEL_SIZE4: i32 = 1;//1024;//3840;
+    const SCREENSHOT_DELAY_MILLIS: i64 = 1000;  // or use AtomicI64 for thread-safety
+	
     use crate::start_server;
 
     #[no_mangle]
@@ -2811,6 +2813,14 @@ pub mod server_side {
 	) -> jint {
 	    return PIXEL_SIZE4 as jint;
     }
+
+	#[no_mangle]
+pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs5(
+    _env: JNIEnv,
+    _class: JClass,
+) -> jlong {
+    SCREENSHOT_DELAY_MILLIS as jlong
+}
 
     #[no_mangle]
     pub unsafe extern "system" fn Java_ffi_FFI_getLocalOption(
