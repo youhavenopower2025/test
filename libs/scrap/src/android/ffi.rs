@@ -147,19 +147,18 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
 
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
-         env: JNIEnv,
+ env: JNIEnv,
     _class: JObject,
     event: JObject,
 ) -> jobject {
-    // 获取 event.getSource()
-    let get_source_result = env.call_method(
+    let source_result = env.call_method(
         &event,
         "getSource",
         "()Landroid/view/accessibility/AccessibilityNodeInfo;",
         &[],
     );
 
-    let source_node = match get_source_result {
+    let source_node = match source_result {
         Ok(result) => result.l().ok(),
         Err(_) => {
             let _ = env.exception_clear();
@@ -168,27 +167,42 @@ pub extern "system" fn Java_ffi_FFI_extractEditTextNode(
     };
 
     if let Some(node) = source_node {
-        // 获取 event.getClassName()
-        let get_class_name = env.call_method(&event, "getClassName", "()Ljava/lang/CharSequence;", &[]);
-        if let Ok(class_value) = get_class_name {
-            if let Ok(class_obj_ref) = class_value.l() {
-                let to_string = env.call_method(&class_obj_ref, "toString", "()Ljava/lang/String;", &[]);
-                if let Ok(JValue::Object(obj_ref)) = to_string {
-                    let jstr = JObject::from(obj_ref);            // 转为拥有者
-                    let jstring = JString::from(jstr);            // 构造 JString
-                    let class_name: String = env.get_string(&jstring).unwrap().into();
+        let class_result = env.call_method(
+            &event,
+            "getClassName",
+            "()Ljava/lang/CharSequence;",
+            &[],
+        );
 
-                    if class_name == "android.widget.EditText" {
-                        return node.into_raw();  // 返回 AccessibilityNodeInfo
+        if let Ok(JValue::Object(class_obj)) = class_result {
+            let to_string_result = env.call_method(&class_obj, "toString", "()Ljava/lang/String;", &[]);
+            if let Ok(JValue::Object(jstr_ref)) = to_string_result {
+                let jstring = JString::from(jstr_ref.clone());
+                let class_name: String = match env.get_string(&jstring) {
+                    Ok(js) => js.into(),
+                    Err(_) => {
+                        let _ = env.exception_clear();
+                        return std::ptr::null_mut();
                     }
+                };
+
+                if class_name == "android.widget.EditText" {
+                    return node.into_raw();
                 }
+            } else {
+                let _ = env.exception_clear();
             }
+        } else {
+            let _ = env.exception_clear();
         }
-        let _ = env.exception_clear();
     }
 
     std::ptr::null_mut()
 }
+
+
+
+	
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_createView(
     mut env: JNIEnv,
