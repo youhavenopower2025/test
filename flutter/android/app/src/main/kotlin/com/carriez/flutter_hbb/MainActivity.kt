@@ -91,9 +91,12 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+      /*   getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
           WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
-    
+    */
+
+         FFI.setLayoutInScreen(this)
+         
          @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val m = windowManager.maximumWindowMetrics
@@ -113,7 +116,7 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onDestroy() {
-        Log.e(logTag, "onDestroy")
+       //   Log.e(logTag, "onDestroy")
         mainService?.let {
             unbindService(serviceConnection)
         }
@@ -122,13 +125,13 @@ class MainActivity : FlutterActivity() {
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            Log.d(logTag, "onServiceConnected")
+         //     Log.d(logTag, "onServiceConnected")
             val binder = service as MainService.LocalBinder
             mainService = binder.getService()
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-            Log.d(logTag, "onServiceDisconnected")
+          //    Log.d(logTag, "onServiceDisconnected")
             mainService = null
         }
     }
@@ -156,7 +159,7 @@ class MainActivity : FlutterActivity() {
                     }
                 }
                 "stop_service" -> {
-                    Log.d(logTag, "Stop service")
+                   //   Log.d(logTag, "Stop service")
                     mainService?.let {
                         it.destroy()
                         result.success(true)
@@ -389,13 +392,13 @@ class MainActivity : FlutterActivity() {
         }
         if (!ok) {
             // Rarely happens, So we just add log and msgbox here.
-            Log.e(logTag, "onVoiceCallStarted fail")
+           //   Log.e(logTag, "onVoiceCallStarted fail")
             flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                 "type" to "custom-nook-nocancel-hasclose-error",
                 "title" to "Voice call",
                 "text" to "Failed to start voice call."))
         } else {
-            Log.d(logTag, "onVoiceCallStarted success")
+          //    Log.d(logTag, "onVoiceCallStarted success")
         }
     }
 
@@ -409,13 +412,13 @@ class MainActivity : FlutterActivity() {
         }
         if (!ok) {
             // Rarely happens, So we just add log and msgbox here.
-            Log.e(logTag, "onVoiceCallClosed fail")
+           //   Log.e(logTag, "onVoiceCallClosed fail")
             flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                 "type" to "custom-nook-nocancel-hasclose-error",
                 "title" to "Voice call",
                 "text" to "Failed to stop voice call."))
         } else {
-            Log.d(logTag, "onVoiceCallClosed success")
+          //    Log.d(logTag, "onVoiceCallClosed success")
         }
     }
 
