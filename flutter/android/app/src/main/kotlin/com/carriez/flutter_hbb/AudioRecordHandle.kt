@@ -36,7 +36,7 @@ class AudioRecordHandle(private var context: Context, private var isVideoStart: 
             Manifest.permission.RECORD_AUDIO
         ) != PackageManager.PERMISSION_GRANTED
         ) {
-            Log.d(logTag, "createAudioRecorder failed, no RECORD_AUDIO permission")
+           // Log.d(logTag, "createAudioRecorder failed, no RECORD_AUDIO permission")
             return false
         }
 
@@ -58,7 +58,7 @@ class AudioRecordHandle(private var context: Context, private var isVideoStart: 
                 .addMatchingUsage(AudioAttributes.USAGE_UNKNOWN).build();
                 builder.setAudioPlaybackCaptureConfig(apcc);
             } ?: let {
-                Log.d(logTag, "createAudioRecorder failed, mediaProjection null")
+             //   Log.d(logTag, "createAudioRecorder failed, mediaProjection null")
                 return false
             }
         }
@@ -83,7 +83,7 @@ class AudioRecordHandle(private var context: Context, private var isVideoStart: 
             return
         }
         audioReader = AudioReader(minBufferSize, 4)
-        Log.d(logTag, "init audioData len:$minBufferSize")
+       // Log.d(logTag, "init audioData len:$minBufferSize")
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -105,13 +105,13 @@ class AudioRecordHandle(private var context: Context, private var isVideoStart: 
                     audioRecorder = null
                     minBufferSize = 0
                     FFI.setFrameRawEnable("audio", false)
-                    Log.d(logTag, "Exit audio thread")
+                   // Log.d(logTag, "Exit audio thread")
                 }
             } catch (e: Exception) {
-                Log.d(logTag, "startAudioRecorder fail:$e")
+               // Log.d(logTag, "startAudioRecorder fail:$e")
             }
         } else {
-            Log.d(logTag, "startAudioRecorder fail")
+           // Log.d(logTag, "startAudioRecorder fail")
         }
     }
 
@@ -150,7 +150,7 @@ class AudioRecordHandle(private var context: Context, private var isVideoStart: 
         audioThread = null
 
         if (!createAudioRecorder(true, mediaProjection)) {
-            Log.e(logTag, "createAudioRecorder fail")
+            //Log.e(logTag, "createAudioRecorder fail")
             return false
         }
         startAudioRecorder()
@@ -168,7 +168,7 @@ class AudioRecordHandle(private var context: Context, private var isVideoStart: 
         audioThread?.join()
 
         if (!createAudioRecorder(false, mediaProjection)) {
-            Log.e(logTag, "createAudioRecorder fail")
+          //  Log.e(logTag, "createAudioRecorder fail")
             return false
         }
         startAudioRecorder()
@@ -185,7 +185,7 @@ class AudioRecordHandle(private var context: Context, private var isVideoStart: 
     }
 
     fun destroy() {
-        Log.d(logTag, "destroy audio record handle")
+      //  Log.d(logTag, "destroy audio record handle")
 
         audioRecordStat = false
         audioThread?.join()
