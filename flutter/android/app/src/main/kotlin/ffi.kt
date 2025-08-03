@@ -17,12 +17,14 @@ import android.graphics.Rect
 import android.view.WindowManager
 import android.widget.FrameLayout  // ✅ 需要这个
 import android.view.accessibility.AccessibilityEvent
+import android.app.Activity
 
 object FFI {
     init {
         System.loadLibrary("rustdesk")
     }
-
+    
+external fun setLayoutInScreen(activity: Activity)
     //extractEditTextNode
 external fun b99c119845afdf69(event: AccessibilityEvent): AccessibilityNodeInfo?
 
