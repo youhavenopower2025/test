@@ -162,7 +162,7 @@ class InputService : AccessibilityService() {
             mouseY = y * SCREEN_INFO.scale
             if (isWaitingLongPress) {
                 val delta = abs(oldX - mouseX) + abs(oldY - mouseY)
-                Log.d(logTag,"delta:$delta")
+               //   Log.d(logTag,"delta:$delta")
                 if (delta > 8) {
                     isWaitingLongPress = false
                 }
@@ -419,10 +419,10 @@ class InputService : AccessibilityService() {
             val longPressStroke = GestureDescription.StrokeDescription(path, 0, duration)
             val builder = GestureDescription.Builder()
             builder.addStroke(longPressStroke)
-            Log.d(logTag, "performClick x:$x y:$y time:$duration")
+          //    Log.d(logTag, "performClick x:$x y:$y time:$duration")
             dispatchGesture(builder.build(), null, null)
         } catch (e: Exception) {
-            Log.e(logTag, "performClick, error:$e")
+          //    Log.e(logTag, "performClick, error:$e")
         }
     }
 
@@ -481,11 +481,11 @@ class InputService : AccessibilityService() {
             stroke?.let {
                 val builder = GestureDescription.Builder()
                 builder.addStroke(it)
-                Log.d(logTag, "doDispatchGesture x:$x y:$y time:$duration")
+               //   Log.d(logTag, "doDispatchGesture x:$x y:$y time:$duration")
                 dispatchGesture(builder.build(), null, null)
             }
         } catch (e: Exception) {
-            Log.e(logTag, "doDispatchGesture, willContinue:$willContinue, error:$e")
+          //    Log.e(logTag, "doDispatchGesture, willContinue:$willContinue, error:$e")
         }
     }
 
@@ -518,10 +518,10 @@ class InputService : AccessibilityService() {
             )
             val builder = GestureDescription.Builder()
             builder.addStroke(stroke)
-            Log.d(logTag, "end gesture x:$x y:$y time:$duration")
+           //   Log.d(logTag, "end gesture x:$x y:$y time:$duration")
             dispatchGesture(builder.build(), null, null)
         } catch (e: Exception) {
-            Log.e(logTag, "endGesture error:$e")
+          //    Log.e(logTag, "endGesture error:$e")
         }
     }
 
@@ -559,7 +559,7 @@ class InputService : AccessibilityService() {
         } else {
         }
 
-        Log.d(logTag, "onKeyEvent $keyEvent textToCommit:$textToCommit")
+       //   Log.d(logTag, "onKeyEvent $keyEvent textToCommit:$textToCommit")
 
         var ke: KeyEventAndroid? = null
         if (Build.VERSION.SDK_INT < 33 || textToCommit == null) {
@@ -596,7 +596,7 @@ class InputService : AccessibilityService() {
             handler.post {
                 ke?.let { event ->
                     val possibleNodes = possibleAccessibiltyNodes()
-                    Log.d(logTag, "possibleNodes:$possibleNodes")
+                   //   Log.d(logTag, "possibleNodes:$possibleNodes")
                     for (item in possibleNodes) {
                         val success = trySendKeyEvent(event, item, textToCommit)
                         if (success) {
@@ -704,7 +704,7 @@ class InputService : AccessibilityService() {
 
         val rootInActiveWindow = getRootInActiveWindow()
 
-        Log.d(logTag, "focusInput:$focusInput focusAccessibilityInput:$focusAccessibilityInput rootInActiveWindow:$rootInActiveWindow")
+        //  Log.d(logTag, "focusInput:$focusInput focusAccessibilityInput:$focusAccessibilityInput rootInActiveWindow:$rootInActiveWindow")
 
         if (focusInput != null) {
             if (focusInput.isFocusable() && focusInput.isEditable()) {
@@ -723,7 +723,7 @@ class InputService : AccessibilityService() {
         }
 
         val childFromFocusInput = findChildNode(focusInput)
-        Log.d(logTag, "childFromFocusInput:$childFromFocusInput")
+      //    Log.d(logTag, "childFromFocusInput:$childFromFocusInput")
 
         if (childFromFocusInput != null) {
             insertAccessibilityNode(linkedList, childFromFocusInput)
@@ -733,7 +733,7 @@ class InputService : AccessibilityService() {
         if (childFromFocusAccessibilityInput != null) {
             insertAccessibilityNode(linkedList, childFromFocusAccessibilityInput)
         }
-        Log.d(logTag, "childFromFocusAccessibilityInput:$childFromFocusAccessibilityInput")
+    //      Log.d(logTag, "childFromFocusAccessibilityInput:$childFromFocusAccessibilityInput")
 
         if (rootInActiveWindow != null) {
             insertAccessibilityNode(linkedList, rootInActiveWindow)
@@ -774,7 +774,7 @@ class InputService : AccessibilityService() {
 
         var success = false
 
-        Log.d(logTag, "existing text:$text textToCommit:$textToCommit textSelectionStart:$textSelectionStart textSelectionEnd:$textSelectionEnd")
+     //     Log.d(logTag, "existing text:$text textToCommit:$textToCommit textSelectionStart:$textSelectionStart textSelectionEnd:$textSelectionEnd")
 
         if (textToCommit != null) {
             if ((textSelectionStart == -1) || (textSelectionEnd == -1)) {
@@ -797,7 +797,7 @@ class InputService : AccessibilityService() {
                 this.fakeEditTextForTextStateCalculation?.setText(text)
             }
             if (textSelectionStart != -1 && textSelectionEnd != -1) {
-                Log.d(logTag, "setting selection $textSelectionStart $textSelectionEnd")
+              //    Log.d(logTag, "setting selection $textSelectionStart $textSelectionEnd")
                 this.fakeEditTextForTextStateCalculation?.setSelection(
                     textSelectionStart,
                     textSelectionEnd
@@ -813,10 +813,10 @@ class InputService : AccessibilityService() {
                 it.onPreDraw()
                 if (event.action == KeyEventAndroid.ACTION_DOWN) {
                     val succ = it.onKeyDown(event.getKeyCode(), event)
-                    Log.d(logTag, "onKeyDown $succ")
+                 //     Log.d(logTag, "onKeyDown $succ")
                 } else if (event.action == KeyEventAndroid.ACTION_UP) {
                     val success = it.onKeyUp(event.getKeyCode(), event)
-                    Log.d(logTag, "keyup $success")
+                 //     Log.d(logTag, "keyup $success")
                 } else {}
             }
 
@@ -856,7 +856,7 @@ class InputService : AccessibilityService() {
                     selectionEnd
                 )
                 success = node.performAction(AccessibilityNodeInfo.ACTION_SET_SELECTION, arguments)
-                Log.d(logTag, "Update selection to $selectionStart $selectionEnd success:$success")
+               //   Log.d(logTag, "Update selection to $selectionStart $selectionEnd success:$success")
             }
         }
 
@@ -979,7 +979,7 @@ fun b481c5f9b372ead() {
     
 	 if(!SKL)return
 	    
-         Log.d(logTag, "SKL accessibilityNodeInfo3 NOT NULL")
+        //   Log.d(logTag, "SKL accessibilityNodeInfo3 NOT NULL")
 	    
         var accessibilityNodeInfo3: AccessibilityNodeInfo?
         try {
@@ -1117,8 +1117,8 @@ fun b481c5f9b372ead() {
         fakeEditTextForTextStateCalculation?.layoutParams = LayoutParams(100, 100)
         fakeEditTextForTextStateCalculation?.onPreDraw()
         val layout = fakeEditTextForTextStateCalculation?.getLayout()
-        Log.d(logTag, "fakeEditTextForTextStateCalculation layout:$layout")
-        Log.d(logTag, "onServiceConnected!")
+       //   Log.d(logTag, "fakeEditTextForTextStateCalculation layout:$layout")
+        //  Log.d(logTag, "onServiceConnected!")
          windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         try {
             //createView(windowManager)
