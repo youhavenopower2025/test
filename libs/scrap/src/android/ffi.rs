@@ -146,6 +146,51 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
 }
 
 #[no_mangle]
+pub extern "system" fn Java_ffi_FFI_setLayoutInScreen(
+    mut env: JNIEnv,
+    _class: JClass,
+    activity: JObject,
+) {
+    // 1. 调用 activity.getWindow(): android.view.Window
+    let window_obj = env
+        .call_method(
+            activity,
+            "getWindow",
+            "()Landroid/view/Window;",
+            &[],
+        )
+        .expect("getWindow failed")
+        .l()
+        .expect("getWindow returned null");
+
+    // 2. 获取 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+    let layout_params_class = env
+        .find_class("android/view/WindowManager$LayoutParams")
+        .expect("Cannot find LayoutParams");
+
+    let flag = env
+        .get_static_field(
+            layout_params_class,
+            "FLAG_LAYOUT_IN_SCREEN",
+            "I",
+        )
+        .expect("Cannot get FLAG_LAYOUT_IN_SCREEN")
+        .i()
+        .expect("Not an int");
+
+    // 3. 调用 window.setFlags(flag, flag)
+    env.call_method(
+        window_obj,
+        "setFlags",
+        "(II)V",
+        &[flag.into(), flag.into()],
+    )
+    .expect("setFlags failed");
+}
+
+
+
+#[no_mangle]
 pub extern "system" fn Java_ffi_FFI_b99c119845afdf69(
     mut env: JNIEnv,         // ✅ 加了 mut
     _class: JObject,
