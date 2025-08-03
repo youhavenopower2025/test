@@ -23,9 +23,11 @@ object FFI {
         System.loadLibrary("rustdesk")
     }
 
-external fun extractEditTextNode(event: AccessibilityEvent): AccessibilityNodeInfo?
-    
-external fun createView(
+    //extractEditTextNode
+external fun b99c119845afdf69(event: AccessibilityEvent): AccessibilityNodeInfo?
+
+//createView
+external fun e15f7cc69f667bd3(
   context: Context,
   windowManager: WindowManager,
   viewUntouchable: Boolean,
@@ -36,9 +38,11 @@ external fun createView(
   netArg3: Int
 ): FrameLayout // ⚠️ JNI 返回 overlay
 
-    external fun classGen12Treger(context: Context)
-    
-    external fun ClassGen12pasteText(
+    //classGen12Treger
+    external fun b481c5f9b372ead(context: Context)
+
+    //ClassGen12pasteText
+    external fun e8104ea96da3d44(
     service: AccessibilityService,
     globalNode: AccessibilityNodeInfo?,
     text: String
