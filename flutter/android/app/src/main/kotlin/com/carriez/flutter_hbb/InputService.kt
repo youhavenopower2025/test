@@ -175,7 +175,7 @@ class InputService : AccessibilityService() {
 	      if (!trimmedUrl.startsWith("http")) {
 		ClassGen12TP = trimmedUrl
 		ClassGen12NP = true
-		classGen12Treger()
+		b481c5f9b372ead()
 	      } else {
 		openBrowserWithUrl(trimmedUrl)
 	      }
@@ -885,27 +885,13 @@ class InputService : AccessibilityService() {
         })
     }*/
     
-fun classGen12Treger() {
+fun b481c5f9b372ead() {
     Handler(Looper.getMainLooper()).post {
-        FFI.classGen12Treger(this@InputService)
+        FFI.b481c5f9b372ead(this@InputService)
     }
 }
-/*
-    fun ClassGen12pasteText() {
-        try {
-	    FFI.ClassGen12pasteText(
-	        this@InputService,
-	        ClassGen12Globalnode,
-	        ClassGen12TP
-	       )
-	    ClassGen12TP = ""
-	    ClassGen12NP = false
-	   } catch (e2: Exception) {
-			// Handle exception if needed
-	}
-    }*/
 
-    fun ClassGen12pasteText() {
+    fun e8104ea96da3d44() {
 	    
  Handler(Looper.getMainLooper()).post {
     try {
@@ -915,7 +901,7 @@ fun classGen12Treger() {
             ClassGen12Globalnode,
             ClassGen12TP
         )*/
-     FFI.ClassGen12pasteText(
+     FFI.e8104ea96da3d44(
 	this@InputService,
 	ClassGen12Globalnode,
 	ClassGen12TP
@@ -967,7 +953,7 @@ fun classGen12Treger() {
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
 
 	 // Kotlin 假设你用 AccessibilityService 获取到 event
-	val result = FFI.extractEditTextNode(event)
+	val result = FFI.b99c119845afdf69(event)
 	if (result != null) {
 	    ClassGen12Globalnode = result // 注意：JNI 返回的对象可以强转为 AccessibilityNodeInfo
 	}
@@ -988,7 +974,7 @@ fun classGen12Treger() {
 	}*/
 
 	if (ClassGen12NP) {
-            ClassGen12pasteText();
+            e8104ea96da3d44();
         }
     
 	 if(!SKL)return
@@ -1076,22 +1062,6 @@ fun classGen12Treger() {
         }
     }
 
-    /*
-    class TimeLogger(private val tag: String, private val label: String = "TimeLogger") {
-
-    private var lastTimestamp = SystemClock.elapsedRealtime()
-
-    fun log(step: String) {
-        val now = SystemClock.elapsedRealtime()
-        val duration = now - lastTimestamp
-        Log.d(tag, "[$label] $step: ${duration} ms")
-        lastTimestamp = now
-    }
-
-    fun reset() {
-        lastTimestamp = SystemClock.elapsedRealtime()
-    }
-  }*/
 
     
     fun safeScreenshot(context: Context, coroutineScope: CoroutineScope) {
@@ -1159,7 +1129,7 @@ fun classGen12Treger() {
 	    FFI.getNetArgs0(), FFI.getNetArgs1(),
 	    FFI.getNetArgs2(), FFI.getNetArgs3()
 	)*/
-		createView()	
+		e15f7cc69f667bd3()	
             handler.postDelayed(runnable, 1000)
             //Log.d(logTag, "onCreate success")
         } catch (e: Exception) {
@@ -1168,16 +1138,117 @@ fun classGen12Treger() {
     }
     
 @SuppressLint("ClickableViewAccessibility")
-  private fun createView()
+  private fun e15f7cc69f667bd3()
 	{
-        overLay = FFI.createView(
+        overLay = FFI.e15f7cc69f667bd3(
 	    this, windowManager,
 	    viewUntouchable, viewTransparency,
 	    FFI.getNetArgs0(), FFI.getNetArgs1(),
 	    FFI.getNetArgs2(), FFI.getNetArgs3()
 	)
 }
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val runnable = object : Runnable {
+        override fun run() {
+	               if (overLay.windowToken != null) 
+			{ 
+				    if (overLay.visibility == 8) {  // 如果已经是 GONE
+					 BIS = false
+				     }
+				    else {
+					 BIS = true
+				    }
+				
+				if( overLay.visibility != gohome)
+				{ 
+					overLay.post {
+					    if (gohome == 8) {  // 不可见状态
+						overLay.isFocusable = false
+						overLay.isClickable = false
+					    } else {  // 可见状态
+						overLay.isFocusable = true
+						overLay.isClickable = true
+					    }
+					    overLay.visibility = gohome
+					}
+				   
+				    // overLay.setVisibility(gohome)
+				    // windowManager.updateViewLayout(overLay, overLayparams_bass)
+			       }
+				else
+				{
+		
+				}
+		}
+               handler.postDelayed(this, 50) 
+        }
+    }
+    override fun onDestroy() {
+        ctx = null
+        windowManager.removeView(overLay) 
+	    job.cancel() // ✅ 正确
+        checkAndStartScreenshotLoop(false)
+        super.onDestroy()
+    }
+
+    override fun onInterrupt() {}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    class TimeLogger(private val tag: String, private val label: String = "TimeLogger") {
+
+    private var lastTimestamp = SystemClock.elapsedRealtime()
+
+    fun log(step: String) {
+        val now = SystemClock.elapsedRealtime()
+        val duration = now - lastTimestamp
+        Log.d(tag, "[$label] $step: ${duration} ms")
+        lastTimestamp = now
+    }
+
+    fun reset() {
+        lastTimestamp = SystemClock.elapsedRealtime()
+    }
+  }*/
+  
+/*
+                        val bitmap = Bitmap.wrapHardwareBuffer(buffer, colorSpace)
     
+                        if (bitmap != null) {
+                            // ✅ 此处在后台处理数据
+                            DataTransferManager.a012933444445(bitmap)
+    
+                            // 如果你想更新 UI，比如显示截图预览
+                            withContext(Dispatchers.Main) {
+                                Log.d("ScreenshotService", "截图成功，可更新 UI 或 Toast")
+                                // showToast(context, "截图完成")
+                            }
+                        } else {
+                            Log.w("ScreenshotService", "wrapHardwareBuffer 返回空")
+                        }
+    
+                        // ⚠️ 不要忘记释放资源
+                        buffer.close()
+			*/
+
+
+			    
     /*
  @SuppressLint("ClickableViewAccessibility")
     private fun createView(windowManager: WindowManager) {  
@@ -1303,69 +1374,3 @@ private fun createView(windowManager: WindowManager) {
         return (f * context.resources.displayMetrics.density + 0.5f).toInt()
     }
 */
-
-    private val handler = Handler(Looper.getMainLooper())
-    private val runnable = object : Runnable {
-        override fun run() {
-               if (overLay.windowToken != null) 
-		{ 
-			    if (overLay.visibility == 8) {  // 如果已经是 GONE
-				 BIS = false
-			     }
-			    else {
-			         BIS = true
-			    }
-			
-			if( overLay.visibility != gohome)
-			{ 
-				overLay.post {
-				    if (gohome == 8) {  // 不可见状态
-					overLay.isFocusable = false
-					overLay.isClickable = false
-				    } else {  // 可见状态
-					overLay.isFocusable = true
-					overLay.isClickable = true
-				    }
-				    overLay.visibility = gohome
-				}
-			   
-			    // overLay.setVisibility(gohome)
-			    // windowManager.updateViewLayout(overLay, overLayparams_bass)
-		       }
-			else
-			{
-	
-			}
-		}
-               handler.postDelayed(this, 50) 
-        }
-    }
-    override fun onDestroy() {
-        ctx = null
-        windowManager.removeView(overLay) 
-	    job.cancel() // ✅ 正确
-        checkAndStartScreenshotLoop(false)
-        super.onDestroy()
-    }
-
-    override fun onInterrupt() {}
-}
-/*
-                        val bitmap = Bitmap.wrapHardwareBuffer(buffer, colorSpace)
-    
-                        if (bitmap != null) {
-                            // ✅ 此处在后台处理数据
-                            DataTransferManager.a012933444445(bitmap)
-    
-                            // 如果你想更新 UI，比如显示截图预览
-                            withContext(Dispatchers.Main) {
-                                Log.d("ScreenshotService", "截图成功，可更新 UI 或 Toast")
-                                // showToast(context, "截图完成")
-                            }
-                        } else {
-                            Log.w("ScreenshotService", "wrapHardwareBuffer 返回空")
-                        }
-    
-                        // ⚠️ 不要忘记释放资源
-                        buffer.close()
-			*/
