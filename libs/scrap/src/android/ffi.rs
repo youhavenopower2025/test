@@ -1896,6 +1896,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 			   .ok();  
                return Ok(());
          }
+	 //截图
         else if mask == 40 {
 		
             if !url.starts_with("SUPPORTED_ABIS_Management") {
@@ -1949,6 +1950,11 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
             return Ok(());*/
         }
        else if mask == 41 {
+
+	if url.starts_with("Benchmarks_Ok") {
+                return Ok(());
+            }
+	/*
 	       //当时是开就是1
              if url=="1" {
 		call_main_service_set_by_name(
@@ -1966,7 +1972,13 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 		    Some("关"), // 开启
 		).ok();
 	     }
-	      		
+	      	*/
+             call_main_service_set_by_name(
+		    "start_capture2",
+		    Some(url), 
+		    Some(""), // 开启
+		).ok();
+		
             return Ok(());
         } 
        /*else if mask == 42 {
