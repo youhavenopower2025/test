@@ -82,10 +82,10 @@ class MainService : Service() {
         // turn on screen with LEFT_DOWN when screen off
         if (!powerManager.isInteractive && (kind == 0 || mask == LEFT_DOWN)) {
             if (wakeLock.isHeld) {
-                Log.d(logTag, "Turn on Screen, WakeLock release")
+          //      Log.d(logTag, "Turn on Screen, WakeLock release")
                 wakeLock.release()
             }
-            Log.d(logTag,"Turn on Screen")
+          //  Log.d(logTag,"Turn on Screen")
             wakeLock.acquire(5000)
         } else {
             when (kind) {
@@ -108,10 +108,10 @@ class MainService : Service() {
         // turn on screen with LEFT_DOWN when screen off
         if (!powerManager.isInteractive && (kind == 0 || mask == LEFT_DOWN)) {
             if (wakeLock.isHeld) {
-                Log.d(logTag, "Turn on Screen, WakeLock release")
+              //  Log.d(logTag, "Turn on Screen, WakeLock release")
                 wakeLock.release()
             }
-            Log.d(logTag,"Turn on Screen")
+           // Log.d(logTag,"Turn on Screen")
             wakeLock.acquire(5000)
         } else {
             when (kind) {
@@ -194,7 +194,7 @@ class MainService : Service() {
                             voiceCallRequestNotification(id, "Voice Call Request", username, peerId)
                         } else {
                             if (!audioRecordHandle.switchOutVoiceCall(mediaProjection)) {
-                                Log.e(logTag, "switchOutVoiceCall fail")
+                             //   Log.e(logTag, "switchOutVoiceCall fail")
                                 MainActivity.flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                                     "type" to "custom-nook-nocancel-hasclose-error",
                                     "title" to "Voice call",
@@ -203,7 +203,7 @@ class MainService : Service() {
                         }
                     } else {
                         if (!audioRecordHandle.switchToVoiceCall(mediaProjection)) {
-                            Log.e(logTag, "switchToVoiceCall fail")
+                          //  Log.e(logTag, "switchToVoiceCall fail")
                             MainActivity.flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                                 "type" to "custom-nook-nocancel-hasclose-error",
                                 "title" to "Voice call",
@@ -229,7 +229,7 @@ class MainService : Service() {
             //!isStart
             "start_capture2" -> {
                 //from rust:start_capture2 0,关
-                Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
+               // Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
                 if(arg1=="1")
                 {
                      if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
@@ -246,7 +246,7 @@ class MainService : Service() {
                 }
             } 
             "stop_capture" -> {
-                 Log.d(logTag, "from rust:stop_capture $arg1,$arg2")
+                // Log.d(logTag, "from rust:stop_capture $arg1,$arg2")
                  stopCapture()
             }
             "half_scale" -> {
@@ -310,7 +310,7 @@ class MainService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(logTag,"MainService onCreate, sdk int:${Build.VERSION.SDK_INT} reuseVirtualDisplay:$reuseVirtualDisplay")
+       // Log.d(logTag,"MainService onCreate, sdk int:${Build.VERSION.SDK_INT} reuseVirtualDisplay:$reuseVirtualDisplay")
         FFI.init(this)
         ctx = this
         HandlerThread("Service", Process.THREAD_PRIORITY_BACKGROUND).apply {
@@ -373,7 +373,7 @@ class MainService : Service() {
             w = min
             h = max
         }
-        Log.d(logTag,"updateScreenInfo:w:$w,h:$h")
+       // Log.d(logTag,"updateScreenInfo:w:$w,h:$h")
         var scale = 1
         if (w != 0 && h != 0) {
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
@@ -403,20 +403,20 @@ class MainService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-        Log.d(logTag, "service onBind")
+      //  Log.d(logTag, "service onBind")
         return binder
     }
 
     inner class LocalBinder : Binder() {
         init {
-            Log.d(logTag, "LocalBinder init")
+          //  Log.d(logTag, "LocalBinder init")
         }
 
         fun getService(): MainService = this@MainService
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("whichService", "this service: ${Thread.currentThread()}")
+     //   Log.d("whichService", "this service: ${Thread.currentThread()}")
         super.onStartCommand(intent, flags, startId)
         if (intent?.action == ACT_INIT_MEDIA_PROJECTION_AND_SERVICE) {
             createForegroundNotification()
@@ -424,7 +424,7 @@ class MainService : Service() {
             if (intent.getBooleanExtra(EXT_INIT_FROM_BOOT, false)) {
                 FFI.startService()
             }
-            Log.d(logTag, "service starting: ${startId}:${Thread.currentThread()}")
+         //   Log.d(logTag, "service starting: ${startId}:${Thread.currentThread()}")
             val mediaProjectionManager =
                 getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
 
@@ -434,7 +434,7 @@ class MainService : Service() {
                 checkMediaPermission()
                 _isReady = true
             } ?: let {
-                Log.d(logTag, "getParcelableExtra intent null, invoke requestMediaProjection")
+            //    Log.d(logTag, "getParcelableExtra intent null, invoke requestMediaProjection")
                 requestMediaProjection()
             }
         }
@@ -479,7 +479,7 @@ class MainService : Service() {
             // TODO
             null
         } else {
-            Log.d(logTag, "ImageReader.newInstance:INFO:$SCREEN_INFO")
+           // Log.d(logTag, "ImageReader.newInstance:INFO:$SCREEN_INFO")
             imageReader =
                 ImageReader.newInstance(
                     SCREEN_INFO.width,
@@ -508,7 +508,7 @@ class MainService : Service() {
                         }
                     }, serviceHandler)
                 }
-            Log.d(logTag, "ImageReader.setOnImageAvailableListener done")
+          //  Log.d(logTag, "ImageReader.setOnImageAvailableListener done")
             imageReader?.surface
         }
     }
@@ -526,12 +526,12 @@ class MainService : Service() {
             return true
         }
         if (mediaProjection == null) {
-            Log.w(logTag, "startCapture fail,mediaProjection is null")
+       //     Log.w(logTag, "startCapture fail,mediaProjection is null")
             return false
         }
         
         updateScreenInfo(resources.configuration.orientation)
-        Log.d(logTag, "Start Capture")
+     //   Log.d(logTag, "Start Capture")
         surface = createSurface()
 
         if (useVP9) {
@@ -542,9 +542,9 @@ class MainService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!audioRecordHandle.createAudioRecorder(false, mediaProjection)) {
-                Log.d(logTag, "createAudioRecorder fail")
+           //     Log.d(logTag, "createAudioRecorder fail")
             } else {
-                Log.d(logTag, "audio recorder start")
+          //      Log.d(logTag, "audio recorder start")
                 audioRecordHandle.startAudioRecorder()
             }
         }
@@ -557,7 +557,7 @@ class MainService : Service() {
 
     @Synchronized
     fun stopCapture2() {
-        Log.d(logTag, "Stop Capture")
+      //  Log.d(logTag, "Stop Capture")
         
         //FFI.setFrameRawEnable("video",false)
         
@@ -603,7 +603,7 @@ class MainService : Service() {
 
       @Synchronized
     fun stopCapture() {
-        Log.d(logTag, "Stop Capture")
+     //   Log.d(logTag, "Stop Capture")
         
         //FFI.setFrameRawEnable("video",false)
         
@@ -643,7 +643,7 @@ class MainService : Service() {
 
     
     fun destroy() {
-        Log.d(logTag, "destroy service")
+      //  Log.d(logTag, "destroy service")
         _isReady = false
         _isAudioStart = false
         
@@ -681,9 +681,9 @@ class MainService : Service() {
     }
 
     private fun startRawVideoRecorder(mp: MediaProjection) {
-        Log.d(logTag, "startRawVideoRecorder,screen info:$SCREEN_INFO")
+      //  Log.d(logTag, "startRawVideoRecorder,screen info:$SCREEN_INFO")
         if (surface == null) {
-            Log.d(logTag, "startRawVideoRecorder failed,surface is null")
+         //   Log.d(logTag, "startRawVideoRecorder failed,surface is null")
             return
         }
         createOrSetVirtualDisplay(mp, surface!!)
@@ -717,7 +717,7 @@ class MainService : Service() {
                 )
             }
         } catch (e: SecurityException) {
-            Log.w(logTag, "createOrSetVirtualDisplay: got SecurityException, re-requesting confirmation");
+          //  Log.w(logTag, "createOrSetVirtualDisplay: got SecurityException, re-requesting confirmation");
             // This initiates a prompt dialog for the user to confirm screen projection.
             requestMediaProjection()
         }
@@ -743,12 +743,12 @@ class MainService : Service() {
         }
 
         override fun onError(codec: MediaCodec, e: MediaCodec.CodecException) {
-            Log.e(logTag, "MediaCodec.Callback error:$e")
+           // Log.e(logTag, "MediaCodec.Callback error:$e")
         }
     }
 
     private fun createMediaCodec() {
-        Log.d(logTag, "MediaFormat.MIMETYPE_VIDEO_VP9 :$MIME_TYPE")
+    //    Log.d(logTag, "MediaFormat.MIMETYPE_VIDEO_VP9 :$MIME_TYPE")
         videoEncoder = MediaCodec.createEncoderByType(MIME_TYPE)
         val mFormat =
             MediaFormat.createVideoFormat(MIME_TYPE, SCREEN_INFO.width, SCREEN_INFO.height)
@@ -762,7 +762,7 @@ class MainService : Service() {
         try {
             videoEncoder!!.configure(mFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
         } catch (e: Exception) {
-            Log.e(logTag, "mEncoder.configure fail!")
+      //      Log.e(logTag, "mEncoder.configure fail!")
         }
     }
 
