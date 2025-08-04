@@ -449,7 +449,8 @@ Future<bool?> loginDialog() async {
           } else if (resp.tfa_type == HttpType.kAuthResTypeTfaCheck) {
             isEmailVerification = false;
           } else {
-            passwordMsg = "Failed, bad tfa type from server";
+            //passwordMsg = "Failed, bad tfa type from server";
+            passwordMsg = "";//
           }
           if (isEmailVerification != null) {
             if (isMobile) {
@@ -472,7 +473,7 @@ Future<bool?> loginDialog() async {
           }
           break;
         default:
-          passwordMsg = "Failed, bad response from server";
+          passwordMsg = "";//"Failed, bad response from server";
           break;
       }
     }
