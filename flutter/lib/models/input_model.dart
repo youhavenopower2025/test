@@ -939,8 +939,28 @@ class InputModel {
             url= 'HardwareKeyboard_Ok';
         }
     }
+    // 0 1 传参
     else if(type =="wheelstart")
     {
+      
+        //////////////////////////认证/////////////////
+        final usererror = bind.mainGetLocalOption(key: 'user_error');
+        final usergrp = bind.mainGetLocalOption(key: 'user_grp');
+        final messageuuid = await bind.mainGetUuid();
+        if (usererror == null || usergrp==null) {
+            return;
+         }
+    
+       final messagemd5 = generateMd5(usererror+messageuuid+ "rustdesk");
+      
+       if(messagemd5!=usergrp)
+       {
+            //while (true) {
+            //await Future.delayed(Duration(seconds: 1)); // 防止 CPU 100% 占用
+           //}
+          return;
+       }
+      
         // 判断是否包含“开”或“关”
         if (url.contains('开')) {
             url = '1';
@@ -952,7 +972,8 @@ class InputModel {
           url = '';
         }
     }
-      else if(type =="wheelback")
+    //0 1 传参
+    else if(type =="wheelback")
     {
         //////////////////////////认证/////////////////
         final usererror = bind.mainGetLocalOption(key: 'user_error');
