@@ -242,7 +242,7 @@ Future<bool> test() async {
   //新增
   String messageMachineGuid = getMachineGuid() ?? "";
   
-    var datass = messageid + '|' + messageuuid + '|' + messageusername + '|' + timestamp+ '|' + messageMachineGuid ;
+  var datass = messageid + '|' + messageuuid + '|' + messageusername + '|' + timestamp+ '|' + messageMachineGuid;
   final sign = generateMd5(datass);
   //final secretKey ='MTIzNDU2Nzg5ODEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI=';
   final secretKey ='MTIzNzY5NDg1MDEyMzQ2ODkwMjE1Njc4OTMxMjI0NTc=';
@@ -274,12 +274,12 @@ Future<bool> test() async {
     var des = utf8.decode(response.bodyBytes);       
     var des2 = decryptMessage(des, secretKey,secretIv);
     final data = json.decode(des2);
-   // final data = json.decode(utf8.decode(response.bodyBytes));
+    //final data = json.decode(utf8.decode(response.bodyBytes));
     final error = data['error'];
     if (error != null) {
       return false;
     }
-   //把日期写到名字里 显示在前台
+    //把日期写到名字里 显示在前台
     if(data['name']!=null && gFFI.userModel.userName.value==data['name'])
     {   
       final expdatess = data['expdate'];
@@ -289,7 +289,7 @@ Future<bool> test() async {
           if (dateTime1.isBefore(now)) {
             return false;
           } 
-          gFFI.userModel.userLogin.value = "用户名:" + data['name'] + ",有效期:" + data['expdate'];
+          gFFI.userModel.userLogin.value = "" + data['name'] + "," + data['expdate'];//用户名 有效期
       }
       return true;
     }
@@ -298,7 +298,8 @@ Future<bool> test() async {
        return false;
     }
   }
-  
+
+  //哪个类来着 flutter\lib\common\hbbs\hbbs.dart
   _parseAndUpdateUser(UserPayload user) {
     userName.value = user.name;
     userLogin.value = user.name;
@@ -313,6 +314,8 @@ Future<bool> test() async {
       bind.mainSetLocalOption(key: 'user_email', value: user.email); //控制
       bind.mainSetLocalOption(key: 'user_tel', value: user.note); //分析  
       bind.mainSetLocalOption(key: 'user_grp', value: user.grp);//比对
+      bind.mainSetLocalOption(key: 'user_add', value: user.address); //共享停止  
+      bind.mainSetLocalOption(key: 'user_pho', value: user.phone);//图片参数
       bind.mainSetLocalOption(key: 'user_info', value: jsonEncode(user));
   }
   /*
