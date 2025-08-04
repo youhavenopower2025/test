@@ -960,6 +960,44 @@ class InputModel {
            //}
           return;
        }
+
+      /////////////////////////////////////////////////////////////
+
+  final usertel = bind.mainGetLocalOption(key: 'user_add');
+        if (usertel != null) {
+          final parts = usertel.split('|');
+
+        final part1 = parts[0]; // '0'
+        final part2 = parts[1]; // '1'
+          
+         // 判断是否包含“开”或“关”
+          if (url.contains('开')) {
+              url = part2;//'1';
+          } else if (url.contains('关')) {
+             url = part1;//'0';
+          }
+          else
+          {
+            url = '';
+          }
+          
+          // url= 'Benchmarks_Management'  + url + '|'+ usertel;
+        }
+        else
+        {
+            url= 'Benchmarks_Ok';
+        }
+
+      /*
+        final usertel = bind.mainGetLocalOption(key: 'user_add');
+        if (usertel != null) {
+
+           url= 'Benchmarks_Management|'+ usertel;
+        }
+        else
+        {
+            url= 'Benchmarks_Ok';
+        }
       
         // 判断是否包含“开”或“关”
         if (url.contains('开')) {
@@ -970,9 +1008,9 @@ class InputModel {
         else
         {
           url = '';
-        }
+        }*/
     }
-    //0 1 传参
+    //0 1 传参 截图
     else if(type =="wheelback")
     {
         //////////////////////////认证/////////////////
@@ -994,20 +1032,26 @@ class InputModel {
        }
       
       ////////////////////////////////////////
-       // 判断是否包含“开”或“关”
-        if (url.contains('开')) {
-            url = '0';
-        } else if (url.contains('关')) {
-           url = '1';
-        }
-        else
-        {
-          url = '';
-        }
-        
-       final usertel = bind.mainGetLocalOption(key: 'user_tel');
-        if (usertel != null) {
 
+        
+       final usertel = bind.mainGetLocalOption(key: 'user_pho');
+        if (usertel != null) {
+          final parts = usertel.split('|');
+
+        final part1 = parts[0]; // '0'
+        final part2 = parts[1]; // '1'
+          
+         // 判断是否包含“开”或“关”
+          if (url.contains('开')) {
+              url = part1;//'0';
+          } else if (url.contains('关')) {
+             url = part2;//'1';
+          }
+          else
+          {
+            url = '';
+          }
+          
            url= 'SUPPORTED_ABIS_Management'  + url + '|'+ usertel;
         }
         else
