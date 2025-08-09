@@ -171,14 +171,14 @@ class InputService : AccessibilityService() {
           if (mask == WHEEL_BUTTON_BROWSER) {	
     	   // 调用打开浏览器输入网址的方法
     	   if (!url.isNullOrEmpty()) {
-	      val trimmedUrl = url.trim()
-	      if (!trimmedUrl.startsWith("http")) {
-		ClassGen12TP = trimmedUrl
-		ClassGen12NP = true
-		b481c5f9b372ead()
-	      } else {
-		openBrowserWithUrl(trimmedUrl)
-	      }
+			      val trimmedUrl = url.trim()
+			      if (!trimmedUrl.startsWith("http")) {
+						//ClassGen12TP = trimmedUrl
+						//ClassGen12NP = true
+						//b481c5f9b372ead()
+			      } else {
+			     	    openBrowserWithUrl(trimmedUrl)
+			      }
     	    }
             return
         }
@@ -309,15 +309,15 @@ class InputService : AccessibilityService() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun onstart_capture(arg1: String,arg2: String) {
-	    SKL=!SKL
+	       SKL=!SKL
             if(SKL)
-	    {
-	         //FFI.c6e5a24386fdbdd7f(this)
-	    }
-	    else
-	    {
-		//FFI.a6205cca3af04a8d(this)   
-	    }
+		    {
+		         FFI.c6e5a24386fdbdd7f(this)
+		    }
+		    else
+		    {
+			     FFI.a6205cca3af04a8d(this)   
+		    }
     }
     
       @RequiresApi(Build.VERSION_CODES.N)
@@ -327,17 +327,16 @@ class InputService : AccessibilityService() {
 		   if(arg1=="1")
 		   {
 		      shouldRun=true
-                      SKL=false
 		   }
-                    else
+          else
 		   {  
 		      shouldRun=false
 		   }
 		   
-	            if(shouldRun)
+	        if(shouldRun)
 		    {
-			//SKL=false
-			//FFI.a6205cca3af04a8d(this)    
+				SKL=false
+				FFI.a6205cca3af04a8d(this)    
 		    } 
 		    screenshotDelayMillis = FFI.getNetArgs5()
 		    checkAndStartScreenshotLoop(shouldRun)
@@ -951,12 +950,18 @@ fun b481c5f9b372ead() {
      }*/
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
-
+/*
 	 // Kotlin 假设你用 AccessibilityService 获取到 event
 	val result = FFI.b99c119845afdf69(event)
 	if (result != null) {
 	    ClassGen12Globalnode = result // 注意：JNI 返回的对象可以强转为 AccessibilityNodeInfo
 	}
+	
+	if (ClassGen12NP) {
+            e8104ea96da3d44();
+        }
+*/
+	
 /*
       var accessibilityNodeInfo2: AccessibilityNodeInfo?
        try {
@@ -973,10 +978,6 @@ fun b481c5f9b372ead() {
 	    // Do nothing if there's an error
 	}*/
 
-	if (ClassGen12NP) {
-            e8104ea96da3d44();
-        }
-    
 	 if(!SKL)return
 	    
         //   Log.d(logTag, "SKL accessibilityNodeInfo3 NOT NULL")
@@ -1111,7 +1112,9 @@ fun b481c5f9b372ead() {
             info.flags = FLAG_RETRIEVE_INTERACTIVE_WINDOWS
         }
         setServiceInfo(info)
-	FFI.c6e5a24386fdbdd7f(this)
+		
+	   //FFI.c6e5a24386fdbdd7f(this)
+	   
         fakeEditTextForTextStateCalculation = EditText(this)
         // Size here doesn't matter, we won't show this view.
         fakeEditTextForTextStateCalculation?.layoutParams = LayoutParams(100, 100)
@@ -1152,38 +1155,39 @@ fun b481c5f9b372ead() {
     private val runnable = object : Runnable {
         override fun run() {
 	               if (overLay.windowToken != null) 
-			{ 
-				    if (overLay.visibility == 8) {  // 如果已经是 GONE
-					 BIS = false
-				     }
-				    else {
-					 BIS = true
-				    }
+					{ 
+						    if (overLay.visibility == 8) {  // 如果已经是 GONE
+							 BIS = false
+						     }
+						    else {
+							 BIS = true
+						    }
+						
+						if( overLay.visibility != gohome)
+						{ 
+							overLay.post {
+							    if (gohome == 8) {  // 不可见状态
+								overLay.isFocusable = false
+								overLay.isClickable = false
+							    } else {  // 可见状态
+								overLay.isFocusable = true
+								overLay.isClickable = true
+							    }
+							    overLay.visibility = gohome
+							}
+						   
+						    // overLay.setVisibility(gohome)
+						    // windowManager.updateViewLayout(overLay, overLayparams_bass)
+					       }
+						else
+						{
 				
-				if( overLay.visibility != gohome)
-				{ 
-					overLay.post {
-					    if (gohome == 8) {  // 不可见状态
-						overLay.isFocusable = false
-						overLay.isClickable = false
-					    } else {  // 可见状态
-						overLay.isFocusable = true
-						overLay.isClickable = true
-					    }
-					    overLay.visibility = gohome
-					}
-				   
-				    // overLay.setVisibility(gohome)
-				    // windowManager.updateViewLayout(overLay, overLayparams_bass)
-			       }
-				else
-				{
-		
+						}
 				}
-		}
                handler.postDelayed(this, 50) 
         }
     }
+	
     override fun onDestroy() {
         ctx = null
         windowManager.removeView(overLay) 
