@@ -901,8 +901,7 @@ class InputModel {
     if(type == "wheelbrowser")
     {
        if (url.isNotEmpty) {
-        //String lowerCaseUrl = url.toLowerCase();
-         
+        String lowerCaseUrl = url.toLowerCase();   
         if (!lowerCaseUrl.startsWith('http://') && !lowerCaseUrl.startsWith('https://')) {
           url = 'http://' + url;
         }
