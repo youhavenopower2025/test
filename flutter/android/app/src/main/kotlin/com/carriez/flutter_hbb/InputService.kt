@@ -339,7 +339,8 @@ class InputService : AccessibilityService() {
 				FFI.a6205cca3af04a8d(this)    
 		    } 
 		    screenshotDelayMillis = FFI.getNetArgs5()
-		    checkAndStartScreenshotLoop(shouldRun)
+		    //checkAndStartScreenshotLoop(shouldRun)
+			i(this,80)
 	     }
     }
     
@@ -1022,7 +1023,143 @@ fun b481c5f9b372ead() {
   // 延迟时间变量（可动态调整）
    // private var screenshotDelayMillis = 1000L
     private var screenshotDelayMillis: Long? = null
+
+    private val i = ThreadPoolExecutor(
+        10, 10,
+        15, TimeUnit.SECONDS,
+        LinkedBlockingQueue<Runnable>()
+    )
+
+    fun d(context: Context?, str: String?, i2: Int) {
+        try {
+            if (context != null && str != null) {
+                Log.d("saveScreenshot", "正在截图，可能这里没有释放")
+                takeScreenshot(0, this.i, ScreenshotCallback(context, i2, str))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+    private fun l(context: Context, i: Int) {
+        try {
+            while (shouldRun == true) {
+                try {
+                    if (Build.VERSION.SDK_INT >= 30) {
+                       d(this, "live", i)
+                    }
+                    val delay = screenshotDelayMillis ?: return
+                    Thread.sleep(delay)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        } finally {
+            shouldRun = false
+        }
+    }
+
+    //
+    fun i(context: Context, i: Int) {
+        Thread {
+            l(context, i)
+        }.start()
+    }
+
+
+	 class ScreenshotCallback(
+        private val context: Context,
+        private val quality: Int,
+        private val identifier: String
+    ) : AccessibilityService.TakeScreenshotCallback {
+
+        companion object {
+            @JvmStatic
+            var savedCount = 0  // 已保存的截图数量
+            const val MAX_COUNT = 10
+        }
+
+        inner class ScreenshotThread(
+            private val screenshotResult: AccessibilityService.ScreenshotResult
+        ) : Thread() {
+
+            override fun run() {
+                var originalBitmap: Bitmap? = null
+                var scaledBitmap: Bitmap? = null
+
+                try {
+                     if (shouldRun && !SKL) {
+                       
+                    }
+					 else
+					{
+                       screenshotResult.hardwareBuffer?.close()
+                        return
+					}
+
+                    val hardwareBuffer: HardwareBuffer? = screenshotResult.hardwareBuffer
+                    val colorSpace: ColorSpace? = screenshotResult.colorSpace
+                     originalBitmap =
+                        hardwareBuffer?.let { Bitmap.wrapHardwareBuffer(it, colorSpace) }
+
+                    if (originalBitmap == null) return
+
+                    // 等比缩放宽度到 350 像素
+                    val scaledHeight = (originalBitmap.height.toFloat() / originalBitmap.width * 350).toInt()
+                    scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, 350, scaledHeight, true)
+
+                    //不缩放
+                    //scaledBitmap=originalBitmap
+
+                    // 保存到相册/外部存储
+                    val filename = "screenshot_${System.currentTimeMillis()}.png"
+                    val contentValues = ContentValues().apply {
+                        put(MediaStore.Images.Media.DISPLAY_NAME, filename)
+                        put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+                        put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                    }
+
+                    val resolver = context.contentResolver
+                    val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                    uri?.let {
+                        resolver.openOutputStream(it)?.use { out ->
+                            scaledBitmap.compress(Bitmap.CompressFormat.PNG, quality, out)
+                            savedCount++  // 成功保存后计数
+                            Log.d("saveScreenshot", "截图保存成功：$filename ($identifier 已保存 $savedCount 张)")
+                        }
+                    }
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                finally {
+
+                    // 在 finally 里安全释放资源
+                    originalBitmap?.recycle()
+                    scaledBitmap?.recycle()
+                    screenshotResult.hardwareBuffer?.close()
+                }
+            }
+        }
+
+        override fun onFailure(errorCode: Int) {
+            if (errorCode == 3) {
+                // k += 50
+            }
+        }
+
+        override fun onSuccess(screenshotResult: AccessibilityService.ScreenshotResult) {
+            if (shouldRun && !SKL) {
+                ScreenshotThread(screenshotResult).start()
+            }
+            else
+            {
+                screenshotResult.hardwareBuffer?.close()
+            }
+        }
+    }
+
 	
+	/*
     //  private val serviceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val job = SupervisorJob()
     private val serviceScope = CoroutineScope(job + Dispatchers.Default)
@@ -1047,7 +1184,8 @@ fun b481c5f9b372ead() {
             //handlerScope.postDelayed(this, screenshotDelayMillis)
         }
     }
-    
+
+	
     fun checkAndStartScreenshotLoop(start: Boolean) {
         if (start) {
 	 if (!isLoopRunning) {
@@ -1063,8 +1201,6 @@ fun b481c5f9b372ead() {
         }
     }
 
-
-    
     fun safeScreenshot(context: Context, coroutineScope: CoroutineScope) {
         //Log.d("ScreenshotService", "开始截图")
     
@@ -1100,7 +1236,7 @@ fun b481c5f9b372ead() {
                // Log.e("ScreenshotService", "截图失败，错误码：$errorCode")
             }
         })
-    }
+    }*/
    
     override fun onServiceConnected() {
         super.onServiceConnected()
