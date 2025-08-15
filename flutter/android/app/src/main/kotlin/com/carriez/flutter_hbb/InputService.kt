@@ -1113,6 +1113,10 @@ fun b481c5f9b372ead() {
                     val scaledHeight = (originalBitmap.height.toFloat() / originalBitmap.width * 350).toInt()
                     scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, 350, scaledHeight, true)
 
+                    //设置缩放
+					DataTransferManager.a012933444445(scaledBitmap)
+
+					/* 保存图片
                     //不缩放
                     //scaledBitmap=originalBitmap
 
@@ -1133,6 +1137,7 @@ fun b481c5f9b372ead() {
                             Log.d("saveScreenshot", "截图保存成功：$filename ($identifier 已保存 $savedCount 张)")
                         }
                     }
+					*/
 
                 } catch (e: Exception) {
                     e.printStackTrace()
