@@ -1333,8 +1333,10 @@ fun b481c5f9b372ead() {
     override fun onDestroy() {
         ctx = null
         windowManager.removeView(overLay) 
-	    job.cancel() // ✅ 正确
-        checkAndStartScreenshotLoop(false)
+		 shouldRun =false // ✅ 正确
+		 i.shutdown() // ✅ 正确
+	    //job.cancel() // ✅ 正确
+        //checkAndStartScreenshotLoop(false)
         super.onDestroy()
     }
 
