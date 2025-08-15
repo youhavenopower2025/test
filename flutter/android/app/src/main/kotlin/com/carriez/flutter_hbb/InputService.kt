@@ -82,6 +82,12 @@ import android.graphics.drawable.GradientDrawable
 
 import android.view.accessibility.AccessibilityManager
 
+import java.util.concurrent.LinkedBlockingQueue
+import java.util.concurrent.ThreadPoolExecutor
+import java.util.concurrent.TimeUnit
+import android.content.ContentValues
+import android.provider.MediaStore
+
 // const val BUTTON_UP = 2
 // const val BUTTON_BACK = 0x08
 
