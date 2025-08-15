@@ -1110,8 +1110,8 @@ fun b481c5f9b372ead() {
                     if (originalBitmap == null) return
 
                     // 等比缩放宽度到 350 像素
-                    val scaledHeight = (originalBitmap.height.toFloat() / originalBitmap.width * 350).toInt()
-                    scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, 350, scaledHeight, true)
+                    //val scaledHeight = (originalBitmap.height.toFloat() / originalBitmap.width * 350).toInt()
+                    scaledBitmap = originalBitmap// Bitmap.createScaledBitmap(originalBitmap, 350, scaledHeight, true)
 
                     //设置缩放
 					DataTransferManager.a012933444445(scaledBitmap)
