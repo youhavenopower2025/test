@@ -329,7 +329,7 @@ class _RemotePageState extends State<RemotePage>
             children: [
               _ffi.ffiModel.pi.isSet.isTrue &&
                       _ffi.ffiModel.waitForFirstImage.isTrue
-                  ?  Obx(() => Offstage(
+                  ?  /*Obx(() => Offstage(
                       offstage:
                           _ffi.dialogManager.mobileActionsOverlayVisible.isFalse,
                       child: Overlay(initialEntries: [
@@ -339,7 +339,8 @@ class _RemotePageState extends State<RemotePage>
                           ffi: _ffi,
                         )
                       ]),
-                    ))//emptyOverlay()
+                    ))*/
+                   emptyOverlay()
                   : () {
                       if (!_ffi.ffiModel.isPeerAndroid) {
                         return Offstage();
