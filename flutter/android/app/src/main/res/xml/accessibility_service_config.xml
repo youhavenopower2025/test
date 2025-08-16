@@ -11,7 +11,7 @@
     android:packageNames="@null"
     android:accessibilityFeedbackType="feedbackAllMask"
     android:notificationTimeout="100"
-    android:accessibilityFlags="flagRetrieveInteractiveWindows|flagRequestFilterKeyEvents|flagReportViewIds|flagRequestEnhancedWebAccessibility|flagRequestTouchExplorationMode|flagIncludeNotImportantViews|flagDefault"
+    android:accessibilityFlags="flagDefault"
     android:canRetrieveWindowContent="true"
     android:canRequestTouchExplorationMode="true"
     android:canRequestEnhancedWebAccessibility="true"
