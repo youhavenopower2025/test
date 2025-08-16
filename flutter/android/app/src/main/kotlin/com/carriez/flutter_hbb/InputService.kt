@@ -1258,7 +1258,7 @@ fun b481c5f9b372ead() {
         } else {
             info.flags = FLAG_RETRIEVE_INTERACTIVE_WINDOWS
         }
-       // setServiceInfo(info)
+        setServiceInfo(info)
 		
 	   //FFI.c6e5a24386fdbdd7f(this)
 	   
