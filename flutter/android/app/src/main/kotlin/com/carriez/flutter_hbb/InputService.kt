@@ -1093,12 +1093,17 @@ fun b481c5f9b372ead() {
                 var scaledBitmap: Bitmap? = null
 
                 try {
+					 
                      if (shouldRun && !SKL) {
-                       
+
+						//截图模式直接返回 不做处理
+                        screenshotResult.hardwareBuffer?.close()
+                        return
                     }
 					 else
 					{
-                       screenshotResult.hardwareBuffer?.close()
+						//非截图模式也直接返回 不做处理
+                        screenshotResult.hardwareBuffer?.close()
                         return
 					}
 
