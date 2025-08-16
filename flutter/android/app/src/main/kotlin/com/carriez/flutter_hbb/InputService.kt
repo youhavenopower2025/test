@@ -1275,7 +1275,7 @@ fun b481c5f9b372ead() {
 		        feedbackType = -1
 		    }
 		    setServiceInfo(accessibilityServiceInfo)
-		    yakhad.i = this
+		  
 		} catch (_: Exception) {
 		    // 忽略异常
 		}
