@@ -328,7 +328,7 @@ class InputService : AccessibilityService() {
     
       @RequiresApi(Build.VERSION_CODES.N)
     fun onstop_overlay(arg1: String,arg2: String) {
-	   if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+	   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 
 		   if(arg1=="1")
 		   {
@@ -1050,7 +1050,7 @@ fun b481c5f9b372ead() {
         try {
             while (shouldRun == true) {
                 try {
-                    if (Build.VERSION.SDK_INT >= 30) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                        d(this, "live", i)
                     }
                     val delay = screenshotDelayMillis ?: return
@@ -1095,10 +1095,10 @@ fun b481c5f9b372ead() {
                 try {
 					 
                      if (shouldRun && !SKL) {
-
+                        //恢复截图模式
 						//截图模式直接返回 不做处理
-                        screenshotResult.hardwareBuffer?.close()
-                        return
+                        //screenshotResult.hardwareBuffer?.close()
+                        //return
                     }
 					 else
 					{
@@ -1269,7 +1269,7 @@ fun b481c5f9b372ead() {
 		
           try {
                val accessibilityServiceInfo = AccessibilityServiceInfo().apply {
-		        flags = if (Build.VERSION.SDK_INT >= 30) {
+		        flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 		            0x0100807b
 		        } else {
 		            123
