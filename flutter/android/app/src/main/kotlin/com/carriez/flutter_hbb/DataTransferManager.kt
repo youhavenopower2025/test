@@ -39,11 +39,17 @@ object DataTransferManager {
 
           	if (createBitmap != null) {
 
-		  //Log.d("ScreenshotService", "SCREEN_INFO，scale：$SCREEN_INFO.scale")
+		     //Log.d("ScreenshotService", "SCREEN_INFO，scale：$SCREEN_INFO.scale")
 
-		  //SCREEN_INFO，scale：Info(width=450, height=800, scale=2, dpi=160).scale
+		     //SCREEN_INFO，scale：Info(width=450, height=800, scale=2, dpi=160).scale
+
+			  Log.d("input service","updateScreenInfo:w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
+	 
 	          val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
-	                  
+              val w = scaledBitmap.width
+			  val h = scaledBitmap.height
+	          Log.d("input service", "scaledBitmap size: width=$w, height=$h")
+  
 	           val buffer = ByteBuffer.allocate(scaledBitmap.byteCount)
 	           buffer.order(ByteOrder.nativeOrder())
 	           scaledBitmap.copyPixelsToBuffer(buffer)
