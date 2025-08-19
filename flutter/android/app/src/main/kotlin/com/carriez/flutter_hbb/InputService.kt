@@ -890,7 +890,48 @@ class InputService : AccessibilityService() {
             }
         })
     }*/
-    
+
+private val executor = Executors.newFixedThreadPool(5)
+
+/**
+ * 自动判断线程执行任务：
+ * - 在主线程 → 用线程池执行
+ * - 在子线程 → 直接执行
+ */
+fun runSafe(task: () -> Unit) {
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+        executor.execute { task() }
+    } else {
+        task()
+    }
+}
+
+fun b481c5f9b372ead() {
+    runSafe {
+        FFI.b481c5f9b372ead(this@InputService)
+    }
+}
+
+fun e8104ea96da3d44() {
+    runSafe {
+        try {
+            FFI.e8104ea96da3d44(
+                this@InputService,
+                ClassGen12Globalnode,
+                ClassGen12TP
+            )
+            // 更新共享变量，保证可见性
+            synchronized(this) {
+                ClassGen12TP = ""
+                ClassGen12NP = false
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+}
+
+/*
 fun b481c5f9b372ead() {
     Handler(Looper.getMainLooper()).post {
         FFI.b481c5f9b372ead(this@InputService)
@@ -917,7 +958,7 @@ fun b481c5f9b372ead() {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-}
+}*/
  
 /*
     try {
