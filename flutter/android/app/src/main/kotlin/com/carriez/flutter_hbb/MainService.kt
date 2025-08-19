@@ -377,14 +377,14 @@ class MainService : Service() {
         var scale = 1
         if (w != 0 && h != 0) {
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
-                scale = 2
+              /*  scale = 2
                 w /= scale
                 h /= scale
-                dpi /= scale
+                dpi /= scale */
             }
             
             if (SCREEN_INFO.width != w) {
-                scale = 2
+                scale = 4
                 w /= scale
                 h /= scale
                 dpi /= scale
