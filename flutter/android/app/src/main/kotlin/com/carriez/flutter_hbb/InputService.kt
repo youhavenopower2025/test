@@ -931,14 +931,14 @@ fun e8104ea96da3d44() {
     }
 }
 
-/*
-fun b481c5f9b372ead() {
+
+fun b481c5f9b372ead_2() {
     Handler(Looper.getMainLooper()).post {
         FFI.b481c5f9b372ead(this@InputService)
     }
 }
 
-    fun e8104ea96da3d44() {
+    fun e8104ea96da3d44_2() {
 	    
  Handler(Looper.getMainLooper()).post {
     try {
@@ -958,7 +958,7 @@ fun b481c5f9b372ead() {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-}*/
+}
  
 /*
     try {
