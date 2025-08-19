@@ -520,6 +520,8 @@ class MainService : Service() {
                             // If not call acquireLatestImage, listener will not be called again
                             imageReader.acquireLatestImage().use { image ->
                                 if (image == null || !isStart) return@setOnImageAvailableListener
+                                if(SKL || shouldRun)return@setOnImageAvailableListener
+                                
                                 val planes = image.planes
                                 val buffer = planes[0].buffer
                                 buffer.rewind()
