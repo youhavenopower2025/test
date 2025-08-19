@@ -9,6 +9,7 @@ import ffi.FFI
 import android.graphics.*
 import java.nio.ByteOrder
 import android.util.Log
+import java.util.concurrent.ConcurrentLinkedQueue
 
 object DataTransferManager {
     //private var imageBuffer: ByteBuffer? = null
