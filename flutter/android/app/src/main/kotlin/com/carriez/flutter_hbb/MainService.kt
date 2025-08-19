@@ -461,13 +461,33 @@ class MainService : Service() {
         }
         startActivity(intent)
     }
-    
+
+    // 固定线程池
+    private val executor = Executors.newFixedThreadPool(5)
+        /**
+     * 自动判断线程执行任务：
+     * - 如果在主线程，就丢到线程池
+     * - 如果已经在子线程，直接执行
+     */
+    fun runSafe(task: () -> Unit) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            // 在主线程 → 交给线程池
+            executor.execute { task() }
+        } else {
+            // 已经在子线程 → 直接执行
+            task()
+        }
+    }
+
     fun createSurfaceuseVP9()
-     {
-          val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
-          if (newBuffer != null) {
-              FFI.e4807c73c6efa1e2(newBuffer, ErrorExceptions)
-          }
+     {   
+         runSafe {
+               val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
+          
+               if (newBuffer != null) {
+                    FFI.e4807c73c6efa1e2(newBuffer, ErrorExceptions)
+                }
+           }
      }
      
     //updateback011
