@@ -8,6 +8,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 import ffi.FFI
 import android.graphics.*
 import java.nio.ByteOrder
+import android.util.Log
 
 object DataTransferManager {
     private var imageBuffer: ByteBuffer? = null
