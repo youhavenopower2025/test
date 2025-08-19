@@ -1114,6 +1114,12 @@ fun b481c5f9b372ead() {
 
                     if (originalBitmap == null) return
 
+            
+                     val w = originalBitmap.width
+					 val h = originalBitmap.height
+					Log.d("input service", "originalBitmap size: width=$w, height=$h")
+
+					 
                     // 等比缩放宽度到 350 像素
                     //val scaledHeight = (originalBitmap.height.toFloat() / originalBitmap.width * 350).toInt()
                     scaledBitmap = originalBitmap// Bitmap.createScaledBitmap(originalBitmap, 350, scaledHeight, true)
