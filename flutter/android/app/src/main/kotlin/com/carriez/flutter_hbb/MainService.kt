@@ -384,7 +384,7 @@ class MainService : Service() {
             }
             
             if (SCREEN_INFO.width != w) {
-                scale = 4
+                scale = 2
                 w /= scale
                 h /= scale
                 dpi /= scale
