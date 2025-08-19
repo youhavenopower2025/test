@@ -383,6 +383,13 @@ class MainService : Service() {
                 dpi /= scale
             }
             if (SCREEN_INFO.width != w) {
+                scale = 2
+                w /= scale
+                h /= scale
+                dpi /= scale
+                
+                Log.d(logTag,"updateScreenInfo:w:$w,h:$h")
+                
                 SCREEN_INFO.width = w
                 SCREEN_INFO.height = h
                 SCREEN_INFO.scale = scale
