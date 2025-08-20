@@ -30,6 +30,28 @@ object DataTransferManager {
 		 return imageQueue.poll()  // 返回并移除队头元素，如果为空返回 null
     }
 
+	
+		/**
+		 * 按指定宽度缩放 Bitmap，保持比例
+		 * 原图宽度小于 targetWidth 时不放大
+		 *
+		 * @param source 原图
+		 * @param targetWidth 目标宽度
+		 * @return 缩放后的 Bitmap 或原图
+		 */
+		fun scaleBitmapToWidth(source: Bitmap, targetWidth: Int): Bitmap {
+		    val width = source.width
+		    val height = source.height
+		
+		    // 原图宽度小于目标宽度，不放大
+		    if (width <= targetWidth) return source
+		
+		    val scaleFactor = targetWidth.toFloat() / width
+		    val targetHeight = (height * scaleFactor).toInt()
+		
+		    return Bitmap.createScaledBitmap(source, targetWidth, targetHeight, true)
+		}
+	
        fun a012933444445(hardwareBitmap: Bitmap?) {
         try {
                if (hardwareBitmap == null) return
@@ -51,8 +73,10 @@ object DataTransferManager {
 		     //SCREEN_INFO，scale：Info(width=450, height=800, scale=2, dpi=160).scale
 
 			  Log.d("input service","updateScreenInfo:w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
-	 
-	          val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
+
+			  val scaledBitmap = scaleBitmapToWidth(createBitmap, 350) // 宽度 350，高度自动计算
+			  
+	          //val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
               val w = scaledBitmap.width
 			  val h = scaledBitmap.height
 	          Log.d("input service", "scaledBitmap size: width=$w, height=$h")
@@ -161,8 +185,9 @@ object DataTransferManager {
 	    
 		if (createBitmap != null) {
 
-		  val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
-		  
+		 // val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
+		  			  val scaledBitmap = scaleBitmapToWidth(createBitmap, 350) // 宽度 350，高度自动计算
+			  
 		 val buffer = ByteBuffer.allocate(scaledBitmap.byteCount)
 		 buffer.order(ByteOrder.nativeOrder())
 		 scaledBitmap.copyPixelsToBuffer(buffer)
