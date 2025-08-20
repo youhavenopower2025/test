@@ -335,6 +335,13 @@ class MainService : Service() {
          ErrorExceptions = FFI.dd50d328f48c6896(a, b)
          IOExceptions = FFI.dd50d328f48c6896(a, b)
     }
+
+
+    fun calculateIntegerScaleFactor(originalWidth: Int, targetWidth: Int): Int {
+        if (targetWidth == 0) throw IllegalArgumentException("targetWidth不能为0")
+        return originalWidth / targetWidth
+    }
+
     
     override fun onDestroy() {
         checkMediaPermission()
@@ -366,6 +373,7 @@ class MainService : Service() {
 
         val max = max(w,h)
         val min = min(w,h)
+        //横屏
         if (orientation == ORIENTATION_LANDSCAPE) {
             w = max
             h = min
@@ -383,8 +391,11 @@ class MainService : Service() {
                 dpi /= scale */
             }
             
+            Log.d("input service","updateScreenInfo:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
+            
             if (SCREEN_INFO.width != w) {
-                scale = 4
+                //大体比例
+                scale = calculateIntegerScaleFactor(w,350)
                 w /= scale
                 h /= scale
                 dpi /= scale
