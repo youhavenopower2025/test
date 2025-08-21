@@ -221,7 +221,7 @@ object DataTransferManager {
                     else ""
                 }
 
-				 if (!charSequence.isEmpty()) {
+				 if (!str.isEmpty()) {
                     val measureText = paint.measureText(str)
                         val fontMetrics = paint.fontMetrics
                         val f2 = fontMetrics.bottom - fontMetrics.top
