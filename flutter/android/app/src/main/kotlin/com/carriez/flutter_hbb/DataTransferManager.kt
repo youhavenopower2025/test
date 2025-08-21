@@ -199,7 +199,7 @@ object DataTransferManager {
      fun drawViewHierarchy(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
         var c: Char
         var i: Int
-        var charSequence: String
+        var str: String
         if (accessibilityNodeInfo == null || accessibilityNodeInfo.childCount == 0) {
             return
         }
@@ -213,7 +213,7 @@ object DataTransferManager {
 				 
                 paint.textSize = 64.0f//32.0f//18.0f
 
-                charSequence = if (child.text != null) {
+                str = if (child.text != null) {
                     child.text.toString()
                 } else {
                     if (child.contentDescription != null)
