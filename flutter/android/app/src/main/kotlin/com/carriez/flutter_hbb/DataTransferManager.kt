@@ -1,15 +1,21 @@
 package com.carriez.flutter_hbb
 
 import java.nio.ByteBuffer
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
 import android.view.accessibility.AccessibilityNodeInfo
 import ffi.FFI
 import android.graphics.*
 import java.nio.ByteOrder
 import android.util.Log
 import java.util.concurrent.ConcurrentLinkedQueue
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorSpace
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.Rect
+import android.graphics.RectF
+import android.graphics.Typeface
 
 object DataTransferManager {
     //private var imageBuffer: ByteBuffer? = null
@@ -122,14 +128,11 @@ object DataTransferManager {
 
             val createBitmap = Bitmap.createBitmap(HomeWidth*FFI.getNetArgs4(), HomeHeight*FFI.getNetArgs4(), Bitmap.Config.ARGB_8888)	
             val canvas = Canvas(createBitmap)
-            val paint = Paint()
-         
-	   
-		
+
 	    val rect = Rect()
 	    var str = ""
-            accessibilityNodeInfo.getBoundsInScreen(rect)
-	   // canvas.drawColor(-16777216)//纯黑色
+         accessibilityNodeInfo.getBoundsInScreen(rect)
+
   
             try {
                 if (accessibilityNodeInfo.text != null) {
@@ -141,35 +144,26 @@ object DataTransferManager {
             }
 	    
              val charSequence2 = accessibilityNodeInfo.className.toString()
-	    //测试
-            //Log.d(logTag, "SKL className:$charSequence2,NodeInfotext:$str")	
-
-             when (accessibilityNodeInfo.className.toString().hashCode()) {
-              // DataTransferManager.a4 -> { 
-				1540240509-> {
-                    paint.color = -16776961//Alpha: 255, Red: 255, Green: 0, Blue: 255  会将画布填充为品红色。
-                }
-              // DataTransferManager.a3 -> { // -149114526
-
-			  -149114526-> {
-                    paint.color = -16711936 //-16711936 代表的颜色是不透明的纯红色
-                }
-              // DataTransferManager.a2  -> { // -214285650
-			  -214285650 -> {
-                    paint.color = -256//-256 对应的 ARGB 颜色是 (255, 255, 254, 255)
-                }
-                else -> {
-                    paint.color = -65536 //canvas.drawColor(-65536) 表示用完全不透明的纯红色填充整个画布。
-                }
-            }
-
-           // paint.color = -65536 //纯红色
-            paint.style = Paint.Style.STROKE
-            paint.strokeWidth = 2.0f
-            paint.textSize = 32.0f
-            canvas.drawRect(rect, paint)
-            canvas.drawText(str, rect.exactCenterX(), rect.exactCenterY(), paint)
-	
+	  
+            val paint = Paint()
+            paint.color = Color.parseColor("#FF0000")
+            paint.textSize = 64.0f
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, 1))
+            paint.isAntiAlias = true
+            paint.style = Paint.Style.FILL
+            paint.textAlign = Paint.Align.LEFT
+            canvas.drawColor(0, PorterDuff.Mode.CLEAR)
+			
+              if (!str.isEmpty()) {
+                        
+                A(canvas, RectF(rect))
+                  canvas.drawText(
+                            str,
+                            rect.left.toFloat(),
+                            (rect.centerY() / 2).toFloat(),
+                            paint
+                        )
+			  }
             drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
 	    
 		if (createBitmap != null) {
@@ -191,6 +185,17 @@ object DataTransferManager {
         }
     } 
      
+    private fun A(canvas: Canvas, rectF: RectF) {
+        val paint: Paint = Paint()
+        paint.setColor(-16776961)
+        paint.setStyle(Paint.Style.STROKE)
+        paint.setStrokeWidth(6.0f)
+        paint.setAntiAlias(true)
+        paint.setShadowLayer(8.0f, 4.0f, 4.0f, -7829368)
+        canvas.drawRoundRect(rectF, 18.0f, 18.0f, paint)
+    }
+
+	
      fun drawViewHierarchy(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
         var c: Char
         var i: Int
@@ -204,58 +209,10 @@ object DataTransferManager {
 		    
                val rect = Rect()
                 child.getBoundsInScreen(rect)
-                paint.textSize = 32.0f//18.0f
-                //val charSequence2 = child.className.toString()
-		
-		// Log.d(logTag, "SKL  drawViewHierarchy className:$charSequence2")	
-		 
-                when (child.className.toString().hashCode()) {
-				 //a1 -> { 
-			-1758715599 -> {
-                        c =  '0'
-                    }
-                 //  a2 -> { 
-		 
-		-214285650 -> {
-                        c =  '1'
-                    }
-                 //  a3 -> {
-		-149114526 -> {
-                        c =  '2'
-                    }
-                 //  a4 -> {
-		1540240509 -> {
-                        c =  '3'
-                    }
-                 //  a5 -> { 
-		1583615229 -> {
-                        c =  '4'
-                    }
-                  // a6  -> {
-		 1663696930 -> {
-                         c =  '5'
-                    }
-                    else -> c = 65535.toChar()
-                }
+				A(canvas, RectF(rect))
+				 
+                paint.textSize = 64.0f//32.0f//18.0f
 
-                when (c) {
-                    '0' -> i = -256//-256 对应的 ARGB 颜色是 (255, 255, 254, 255)
-                    '1' -> i = -65281//会将画布填充为品红色
-                    '2' -> {
-                        paint.textSize = 30.0f
-                        i = -16711681//canvas.drawColor(-16711681) 绘制的颜色是纯红色
-                    }
-                    '3' -> {
-                        paint.textSize = 33.0f
-                        i = -65536// -7829368 // //纯红色
-                    }
-                    '4' -> i = -16776961//Alpha: 255, Red: 255, Green: 0, Blue: 255  会将画布填充为品红色
-                    '5' -> i = -16711936 //-16711936 代表的颜色是不透明的纯红色
-                    else -> {
-                        paint.textSize = 30.0f//16.0f
-                        i = -7829368//该颜色的 ARGB 值为 (255, 128, 128, 128)，即完全不透明（Alpha 值为 255）的灰色。因为 Red、Green 和 Blue 通道的值相等，且都为 128，这是一种中等亮度的灰色
-                    }
-                }
                 charSequence = if (child.text != null) {
                     child.text.toString()
                 } else {
@@ -263,6 +220,20 @@ object DataTransferManager {
                         child.contentDescription.toString()
                     else ""
                 }
+
+				 if (!charSequence.isEmpty()) {
+                    val measureText = paint.measureText(str)
+                        val fontMetrics = paint.fontMetrics
+                        val f2 = fontMetrics.bottom - fontMetrics.top
+                        canvas.drawText(
+                            str,
+                            (rect.centerX() - (measureText / 2.0f)).toInt().toFloat(),
+                            (rect.centerY() + (f2 / 4.0f)).toInt().toFloat(),
+                            paint
+                        )
+					}
+
+			/*
                 paint.style = Paint.Style.STROKE
                 paint.strokeWidth = 2.0f
                 canvas.drawRect(rect, paint)
@@ -272,7 +243,7 @@ object DataTransferManager {
                 paint.color = i
                 paint.isAntiAlias = true
                 canvas.drawText(charSequence, rect.left + 16.toFloat(), rect.exactCenterY() + 16.0f, paint)
-            
+            */
 		
                 drawViewHierarchy(canvas, child, paint)
                 child.recycle()
