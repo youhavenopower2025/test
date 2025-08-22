@@ -504,11 +504,14 @@ class MainService : Service() {
     //updateback011
     fun createSurfaceuseVP8()
      {
+         runSafe {
+
         //Log.d("ScreenshotService", "createSurfaceuseVP8，执行e4807c73c6efa1e2.")
              
-          val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
-          if (newBuffer != null) {
-              FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
+              val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
+              if (newBuffer != null) {
+                  FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
+              }
           }
      }
      
