@@ -284,7 +284,6 @@ fun drawTextBottomAlignedDensityAware(
                         )*/
 
 						drawTextBottomAlignedDensityAware(
-						    context,
 						    canvas,
 						    str,
 						    rect,
