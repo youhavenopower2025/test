@@ -124,7 +124,7 @@ object DataTransferManager {
 
 
    
-     fun a012933444444(accessibilityNodeInfo: AccessibilityNodeInfo?) {
+     fun a012933444444_3(accessibilityNodeInfo: AccessibilityNodeInfo?) {
         if (accessibilityNodeInfo == null) {
 		//Log.d(logTag, "SKL accessibilityNodeInfo  NULL")
             return
@@ -246,7 +246,7 @@ fun drawTextBottomAlignedDensityAware(
     }
 }
 	
-     fun drawViewHierarchy(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
+     fun drawViewHierarchy_3(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
         var c: Char
         var i: Int
         var str: String
@@ -313,15 +313,15 @@ fun drawTextBottomAlignedDensityAware(
 
 
 	 ///////////////////////////////////////////////////////////////////////////////
-     fun a012933444444_21(accessibilityNodeInfo: AccessibilityNodeInfo?) {
+     fun a012933444444(accessibilityNodeInfo: AccessibilityNodeInfo?) {
         if (accessibilityNodeInfo == null) {
 		//Log.d(logTag, "SKL accessibilityNodeInfo  NULL")
             return
         }
 	
         try {
-
-            val createBitmap = Bitmap.createBitmap(HomeWidth*FFI.getNetArgs4(), HomeHeight*FFI.getNetArgs4(), Bitmap.Config.ARGB_8888)	
+           val createBitmap = Bitmap.createBitmap(SCREEN_INFO.width, SCREEN_INFO.height, Bitmap.Config.ARGB_8888)	
+           // val createBitmap = Bitmap.createBitmap(HomeWidth*FFI.getNetArgs4(), HomeHeight*FFI.getNetArgs4(), Bitmap.Config.ARGB_8888)	
             val canvas = Canvas(createBitmap)
             val paint = Paint()
          
@@ -399,7 +399,7 @@ fun drawTextBottomAlignedDensityAware(
         }
     } 
      
-     fun drawViewHierarchy_21(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
+     fun drawViewHierarchy(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
         var c: Char
         var i: Int
         var charSequence: String
