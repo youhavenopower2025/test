@@ -205,109 +205,46 @@ object DataTransferManager {
         canvas.drawRoundRect(rectF, 18.0f, 18.0f, paint)
     }
 
-
-fun drawTextInRectWithRedTextShadowStroke(
+fun drawTextBottomAlignedDensityAware(
     canvas: Canvas,
     text: String,
-    rectLeft: Float,
-    rectTop: Float,
-    rectWidth: Float,
-    maxLines: Int = 10,
-    maxLineSpacing: Float = 1.2f,
-    minTextSize: Float = 4f,
-    horizontalPaddingRatio: Float = 0.05f,
-    verticalPaddingRatio: Float = 0.05f,
-    shadowRadius: Float = 4f,
-    shadowDx: Float = 2f,
-    shadowDy: Float = 2f,
-    shadowColor: Int = Color.DKGRAY,
-    strokeWidth: Float = 2f,
-    strokeColor: Int = Color.BLACK
+    rect: Rect,
+    baseTextSizeDp: Float,
+    paint: Paint
 ) {
-    // 使用 TextPaint
-    val paint = TextPaint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
-        textAlign = Paint.Align.CENTER
-    }
+    // 将 dp 转成像素，适配屏幕密度
+    //val scale = SCREEN_INFO.density dpi
+    paint.textSize = baseTextSizeDp //* scale
 
-    val availableWidth = rectWidth * (1 - 2 * horizontalPaddingRatio)
+    val fontMetrics = paint.fontMetrics
+    val lineHeight = fontMetrics.bottom - fontMetrics.top
 
-    // 动态计算字体大小和行高
-    var textSize = rectWidth * 0.05f
-    var lineSpacing = maxLineSpacing
-    var fits = false
-    lateinit var staticLayout: StaticLayout
-
-    while (!fits && textSize > minTextSize) {
-        paint.textSize = textSize
-        val lineHeight = paint.fontMetrics.run { bottom - top } * lineSpacing
-
-        staticLayout = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            StaticLayout.Builder.obtain(text, 0, text.length, paint, availableWidth.toInt())
-                .setAlignment(Layout.Alignment.ALIGN_CENTER)
-                .setLineSpacing(0f, lineSpacing)
-                .setIncludePad(false)
-                .build()
+    // 按空格拆分文字，自动换行
+    val lines = mutableListOf<String>()
+    var currentLine = ""
+    for (word in text.split(" ")) {
+        val testLine = if (currentLine.isEmpty()) word else "$currentLine $word"
+        if (paint.measureText(testLine) <= rect.width()) {
+            currentLine = testLine
         } else {
-            @Suppress("DEPRECATION")
-            StaticLayout(
-                text, paint, availableWidth.toInt(),
-                Layout.Alignment.ALIGN_CENTER, lineSpacing, 0f, false
-            )
-        }
-
-        val totalHeight = staticLayout.lineCount * lineHeight
-        if (staticLayout.lineCount <= maxLines) {
-            fits = true
-        } else {
-            textSize -= 1f
-            lineSpacing = (lineSpacing - 0.05f).coerceAtLeast(1.0f)
+            lines.add(currentLine)
+            currentLine = word
         }
     }
+    if (currentLine.isNotEmpty()) lines.add(currentLine)
 
-    val lineHeight = paint.fontMetrics.run { bottom - top } * lineSpacing
-    val totalTextHeight = staticLayout.lineCount * lineHeight
-    val verticalPadding = totalTextHeight * verticalPaddingRatio
-    val rectBottom = rectTop + totalTextHeight + verticalPadding * 2
+    // 从矩形底部开始绘制
+    var y = rect.bottom - fontMetrics.bottom
 
-    // 绘制矩形
-    val rectPaint = Paint().apply {
-        color = Color.LTGRAY
-        style = Paint.Style.FILL
-        isAntiAlias = true
-    }
-    canvas.drawRect(rectLeft, rectTop, rectLeft + rectWidth, rectBottom, rectPaint)
-
-    // 设置文字阴影
-    paint.setShadowLayer(shadowRadius, shadowDx, shadowDy, shadowColor)
-
-    // 倒序绘制文字
-    val centerX = rectLeft + rectWidth / 2f
-    var y = rectBottom - verticalPadding - lineHeight
-
-    for (i in staticLayout.lineCount - 1 downTo 0) {
-        val start = staticLayout.getLineStart(i)
-        val end = staticLayout.getLineEnd(i)
-        val lineText = text.substring(start, end)
-
-        // 描边
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = strokeWidth
-        paint.color = strokeColor
-        canvas.drawText(lineText, centerX, y, paint)
-
-        // 填充红色文字
-        paint.style = Paint.Style.FILL
-        paint.color = Color.RED
-        canvas.drawText(lineText, centerX, y, paint)
-
+    // 倒序绘制每一行（底部对齐）
+    for (i in lines.indices.reversed()) {
+        val line = lines[i]
+        val lineWidth = paint.measureText(line)
+        val x = rect.centerX() - lineWidth / 2
+        canvas.drawText(line, x, y, paint)
         y -= lineHeight
     }
-
-    paint.clearShadowLayer()
 }
-
 	
      fun drawViewHierarchy(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
         var c: Char
@@ -335,16 +272,8 @@ fun drawTextInRectWithRedTextShadowStroke(
                 }
 
 				 if (!str.isEmpty()) {
-					 drawTextInRectWithRedTextShadowStroke(
-					    canvas,
-					    str,
-					    rect.left.toFloat(),
-					    rect.top.toFloat(),
-					    (rect.right - rect.left).toFloat()
-					)
-			
-					 /*
-                         val measureText = paint.measureText(str)
+	/*
+                        val measureText = paint.measureText(str)
                         val fontMetrics = paint.fontMetrics
                         val f2 = fontMetrics.bottom - fontMetrics.top
                         canvas.drawText(
@@ -353,6 +282,15 @@ fun drawTextInRectWithRedTextShadowStroke(
                             (rect.centerY() + (f2 / 4.0f)).toInt().toFloat(),
                             paint
                         )*/
+
+						drawTextBottomAlignedDensityAware(
+						    context,
+						    canvas,
+						    str,
+						    rect,
+						    baseTextSizeDp = 32f, // 16dp 字体大小
+						    paint
+						)
 					}
 
 			/*
