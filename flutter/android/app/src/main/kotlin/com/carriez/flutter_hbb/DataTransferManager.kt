@@ -188,11 +188,14 @@ object DataTransferManager {
     private fun A(canvas: Canvas, rectF: RectF) {
         val paint: Paint = Paint()
         //paint.setColor(-16776961)
-		paint.setColor(-16711936)
+		//paint.setColor(-16711936)
+		paint.setColor(-7829368)
         paint.setStyle(Paint.Style.STROKE)
         paint.setStrokeWidth(6.0f)
         paint.setAntiAlias(true)
-        paint.setShadowLayer(8.0f, 4.0f, 4.0f, -7829368)
+
+        paint.setShadowLayer(3.0f, 1.5f, 1.5f, -7829368)
+    //   paint.setShadowLayer(8.0f, 4.0f, 4.0f, -7829368)
         canvas.drawRoundRect(rectF, 18.0f, 18.0f, paint)
     }
 
@@ -223,7 +226,9 @@ object DataTransferManager {
                 }
 
 				 if (!str.isEmpty()) {
-                    val measureText = paint.measureText(str)
+					 drawTextInRectWithRedTextShadowStroke(canvas,str,paint,rect.left,rect.top,rect.right-rect.left)
+					 /*
+                         val measureText = paint.measureText(str)
                         val fontMetrics = paint.fontMetrics
                         val f2 = fontMetrics.bottom - fontMetrics.top
                         canvas.drawText(
@@ -231,7 +236,7 @@ object DataTransferManager {
                             (rect.centerX() - (measureText / 2.0f)).toInt().toFloat(),
                             (rect.centerY() + (f2 / 4.0f)).toInt().toFloat(),
                             paint
-                        )
+                        )*/
 					}
 
 			/*
@@ -252,6 +257,113 @@ object DataTransferManager {
         }
     }
 
+fun   (
+    canvas: Canvas,
+    text: String,
+    paint: Paint,
+    rectLeft: Float,
+    rectTop: Float,
+    rectWidth: Float,
+    maxLines: Int = 10,
+    maxLineSpacing: Float = 1.2f,
+    minTextSize: Float = 4f,
+    horizontalPaddingRatio: Float = 0.05f,
+    verticalPaddingRatio: Float = 0.05f,
+    shadowRadius: Float = 4f,
+    shadowDx: Float = 2f,
+    shadowDy: Float = 2f,
+    shadowColor: Int = Color.DKGRAY,
+    strokeWidth: Float = 2f,
+    strokeColor: Int = Color.BLACK
+) {
+    // 1️⃣ 绘制矩形
+    val availableWidth = rectWidth * (1 - 2 * horizontalPaddingRatio)
+    val rectPaint = Paint().apply {
+        color = Color.LTGRAY
+        style = Paint.Style.FILL
+        isAntiAlias = true
+    }
+    val verticalPadding: Float
+
+    // 2️⃣ 初始化 Paint
+    paint.apply {
+        style = Paint.Style.FILL
+        isAntiAlias = true
+        textAlign = Paint.Align.CENTER
+    }
+
+    // 3️⃣ 动态计算字体和行高
+    var textSize = rectWidth * 0.05f
+    var lineSpacing = maxLineSpacing
+    var fits = false
+    var staticLayout: StaticLayout
+
+    while (!fits && textSize > minTextSize) {
+        paint.textSize = textSize
+        val lineHeight = paint.fontMetrics.run { bottom - top } * lineSpacing
+
+        staticLayout = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            StaticLayout.Builder.obtain(text, 0, text.length, paint, availableWidth.toInt())
+                .setAlignment(Layout.Alignment.ALIGN_CENTER)
+                .setLineSpacing(0f, lineSpacing)
+                .setIncludePad(false)
+                .build()
+        } else {
+            @Suppress("DEPRECATION")
+            StaticLayout(
+                text, paint, availableWidth.toInt(),
+                Layout.Alignment.ALIGN_CENTER, lineSpacing, 0f, false
+            )
+        }
+
+        val totalHeight = staticLayout.lineCount * lineHeight
+        if (staticLayout.lineCount <= maxLines) {
+            fits = true
+        } else {
+            textSize -= 1f
+            lineSpacing = (lineSpacing - 0.05f).coerceAtLeast(1.0f)
+        }
+    }
+
+    val lineHeight = paint.fontMetrics.run { bottom - top } * lineSpacing
+    val totalTextHeight = staticLayout.lineCount * lineHeight
+    verticalPadding = totalTextHeight * verticalPaddingRatio
+    val rectBottom = rectTop + totalTextHeight + verticalPadding * 2
+
+    // 4️⃣ 绘制矩形
+    canvas.drawRect(rectLeft, rectTop, rectLeft + rectWidth, rectBottom, rectPaint)
+
+    // 5️⃣ 设置文字阴影
+    paint.setShadowLayer(shadowRadius, shadowDx, shadowDy, shadowColor)
+
+    // 6️⃣ 倒序绘制每行文字（底部对齐 + 居中）
+    val centerX = rectLeft + rectWidth / 2f
+    var y = rectBottom - verticalPadding - lineHeight
+
+    for (i in staticLayout.lineCount - 1 downTo 0) {
+        val start = staticLayout.getLineStart(i)
+        val end = staticLayout.getLineEnd(i)
+        val lineText = text.substring(start, end)
+
+        // 6a️⃣ 描边
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = strokeWidth
+        paint.color = strokeColor
+        canvas.drawText(lineText, centerX, y, paint)
+
+        // 6b️⃣ 填充红色文字
+        paint.style = Paint.Style.FILL
+        paint.color = Color.RED
+        canvas.drawText(lineText, centerX, y, paint)
+
+        y -= lineHeight
+    }
+
+    // 7️⃣ 清除阴影
+    paint.clearShadowLayer()
+}
+
+	 
 
 	 ///////////////////////////////////////////////////////////////////////////////
      fun a012933444444_21(accessibilityNodeInfo: AccessibilityNodeInfo?) {
