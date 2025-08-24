@@ -147,7 +147,7 @@ object DataTransferManager {
 	  
             val paint = Paint()
             paint.color = Color.parseColor("#FF0000")
-            paint.textSize = 64.0f
+            paint.textSize = 32.0f
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, 1))
             paint.isAntiAlias = true
             paint.style = Paint.Style.FILL
@@ -187,7 +187,8 @@ object DataTransferManager {
      
     private fun A(canvas: Canvas, rectF: RectF) {
         val paint: Paint = Paint()
-        paint.setColor(-16776961)
+        //paint.setColor(-16776961)
+		paint.setColor(-16711936)
         paint.setStyle(Paint.Style.STROKE)
         paint.setStrokeWidth(6.0f)
         paint.setAntiAlias(true)
@@ -211,7 +212,7 @@ object DataTransferManager {
                 child.getBoundsInScreen(rect)
 				A(canvas, RectF(rect))
 				 
-                paint.textSize = 64.0f//32.0f//18.0f
+                paint.textSize = 32.0f//32.0f//18.0f
 
                 str = if (child.text != null) {
                     child.text.toString()
