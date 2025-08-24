@@ -497,19 +497,19 @@ class MainService : Service() {
     //屏幕分析
     fun createSurfaceuseVP9()
      {   
-         runSafe {
+        // runSafe {
                val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
           
                if (newBuffer != null) {
                     FFI.e4807c73c6efa1e2(newBuffer, ErrorExceptions)
                 }
-           }
+        //   }
      }
      
     //updateback011 截图
     fun createSurfaceuseVP8()
      {
-         runSafe {
+       //  runSafe {
 
         //Log.d("ScreenshotService", "createSurfaceuseVP8，执行e4807c73c6efa1e2.")
              
@@ -517,7 +517,7 @@ class MainService : Service() {
               if (newBuffer != null) {
                   FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
               }
-          }
+          //}
      }
      
     @SuppressLint("WrongConstant")
