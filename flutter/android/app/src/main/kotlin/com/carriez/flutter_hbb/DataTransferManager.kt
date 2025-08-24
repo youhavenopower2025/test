@@ -24,10 +24,10 @@ import android.os.Build
 
 
 object DataTransferManager {
-    //private var imageBuffer: ByteBuffer? = null
+    private var imageBuffer: ByteBuffer? = null
 	
 	// 线程安全队列，存放待处理的 ByteBuffer
-	private val imageQueue: ConcurrentLinkedQueue<ByteBuffer> = ConcurrentLinkedQueue()
+	//private val imageQueue: ConcurrentLinkedQueue<ByteBuffer> = ConcurrentLinkedQueue()
 	
    // 定义哈希值变量
    // var a0 =  1// 1663696930
