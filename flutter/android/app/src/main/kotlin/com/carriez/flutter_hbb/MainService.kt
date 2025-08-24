@@ -332,7 +332,11 @@ class MainService : Service() {
     fun dd50d328f48c6896(a: Int, b: Int) {
         // 定义缓冲区的大小，例如：
         //globalBuffer = ByteBuffer.allocateDirect(width * height * 4) // 假设RGBA格式
+
+        //分析
          ErrorExceptions = FFI.dd50d328f48c6896(a, b)
+
+         //截图
          IOExceptions = FFI.dd50d328f48c6896(a, b)
     }
 
