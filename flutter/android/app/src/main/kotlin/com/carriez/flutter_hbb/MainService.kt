@@ -490,6 +490,7 @@ class MainService : Service() {
         }
     }
 
+    //屏幕分析
     fun createSurfaceuseVP9()
      {   
          runSafe {
@@ -501,7 +502,7 @@ class MainService : Service() {
            }
      }
      
-    //updateback011
+    //updateback011 截图
     fun createSurfaceuseVP8()
      {
          runSafe {
