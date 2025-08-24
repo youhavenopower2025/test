@@ -17,6 +17,12 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Typeface
 
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextPaint
+import android.os.Build
+
+
 object DataTransferManager {
     //private var imageBuffer: ByteBuffer? = null
 	
