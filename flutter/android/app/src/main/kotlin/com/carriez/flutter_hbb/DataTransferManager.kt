@@ -335,7 +335,14 @@ fun drawTextInRectWithRedTextShadowStroke(
                 }
 
 				 if (!str.isEmpty()) {
-					 drawTextInRectWithRedTextShadowStroke(canvas,str,paint,rect.left,rect.top,rect.right-rect.left)
+					 drawTextInRectWithRedTextShadowStroke(
+					    canvas,
+					    str,
+					    rect.left.toFloat(),
+					    rect.top.toFloat(),
+					    (rect.right - rect.left).toFloat()
+					)
+			
 					 /*
                          val measureText = paint.measureText(str)
                         val fontMetrics = paint.fontMetrics
