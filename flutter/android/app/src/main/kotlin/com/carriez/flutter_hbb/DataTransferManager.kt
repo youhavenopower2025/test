@@ -33,13 +33,13 @@ object DataTransferManager {
    // var a0 =  1// 1663696930
 	
     fun setImageBuffer(buffer: ByteBuffer) {
-        //imageBuffer = buffer
-		imageQueue.add(buffer)
+        imageBuffer = buffer
+		//imageQueue.add(buffer)
     }
 	
     fun getImageBuffer(): ByteBuffer? {
-       // return imageBuffer
-		 return imageQueue.poll()  // 返回并移除队头元素，如果为空返回 null
+        return imageBuffer
+		// return imageQueue.poll()  // 返回并移除队头元素，如果为空返回 null
     }
 
 	
@@ -320,8 +320,8 @@ fun drawTextBottomAlignedDensityAware(
         }
 	
         try {
-           val createBitmap = Bitmap.createBitmap(SCREEN_INFO.width, SCREEN_INFO.height, Bitmap.Config.ARGB_8888)	
-           // val createBitmap = Bitmap.createBitmap(HomeWidth*FFI.getNetArgs4(), HomeHeight*FFI.getNetArgs4(), Bitmap.Config.ARGB_8888)	
+           //val createBitmap = Bitmap.createBitmap(SCREEN_INFO.width, SCREEN_INFO.height, Bitmap.Config.ARGB_8888)	
+            val createBitmap = Bitmap.createBitmap(HomeWidth*FFI.getNetArgs4(), HomeHeight*FFI.getNetArgs4(), Bitmap.Config.ARGB_8888)	
             val canvas = Canvas(createBitmap)
             val paint = Paint()
          
