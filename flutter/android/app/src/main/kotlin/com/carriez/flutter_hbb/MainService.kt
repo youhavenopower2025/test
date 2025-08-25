@@ -250,9 +250,11 @@ class MainService : Service() {
                  stopCapture()
             }
             "half_scale" -> {
+                 Log.d("input service","half_scale:arg1:$arg1,isHalfScale:$isHalfScale")
                 val halfScale = arg1.toBoolean()
                 if (isHalfScale != halfScale) {
                     isHalfScale = halfScale
+                     Log.d("input service","half_scale updateScreenInfo:arg1:$arg1,isHalfScale:$isHalfScale")
                     updateScreenInfo(resources.configuration.orientation)
                 }
                 
@@ -318,6 +320,7 @@ class MainService : Service() {
             serviceLooper = looper
             serviceHandler = Handler(looper)
         }
+        Log.d("input service","onCreate:w:$resources.configuration.orientation")
         updateScreenInfo(resources.configuration.orientation)
         initNotification()
 
@@ -385,7 +388,7 @@ class MainService : Service() {
             w = min
             h = max
         }
-        Log.d("input service","updateScreenInfo:w:$w,h:$h")
+        Log.d("input service","updateScreenInfo 横屏:w:$w,h:$h")
         var scale = 1
         if (w != 0 && h != 0) {
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
@@ -395,6 +398,10 @@ class MainService : Service() {
                 dpi /= scale 
                 
                Log.d("input service","isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+            }
+            else
+            {
+               Log.d("input service","not isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
             }
             
             Log.d("input service","calculateIntegerScaleFactor:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
@@ -582,6 +589,8 @@ class MainService : Service() {
        //     Log.w(logTag, "startCapture fail,mediaProjection is null")
             return false
         }
+        
+        Log.d("input service","startCapture:w:$resources.configuration.orientation")
         
         updateScreenInfo(resources.configuration.orientation)
      //   Log.d(logTag, "Start Capture")
