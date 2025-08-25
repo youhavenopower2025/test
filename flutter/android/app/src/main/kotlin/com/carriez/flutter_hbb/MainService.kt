@@ -230,8 +230,8 @@ class MainService : Service() {
             "start_capture2" -> {
 
                 var w = HomeWidth
-                var h = HomeHeight = h
-                var dpi = HomeDpi = dpi
+                var h = HomeHeight 
+                var dpi = HomeDpi 
                 
                 var scale = calculateIntegerScaleFactor(w,350)
                 w /= scale
