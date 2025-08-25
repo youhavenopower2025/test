@@ -388,7 +388,7 @@ class MainService : Service() {
             w = min
             h = max
         }
-        Log.d("input service","updateScreenInfo 横屏:w:$w,h:$h")
+        Log.d("input service","updateScreenInfo 横屏:w:$w,h:$h,isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
         var scale = 1
         if (w != 0 && h != 0) {
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
