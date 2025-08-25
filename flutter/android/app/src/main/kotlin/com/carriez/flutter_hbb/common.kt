@@ -59,7 +59,7 @@ var gohome = 8
 
 var HomeWidth = 0    
 var HomeHeight = 0
-
+var HomeDpi = 0
 var SKL = false
 var BIS = false
 
