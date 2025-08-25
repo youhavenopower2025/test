@@ -385,19 +385,22 @@ class MainService : Service() {
             w = min
             h = max
         }
-        Log.d(logTag,"updateScreenInfo:w:$w,h:$h")
+        Log.d("input service","updateScreenInfo:w:$w,h:$h")
         var scale = 1
         if (w != 0 && h != 0) {
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
-              /*  scale = 2
+                scale = 2
                 w /= scale
                 h /= scale
-                dpi /= scale */
+                dpi /= scale 
+                
+               Log.d("input service","isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
             }
             
-            Log.d("input service","updateScreenInfo:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
+            Log.d("input service","calculateIntegerScaleFactor:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
             
             if (SCREEN_INFO.width != w) {
+                /*
                 //大体比例
                 scale = calculateIntegerScaleFactor(w,350)
                 w /= scale
@@ -405,6 +408,7 @@ class MainService : Service() {
                 dpi /= scale
                 
                 Log.d("input service","updateScreenInfo:w:$w,h:$h")
+                */
                 
                 SCREEN_INFO.width = w
                 SCREEN_INFO.height = h
