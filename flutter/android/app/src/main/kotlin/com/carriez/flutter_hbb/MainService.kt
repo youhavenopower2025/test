@@ -228,6 +228,11 @@ class MainService : Service() {
             } 
             //!isStart
             "start_capture2" -> {
+
+               Log.d("input service","refreshScreen: $arg1,$arg2")
+               FFI.refreshScreen()
+               return 
+                
                 //from rust:start_capture2 0,关
                // Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
                 if(arg1=="1")
@@ -421,7 +426,9 @@ class MainService : Service() {
                 SCREEN_INFO.height = h
                 SCREEN_INFO.scale = scale
                 SCREEN_INFO.dpi = dpi
-                
+
+                Log.d("input service","dd50d328f48c6896:w:$w,h:$h")
+                 
                 dd50d328f48c6896(w,h)
                 
                 if (isStart) {
