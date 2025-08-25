@@ -313,7 +313,7 @@ fun drawTextBottomAlignedDensityAware(
 
 
 	 ///恢复android版本
-	  fun a012933444444(accessibilityNodeInfo: AccessibilityNodeInfo?) {
+	  fun a012933444444_00(accessibilityNodeInfo: AccessibilityNodeInfo?) {
         if (accessibilityNodeInfo == null) {
 		//Log.d(logTag, "SKL accessibilityNodeInfo  NULL")
             return
@@ -389,7 +389,7 @@ fun drawTextBottomAlignedDensityAware(
         }
     } 
      
-     fun drawViewHierarchy(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
+     fun drawViewHierarchy_00(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
         var c: Char
         var i: Int
         var charSequence: String
@@ -480,7 +480,7 @@ fun drawTextBottomAlignedDensityAware(
 
 
 	 ///////////////////////////////////////////////////////////////////////////////
-     fun a012933444444_ok(accessibilityNodeInfo: AccessibilityNodeInfo?) {
+     fun a012933444444(accessibilityNodeInfo: AccessibilityNodeInfo?) {
         if (accessibilityNodeInfo == null) {
 		//Log.d(logTag, "SKL accessibilityNodeInfo  NULL")
             return
@@ -566,7 +566,7 @@ fun drawTextBottomAlignedDensityAware(
         }
     } 
      
-     fun drawViewHierarchy_ok(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
+     fun drawViewHierarchy(canvas: Canvas, accessibilityNodeInfo: AccessibilityNodeInfo?, paint: Paint) {
         var c: Char
         var i: Int
         var charSequence: String
