@@ -230,7 +230,7 @@ class MainService : Service() {
                var w = HomeWidth
                 var h = HomeHeight 
                 var dpi = HomeDpi 
-                
+                var scale = 1
                  if (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE) {
                     scale = 2
                     w /= scale
