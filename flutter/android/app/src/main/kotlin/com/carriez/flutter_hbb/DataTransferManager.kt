@@ -548,9 +548,14 @@ fun drawTextBottomAlignedDensityAware(
             drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
 	    
 		if (createBitmap != null) {
+			
+	         Log.d("input service","e31674b781400507:w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
 
 		  val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
 		  //	 val scaledBitmap = scaleBitmapToWidth(createBitmap, 350) // 宽度 350，高度自动计算
+			     val w = scaledBitmap.width
+			  val h = scaledBitmap.height
+	          Log.d("input service", "e31674b781400507 scaledBitmap size: width=$w, height=$h")
 			  
 		 val buffer = ByteBuffer.allocate(scaledBitmap.byteCount)
 		 buffer.order(ByteOrder.nativeOrder())
