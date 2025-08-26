@@ -661,7 +661,7 @@ class MainService : Service() {
         
         _isStart = false
 
-       Log.d("input service","startCapture2:w:$resources.configuration.orientation")
+       Log.d("input service","stopCapture2:w:$resources.configuration.orientation")
         
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
         // release video
