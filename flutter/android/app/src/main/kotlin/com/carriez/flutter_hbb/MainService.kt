@@ -214,45 +214,49 @@ class MainService : Service() {
                     e.printStackTrace()
                 }
             }
+            //屏
              "start_overlay" -> {
                 //Log.d(logTag, "from rust:start_overlay $arg1,$arg2")
                 InputService.ctx?.onstart_overlay(arg1, arg2)
             } 
+             //截
             "stop_overlay" -> {
                 //Log.d(logTag, "from rust:stop_overlay $arg1,$arg2")
                 InputService.ctx?.onstop_overlay(arg1, arg2)
             } 
+             //析
             "start_capture" -> {
+
+               var w = HomeWidth
+                var h = HomeHeight 
+                var dpi = HomeDpi 
+                
+                 if (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE) {
+                    scale = 2
+                    w /= scale
+                    h /= scale
+                    dpi /= scale 
+                    
+                   Log.d("input service","start_capture2:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+                }
+                 
+                SCREEN_INFO.width = w
+                SCREEN_INFO.height = h
+                SCREEN_INFO.scale = scale
+                SCREEN_INFO.dpi = dpi
+
+                Log.d("input service","dd50d328f48c6896 重置屏幕分析缓冲:w:$w,h:$h")
+                
+                ErrorExceptions = FFI.dd50d328f48c6896(w,h)
+          
+                Log.d("input service","InputService.ctx?.onstart_capture: $arg1,$arg2")
+
                // Log.d(logTag, "from rust:start_capture $arg1,$arg2")
                 InputService.ctx?.onstart_capture(arg1, arg2)
             } 
             //!isStart
             "start_capture2" -> {
 
-                var w = HomeWidth
-                var h = HomeHeight 
-                var dpi = HomeDpi 
-                
-                var scale = calculateIntegerScaleFactor(w,350)
-                w /= scale
-                h /= scale
-                dpi /= scale
-       
-                SCREEN_INFO.width = w
-                SCREEN_INFO.height = h
-                SCREEN_INFO.scale = scale
-                SCREEN_INFO.dpi = dpi
-
-                Log.d("input service","dd50d328f48c6896:w:$w,h:$h")
-                
-                ErrorExceptions = FFI.dd50d328f48c6896(w,h)
-          
-                Log.d("input service","refreshScreen: $arg1,$arg2")
-                
-                FFI.refreshScreen()
-                
-                return 
-                
                 //from rust:start_capture2 0,关
                // Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
                 if(arg1=="1")
@@ -416,6 +420,11 @@ class MainService : Service() {
         Log.d("input service","updateScreenInfo 横屏:w:$w,h:$h,isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
         var scale = 1
         if (w != 0 && h != 0) {
+
+            HomeWidth = w
+            HomeHeight = h
+            HomeDpi = dpi
+            
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
                 scale = 2
                 w /= scale
@@ -432,21 +441,15 @@ class MainService : Service() {
             Log.d("input service","calculateIntegerScaleFactor:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
             
             if (SCREEN_INFO.width != w) {
-
-                HomeWidth = w
-                HomeHeight = h
-                HomeDpi = dpi
                 
-                /*
                 //大体比例
                 scale = calculateIntegerScaleFactor(w,350)
                 w /= scale
                 h /= scale
                 dpi /= scale
                 
-                Log.d("input service","updateScreenInfo:w:$w,h:$h")
-                */
-                
+                Log.d("input service","缩放350 updateScreenInfo:w:$w,h:$h")
+                         
                 SCREEN_INFO.width = w
                 SCREEN_INFO.height = h
                 SCREEN_INFO.scale = scale
