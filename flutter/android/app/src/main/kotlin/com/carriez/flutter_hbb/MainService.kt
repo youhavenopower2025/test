@@ -657,7 +657,9 @@ class MainService : Service() {
         //FFI.setFrameRawEnable("video",false)
         
         _isStart = false
-       
+
+       Log.d("input service","startCapture2:w:$resources.configuration.orientation")
+        
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
         // release video
         if (reuseVirtualDisplay) {
@@ -698,9 +700,12 @@ class MainService : Service() {
 
       @Synchronized
     fun stopCapture() {
-     //   Log.d(logTag, "Stop Capture")
+
+       Log.d("input service","startCapture:w:$resources.configuration.orientation")
+       
+       //Log.d(logTag, "Stop Capture")
         
-        //FFI.setFrameRawEnable("video",false)
+        FFI.setFrameRawEnable("video",false)
         
         _isStart = false
        
