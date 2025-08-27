@@ -231,13 +231,27 @@ class MainService : Service() {
                 var h = HomeHeight 
                 var dpi = HomeDpi 
                 var scale = 1
+                
                  if (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE) {
                     scale = 2
                     w /= scale
                     h /= scale
                     dpi /= scale 
                     
-                   Log.d("input service","start_capture2:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+                   Log.d("input service","scale=2:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+                }
+                 
+                 if (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE) {
+                    w = HomeWidth
+                    h = HomeHeight 
+                    dpi = HomeDpi 
+                     
+                    scale = 4
+                    w /= scale
+                    h /= scale
+                    dpi /= scale 
+                    
+                   Log.d("input service","scale=3:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
                 }
                  
                 SCREEN_INFO.width = w
