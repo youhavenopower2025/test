@@ -548,15 +548,17 @@ fun drawTextBottomAlignedDensityAware(
             canvas.drawColor(0, PorterDuff.Mode.CLEAR)
 
 			   if (!str.isEmpty()) {
-				 A(canvas, RectF(rect))
+				// A(canvas, RectF(rect))
 	             canvas.drawText(
 	                            str,
 	                            rect.left.toFloat(),
 	                            (rect.centerY() / 2).toFloat(),
 	                            paint
-	                        )
-                  drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
+	             )
 			   }
+
+			    drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
+				
 			if (createBitmap != null) {
 				
 		        Log.d("input service","e31674b781400507:w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
