@@ -673,20 +673,22 @@ fun drawTextBottomAlignedDensityAware(
         canvas.drawRoundRect(rectF, 18.0f, 18.0f, paint)
     }*/
 
-				   
-				/*
+
+			   //绘制框
                 paint.style = Paint.Style.STROKE
                 paint.strokeWidth = 2.0f
                 canvas.drawRect(rect, paint)
                 paint.style = Paint.Style.STROKE
                 paint.color = -1
                 canvas.drawRect(rect, paint)
-                paint.color = i
+				
+               //绘制文字
                 paint.isAntiAlias = true
-				*/
+				
               //  canvas.drawText(charSequence, rect.left + 16.toFloat(), rect.exactCenterY() + 16.0f, paint)
 
-			  
+			   paint.strokeWidth = 1.0f       // 可选，文字一般无影响
+			   paint.style = Paint.Style.FILL  // 文字填充
                //保留颜色
 			   paint.color = i				
                paint.textSize = 48.0f
