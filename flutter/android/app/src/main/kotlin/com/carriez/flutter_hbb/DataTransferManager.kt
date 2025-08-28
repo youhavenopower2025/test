@@ -674,14 +674,17 @@ fun drawTextBottomAlignedDensityAware(
     }*/
 
 
+	           //没有文本也要画边框
+				A(canvas, RectF(rect))
+
 			   //绘制框
-                paint.style = Paint.Style.STROKE
+            /*    paint.style = Paint.Style.STROKE
                 paint.strokeWidth = 2.0f
                 canvas.drawRect(rect, paint)
                 paint.style = Paint.Style.STROKE
                 paint.color = -1
                 canvas.drawRect(rect, paint)
-				
+				*/
                //绘制文字
                 paint.isAntiAlias = true
 				
