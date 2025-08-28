@@ -540,7 +540,7 @@ fun drawTextBottomAlignedDensityAware(
 
            // val paint = Paint()
            // paint.color = Color.parseColor("#FF0000")
-            paint.textSize = 64.0f
+            paint.textSize = 48.0f
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, 1))
             paint.isAntiAlias = true
             paint.style = Paint.Style.FILL
@@ -555,10 +555,8 @@ fun drawTextBottomAlignedDensityAware(
 	                            (rect.centerY() / 2).toFloat(),
 	                            paint
 	                        )
+                  drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
 			   }
-		
-            drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
-	    
 			if (createBitmap != null) {
 				
 		        Log.d("input service","e31674b781400507:w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
@@ -598,7 +596,7 @@ fun drawTextBottomAlignedDensityAware(
                 //没有文本也要画边框
 				A(canvas, RectF(rect))
 				
-                paint.textSize = 64.0f//32.0f
+                //paint.textSize = 64.0f//32.0f
                 //val charSequence2 = child.className.toString()
 		
 		// Log.d(logTag, "SKL  drawViewHierarchy className:$charSequence2")	
@@ -673,7 +671,7 @@ fun drawTextBottomAlignedDensityAware(
 			  
                //保留颜色
 			   paint.color = i				
-               paint.textSize = 64.0f
+               paint.textSize = 48.0f
 	
                  if (!charSequence.isEmpty()) {
 	
