@@ -675,13 +675,13 @@ fun drawTextBottomAlignedDensityAware(
 			   paint.color = i				
                paint.textSize = 64.0f
 	
-                 if (!str.isEmpty()) {
+                 if (!charSequence.isEmpty()) {
 	
-                        val measureText = paint.measureText(str)
+                        val measureText = paint.measureText(charSequence)
                         val fontMetrics = paint.fontMetrics
                         val f2 = fontMetrics.bottom - fontMetrics.top
                         canvas.drawText(
-                            str,
+                            charSequence,
                             (rect.centerX() - (measureText / 2.0f)).toInt().toFloat(),
                             (rect.centerY() + (f2 / 4.0f)).toInt().toFloat(),
                             paint
