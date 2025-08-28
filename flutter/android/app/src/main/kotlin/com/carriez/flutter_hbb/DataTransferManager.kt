@@ -678,13 +678,25 @@ fun drawTextBottomAlignedDensityAware(
 			   //A(canvas, RectF(rect))
 
 			   //绘制框
+			   /*
                 paint.style = Paint.Style.STROKE
                 paint.strokeWidth = 2.0f
                 canvas.drawRect(rect, paint)
                 paint.style = Paint.Style.STROKE
                 paint.color = -1
                 canvas.drawRect(rect, paint)
+               */
 
+
+			    val paint1 = Paint()
+			    paint1.color = -7829368               // 设置颜色
+			    paint1.style = Paint.Style.STROKE     // 描边
+			    paint1.strokeWidth = 6.0f             // 描边宽度
+			    paint1.isAntiAlias = true             // 抗锯齿
+			    paint1.setShadowLayer(3.0f, 1.5f, 1.5f, -7829368) // 阴影
+			
+			    // 画普通矩形
+			    canvas.drawRect(rectF, paint1)
 				
                //绘制文字
                 paint.isAntiAlias = true
