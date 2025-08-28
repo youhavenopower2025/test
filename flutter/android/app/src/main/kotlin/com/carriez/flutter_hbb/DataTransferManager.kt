@@ -693,9 +693,9 @@ fun drawTextBottomAlignedDensityAware(
 			   paint.color = i				
                paint.textSize = 48.0f
 
-				 val maxWidth = bounds.width().toFloat() - 32.toFloat()// 不减 padding
+				 val maxWidth = rect.width().toFloat()// - 32.toFloat()// 不减 padding
                  if (!charSequence.isEmpty()) {
-	                 if (!isTextExceedWidth(text, paint, maxWidth)) {
+	                 if (!isTextExceedWidth(charSequence, paint, maxWidth)) {
                         val measureText = paint.measureText(charSequence)
                         val fontMetrics = paint.fontMetrics
                         val f2 = fontMetrics.bottom - fontMetrics.top
@@ -706,10 +706,14 @@ fun drawTextBottomAlignedDensityAware(
                             paint
                         )
 					}
+					 else
+					 {
+                          drawTextWithWrapFromCenterUp(canvas, rect, charSequence, paint, textSize = 48f)
+					 }
 				 }
 				 else
 				{
-                   drawTextWithWrapFromCenterUp(canvas, rect, text, paint, textSize = 48f)
+                  //空文本不需要
 				}
 
                 //FFI.udb04498d6190e5b(child, canvas, paint) // 传递 Rect 作为参数
