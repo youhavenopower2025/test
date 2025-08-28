@@ -596,7 +596,7 @@ fun drawTextBottomAlignedDensityAware(
                 child.getBoundsInScreen(rect)
 
                 //没有文本也要画边框
-				A(canvas, RectF(rect))
+				//A(canvas, RectF(rect))
 				
                 //paint.textSize = 64.0f//32.0f
                 //val charSequence2 = child.className.toString()
