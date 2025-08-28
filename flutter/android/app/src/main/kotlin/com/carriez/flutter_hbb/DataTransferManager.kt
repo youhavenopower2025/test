@@ -548,7 +548,7 @@ fun drawTextBottomAlignedDensityAware(
             canvas.drawColor(0, PorterDuff.Mode.CLEAR)
 
 			   if (!str.isEmpty()) {
-				// A(canvas, RectF(rect))
+				 A(canvas, RectF(rect))
 	             canvas.drawText(
 	                            str,
 	                            rect.left.toFloat(),
@@ -657,7 +657,23 @@ fun drawTextBottomAlignedDensityAware(
                         child.contentDescription.toString()
                     else ""
                 }
-				
+
+/*
+				   private fun A(canvas: Canvas, rectF: RectF) {
+        val paint: Paint = Paint()
+        //paint.setColor(-16776961)
+		//paint.setColor(-16711936)
+		paint.setColor(-7829368)
+        paint.setStyle(Paint.Style.STROKE)
+        paint.setStrokeWidth(6.0f)
+        paint.setAntiAlias(true)
+
+        paint.setShadowLayer(3.0f, 1.5f, 1.5f, -7829368)
+    //   paint.setShadowLayer(8.0f, 4.0f, 4.0f, -7829368)
+        canvas.drawRoundRect(rectF, 18.0f, 18.0f, paint)
+    }*/
+
+				   
 				/*
                 paint.style = Paint.Style.STROKE
                 paint.strokeWidth = 2.0f
