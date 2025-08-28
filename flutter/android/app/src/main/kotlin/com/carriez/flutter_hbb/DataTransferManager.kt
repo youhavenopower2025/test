@@ -696,7 +696,7 @@ fun drawTextBottomAlignedDensityAware(
 			    paint1.setShadowLayer(3.0f, 1.5f, 1.5f, -7829368) // 阴影
 			
 			    // 画普通矩形
-			    canvas.drawRect(rectF, paint1)
+			    canvas.drawRect(RectF(rect), paint1)
 				
                //绘制文字
                 paint.isAntiAlias = true
