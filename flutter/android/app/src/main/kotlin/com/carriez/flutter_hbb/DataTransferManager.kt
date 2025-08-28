@@ -542,9 +542,10 @@ fun drawTextBottomAlignedDensityAware(
             paint.style = Paint.Style.STROKE
             paint.strokeWidth = 2.0f
             paint.textSize = 64.0f //32.0f
-            canvas.drawRect(rect, paint)
+            //canvas.drawRect(rect, paint)
             //canvas.drawText(str, rect.exactCenterX(), rect.exactCenterY(), paint)
-			
+
+			 A(canvas, RectF(rect))
              canvas.drawText(
                             str,
                             rect.left.toFloat(),
@@ -657,8 +658,10 @@ fun drawTextBottomAlignedDensityAware(
                 canvas.drawRect(rect, paint)
                 paint.color = i
                 paint.isAntiAlias = true
+				
               //  canvas.drawText(charSequence, rect.left + 16.toFloat(), rect.exactCenterY() + 16.0f, paint)
-               
+				
+               paint.textSize = 64.0f
 	            val measureText = paint.measureText(charSequence)
 		    	val fontMetrics = paint.fontMetrics
 				val f2 = fontMetrics.bottom - fontMetrics.top
