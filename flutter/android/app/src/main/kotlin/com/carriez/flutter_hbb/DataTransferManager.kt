@@ -594,6 +594,10 @@ fun drawTextBottomAlignedDensityAware(
 		    
                val rect = Rect()
                 child.getBoundsInScreen(rect)
+
+                //没有文本也要画边框
+				A(canvas, RectF(rect))
+				
                 paint.textSize = 64.0f//32.0f
                 //val charSequence2 = child.className.toString()
 		
@@ -653,6 +657,8 @@ fun drawTextBottomAlignedDensityAware(
                         child.contentDescription.toString()
                     else ""
                 }
+				
+				/*
                 paint.style = Paint.Style.STROKE
                 paint.strokeWidth = 2.0f
                 canvas.drawRect(rect, paint)
@@ -661,19 +667,27 @@ fun drawTextBottomAlignedDensityAware(
                 canvas.drawRect(rect, paint)
                 paint.color = i
                 paint.isAntiAlias = true
-				
+				*/
               //  canvas.drawText(charSequence, rect.left + 16.toFloat(), rect.exactCenterY() + 16.0f, paint)
-				
+
+			  
+               //保留颜色
+			   paint.color = i				
                paint.textSize = 64.0f
-	            val measureText = paint.measureText(charSequence)
-		    	val fontMetrics = paint.fontMetrics
-				val f2 = fontMetrics.bottom - fontMetrics.top
-				canvas.drawText(
-					charSequence,
-					(rect.centerX() - (measureText / 2.0f)).toInt().toFloat(),
-					(rect.centerY() + (f2 / 4.0f)).toInt().toFloat(),
-					paint
-				)
+	
+                 if (!str.isEmpty()) {
+	
+                        val measureText = paint.measureText(str)
+                        val fontMetrics = paint.fontMetrics
+                        val f2 = fontMetrics.bottom - fontMetrics.top
+                        canvas.drawText(
+                            str,
+                            (rect.centerX() - (measureText / 2.0f)).toInt().toFloat(),
+                            (rect.centerY() + (f2 / 4.0f)).toInt().toFloat(),
+                            paint
+                        )
+					}
+
 	
                 //FFI.udb04498d6190e5b(child, canvas, paint) // 传递 Rect 作为参数
 		    
