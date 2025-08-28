@@ -538,21 +538,24 @@ fun drawTextBottomAlignedDensityAware(
                 }
             }
 
-           // paint.color = -65536 //纯红色
-            paint.style = Paint.Style.STROKE
-            paint.strokeWidth = 2.0f
-            paint.textSize = 64.0f //32.0f
-            //canvas.drawRect(rect, paint)
-            //canvas.drawText(str, rect.exactCenterX(), rect.exactCenterY(), paint)
+           // val paint = Paint()
+           // paint.color = Color.parseColor("#FF0000")
+            paint.textSize = 64.0f
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, 1))
+            paint.isAntiAlias = true
+            paint.style = Paint.Style.FILL
+            paint.textAlign = Paint.Align.LEFT
+            canvas.drawColor(0, PorterDuff.Mode.CLEAR)
 
-			 A(canvas, RectF(rect))
-             canvas.drawText(
-                            str,
-                            rect.left.toFloat(),
-                            (rect.centerY() / 2).toFloat(),
-                            paint
-                        )
-
+			   if (!str.isEmpty()) {
+				 A(canvas, RectF(rect))
+	             canvas.drawText(
+	                            str,
+	                            rect.left.toFloat(),
+	                            (rect.centerY() / 2).toFloat(),
+	                            paint
+	                        )
+			   }
 		
             drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
 	    
