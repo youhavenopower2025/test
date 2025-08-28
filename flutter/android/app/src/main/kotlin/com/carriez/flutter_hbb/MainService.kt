@@ -246,7 +246,7 @@ class MainService : Service() {
                     h = HomeHeight 
                     dpi = HomeDpi 
                      
-                    scale = 3
+                    scale = 4
                     w /= scale
                     h /= scale
                     dpi /= scale 
