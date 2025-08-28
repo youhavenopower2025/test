@@ -227,6 +227,7 @@ class MainService : Service() {
              //析
             "start_capture" -> {
 
+                /*
                var w = HomeWidth
                 var h = HomeHeight 
                 var dpi = HomeDpi 
@@ -262,7 +263,7 @@ class MainService : Service() {
                 Log.d("input service","dd50d328f48c6896 重置屏幕分析缓冲:w:$w,h:$h")
                 
                 ErrorExceptions = FFI.dd50d328f48c6896(w,h)
-          
+             */
                 Log.d("input service","InputService.ctx?.onstart_capture: $arg1,$arg2")
 
                // Log.d(logTag, "from rust:start_capture $arg1,$arg2")
