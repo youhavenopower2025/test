@@ -441,12 +441,13 @@ class MainService : Service() {
             HomeDpi = dpi
             
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
-                scale = 2
+               /* scale = 2
                 w /= scale
                 h /= scale
                 dpi /= scale 
                 
                Log.d("input service","isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+                */
             }
             else
             {
