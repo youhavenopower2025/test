@@ -319,14 +319,14 @@ class InputService : AccessibilityService() {
             if(SKL)
 		    {
 				                
-                FFI.refreshScreen()
+                //FFI.refreshScreen()
                  Log.d("input service","onstart_capture 重置屏幕分析缓冲:$SKL")
 		       //  FFI.c6e5a24386fdbdd7f(this)
 		    }
 		    else
 		    {
 				                
-                FFI.refreshScreen()
+                //FFI.refreshScreen()
                  Log.d("input service","onstart_capture 重置屏幕分析缓冲:$SKL")
 			   //  FFI.a6205cca3af04a8d(this)   
 		    }
