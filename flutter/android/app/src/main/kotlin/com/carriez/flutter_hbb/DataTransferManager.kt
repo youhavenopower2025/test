@@ -107,7 +107,10 @@ object DataTransferManager {
                createBitmap = null   // 清空引用，避免后续使用它
 					
 	           DataTransferManager.setImageBuffer(buffer) 
-			 
+
+			  // 手动清理 buffer 引用
+               buffer = null  // 让垃圾回收器可以回收它
+				
 	           Log.d("input service", "a012933444445 执行 createSurfaceuseVP9")
 			 
 	             //MainService.ctx?.createSurfaceuseVP8()	 
