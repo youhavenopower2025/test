@@ -65,8 +65,15 @@ object DataTransferManager {
 	      
                //val hardwareBitmap = Bitmap.wrapHardwareBuffer(hardwareBuffer, colorSpace)
 
-	       val createBitmap = hardwareBitmap.copy(Bitmap.Config.ARGB_8888, true)
-	       hardwareBitmap.recycle()
+	    //   val createBitmap = hardwareBitmap.copy(Bitmap.Config.ARGB_8888, true)
+
+       // val scaledBitmap = Bitmap.createScaledBitmap(hardwareBitmap, targetWidth, targetHeight, true)
+		 val scaledBitmap = FFI.e31674b781400507(hardwareBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
+		val createBitmap = scaledBitmap.copy(Bitmap.Config.ARGB_8888, true)
+		scaledBitmap.recycle()
+
+		   
+	       //hardwareBitmap.recycle()
 
                 //val createBitmap = Bitmap.createBitmap(HomeWidth, HomeHeight, Bitmap.Config.ARGB_8888)    
                 //val canvas = Canvas(createBitmap)
@@ -81,15 +88,18 @@ object DataTransferManager {
 			  Log.d("input service","updateScreenInfo:a012933444445 w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
 
 			 // val scaledBitmap = scaleBitmapToWidth(createBitmap, 350) // 宽度 350，高度自动计算
-			  
+			 
+			  /*
 	          val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
               val w = scaledBitmap.width
 			  val h = scaledBitmap.height
 	          Log.d("input service", "a012933444445 scaledBitmap size: width=$w, height=$h")
-  
-	           val buffer = ByteBuffer.allocate(scaledBitmap.byteCount)
+             */
+
+
+	           val buffer = ByteBuffer.allocate(createBitmap.byteCount)
 	           buffer.order(ByteOrder.nativeOrder())
-	           scaledBitmap.copyPixelsToBuffer(buffer)
+	           createBitmap.copyPixelsToBuffer(buffer)
 	           buffer.rewind()
 	                
 	           DataTransferManager.setImageBuffer(buffer) 
