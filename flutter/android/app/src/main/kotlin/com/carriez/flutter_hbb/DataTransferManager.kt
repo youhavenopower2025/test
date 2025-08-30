@@ -105,7 +105,7 @@ object DataTransferManager {
 	                
 	           DataTransferManager.setImageBuffer(buffer) 
 			 
-	           //Log.d("ScreenshotService", "a012933444444 执行 createSurfaceuseVP9")
+	           Log.d("input service", "a012933444445 执行 createSurfaceuseVP9")
 			 
 	         //  MainService.ctx?.createSurfaceuseVP8()	 
                 }
