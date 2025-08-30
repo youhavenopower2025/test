@@ -56,8 +56,53 @@ object DataTransferManager {
 		
 		    return Bitmap.createScaledBitmap(source, targetWidth, targetHeight, true)
 		}*/
-	
-       fun a012933444445(hardwareBitmap: Bitmap?) {
+
+
+	fun a012933444445(hardwareBitmap: Bitmap?) {
+    try {
+        if (hardwareBitmap == null) return
+
+        Log.d("input service", "a012933444445进入成功")
+
+        // 创建 scaledBitmap
+        val scaledBitmap = FFI.e31674b781400507(hardwareBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
+        Log.d("input service", "a012933444445 缩放 SCREEN_INFO，scale：$SCREEN_INFO.scale")
+
+        // 复制 scaledBitmap 为 ARGB_8888 格式
+        var createBitmap = scaledBitmap.copy(Bitmap.Config.ARGB_8888, true)
+        scaledBitmap.recycle()  // 释放 scaledBitmap 内存
+
+        // 检查 createBitmap 是否为 null
+        if (createBitmap != null) {
+            Log.d("input service", "a012933444445 updateScreenInfo: w:${SCREEN_INFO.width}, h:${SCREEN_INFO.height}, scale:${SCREEN_INFO.scale}, dpi:${SCREEN_INFO.dpi}")
+
+            // 创建 ByteBuffer 并将 Bitmap 的像素复制到其中
+            val buffer = ByteBuffer.allocate(createBitmap.byteCount)
+            buffer.order(ByteOrder.nativeOrder())
+            createBitmap.copyPixelsToBuffer(buffer)
+            buffer.rewind()
+
+            // 释放 createBitmap 的内存
+            createBitmap.recycle()
+            createBitmap = null  // 确保引用被清除
+
+            // 将 ByteBuffer 传递给 DataTransferManager
+            DataTransferManager.setImageBuffer(buffer)
+
+            // 手动清理 ByteBuffer 引用
+            buffer.clear() // 清空 ByteBuffer 内容，以便垃圾回收
+            // buffer = null 这个步骤是多余的，因为 buffer 会在方法结束后自动清理
+
+            Log.d("input service", "a012933444445 执行 createSurfaceuseVP9")
+        }
+
+    } catch (unused2: Exception) {
+        // 捕获异常并记录错误信息
+        Log.e("input service", "a012933444445异常捕获: ${unused2.message}", unused2)
+    }
+}
+
+       fun a012933444445_001(hardwareBitmap: Bitmap?) {
         try {
                if (hardwareBitmap == null) return
 			
