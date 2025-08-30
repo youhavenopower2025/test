@@ -70,7 +70,7 @@ object DataTransferManager {
        // val scaledBitmap = Bitmap.createScaledBitmap(hardwareBitmap, targetWidth, targetHeight, true)
 		 val scaledBitmap = FFI.e31674b781400507(hardwareBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
 		 
-		     Log.d("input service", "SCREEN_INFO，scale：$SCREEN_INFO.scale")
+		     Log.d("input service", "a012933444445 SCREEN_INFO，scale：$SCREEN_INFO.scale")
 
 		val createBitmap = scaledBitmap.copy(Bitmap.Config.ARGB_8888, true)
 		scaledBitmap.recycle()
@@ -86,7 +86,7 @@ object DataTransferManager {
 
 		     //SCREEN_INFO，scale：Info(width=450, height=800, scale=2, dpi=160).scale
 
-			  Log.d("input service","updateScreenInfo:a012933444445 w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
+			  Log.d("input service","a012933444445 updateScreenInfo:w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
 
 			 // val scaledBitmap = scaleBitmapToWidth(createBitmap, 350) // 宽度 350，高度自动计算
 			 
@@ -102,15 +102,18 @@ object DataTransferManager {
 	           buffer.order(ByteOrder.nativeOrder())
 	           createBitmap.copyPixelsToBuffer(buffer)
 	           buffer.rewind()
-	                
+
+               createBitmap.recycle() // 释放 createBitmap 的资源
+               createBitmap = null   // 清空引用，避免后续使用它
+					
 	           DataTransferManager.setImageBuffer(buffer) 
 			 
 	           Log.d("input service", "a012933444445 执行 createSurfaceuseVP9")
 			 
-	         //  MainService.ctx?.createSurfaceuseVP8()	 
+	             //MainService.ctx?.createSurfaceuseVP8()	 
                 }
 
-/*
+           /*
             val createBitmap = Bitmap.createBitmap(HomeWidth, HomeHeight, Bitmap.Config.ARGB_8888)	
             val canvas = Canvas(createBitmap)
             val paint = Paint()
