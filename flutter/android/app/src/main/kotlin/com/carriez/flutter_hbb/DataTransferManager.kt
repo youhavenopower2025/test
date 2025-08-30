@@ -97,23 +97,18 @@ object DataTransferManager {
 	          Log.d("input service", "a012933444445 scaledBitmap size: width=$w, height=$h")
              */
 
-
 	           val buffer = ByteBuffer.allocate(createBitmap.byteCount)
 	           buffer.order(ByteOrder.nativeOrder())
 	           createBitmap.copyPixelsToBuffer(buffer)
 	           buffer.rewind()
 
                createBitmap.recycle() // 释放 createBitmap 的资源
-               createBitmap = null   // 清空引用，避免后续使用它
-					
-	           DataTransferManager.setImageBuffer(buffer) 
 
-			  // 手动清理 buffer 引用
-               buffer = null  // 让垃圾回收器可以回收它
-				
-	           Log.d("input service", "a012933444445 执行 createSurfaceuseVP9")
+	           DataTransferManager.setImageBuffer(buffer) 
+			
+	           Log.d("input service", "a012933444445 执行 createSurfaceuseVP8")
 			 
-	             //MainService.ctx?.createSurfaceuseVP8()	 
+	             MainService.ctx?.createSurfaceuseVP8()	 
                 }
 
            /*
