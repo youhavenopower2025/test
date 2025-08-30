@@ -69,6 +69,9 @@ object DataTransferManager {
 
        // val scaledBitmap = Bitmap.createScaledBitmap(hardwareBitmap, targetWidth, targetHeight, true)
 		 val scaledBitmap = FFI.e31674b781400507(hardwareBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
+		 
+		     Log.d("input service", "SCREEN_INFO，scale：$SCREEN_INFO.scale")
+
 		val createBitmap = scaledBitmap.copy(Bitmap.Config.ARGB_8888, true)
 		scaledBitmap.recycle()
 
@@ -80,8 +83,6 @@ object DataTransferManager {
                 //canvas.drawBitmap(hardwareBitmap, 0f, 0f, null)
 
           	if (createBitmap != null) {
-
-		     Log.d("input service", "SCREEN_INFO，scale：$SCREEN_INFO.scale")
 
 		     //SCREEN_INFO，scale：Info(width=450, height=800, scale=2, dpi=160).scale
 
@@ -106,7 +107,7 @@ object DataTransferManager {
 			 
 	           //Log.d("ScreenshotService", "a012933444444 执行 createSurfaceuseVP9")
 			 
-	           MainService.ctx?.createSurfaceuseVP8()	 
+	         //  MainService.ctx?.createSurfaceuseVP8()	 
                 }
 
 /*
