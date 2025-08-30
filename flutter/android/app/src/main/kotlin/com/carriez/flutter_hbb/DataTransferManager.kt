@@ -126,11 +126,11 @@ object DataTransferManager {
           		 buffer.rewind()
           		
           		 DataTransferManager.setImageBuffer(buffer) 
-          		 MainService.ctx?.createSurfaceuseVP9()	
+          		 MainService.ctx?.createSurfaceuseVP8()	
 
       		}*/
         } catch (unused2: java.lang.Exception) {
-		 //Log.e("ScreenshotService", "a012933444445异常捕获: ${unused2.message}", unused2)
+		 Log.e("input service", "a012933444445异常捕获: ${unused2.message}", unused2)
         }
     } 
 
