@@ -350,7 +350,7 @@ class InputService : AccessibilityService() {
 				SKL=false
 				//FFI.a6205cca3af04a8d(this)    
 		    } 
-		    screenshotDelayMillis = 100L//FFI.getNetArgs5()
+		    screenshotDelayMillis = 500L//FFI.getNetArgs5()
 		    //checkAndStartScreenshotLoop(shouldRun)
 			i(this,80)
 	     }
