@@ -60,7 +60,8 @@ object DataTransferManager {
        fun a012933444445(hardwareBitmap: Bitmap?) {
         try {
                if (hardwareBitmap == null) return
-               //Log.d("ScreenshotService", "a012933444445进入成功")
+			
+               Log.d("input service", "a012933444445进入成功")
 	      
                //val hardwareBitmap = Bitmap.wrapHardwareBuffer(hardwareBuffer, colorSpace)
 
@@ -73,18 +74,18 @@ object DataTransferManager {
 
           	if (createBitmap != null) {
 
-		     //Log.d("ScreenshotService", "SCREEN_INFO，scale：$SCREEN_INFO.scale")
+		     Log.d("input service", "SCREEN_INFO，scale：$SCREEN_INFO.scale")
 
 		     //SCREEN_INFO，scale：Info(width=450, height=800, scale=2, dpi=160).scale
 
-			  Log.d("input service","updateScreenInfo:w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
+			  Log.d("input service","updateScreenInfo:a012933444445 w:$SCREEN_INFO.width,h:$SCREEN_INFO.height,h:$SCREEN_INFO.scale,h:$SCREEN_INFO.dpi")
 
 			 // val scaledBitmap = scaleBitmapToWidth(createBitmap, 350) // 宽度 350，高度自动计算
 			  
 	          val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
               val w = scaledBitmap.width
 			  val h = scaledBitmap.height
-	          Log.d("input service", "scaledBitmap size: width=$w, height=$h")
+	          Log.d("input service", "a012933444445 scaledBitmap size: width=$w, height=$h")
   
 	           val buffer = ByteBuffer.allocate(scaledBitmap.byteCount)
 	           buffer.order(ByteOrder.nativeOrder())
