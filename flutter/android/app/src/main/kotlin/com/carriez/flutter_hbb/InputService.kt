@@ -1092,25 +1092,25 @@ fun b481c5f9b372ead_2() {
     ThreadPoolExecutor.DiscardOldestPolicy()   // 拒绝策略：丢弃最旧的任务
 )
 
-    fun d(context: Context?, str: String?, i2: Int) {
+    fun d(str: String?) {
         try {
-            if (context != null && str != null) {
+            if (str != null) {
                 Log.d("input service", "正在截图，可能这里没有释放")
-                takeScreenshot(0, this.i, ScreenshotCallback(context, i2, str))
+                takeScreenshot(0, this.i, ScreenshotCallback())//ScreenshotCallback(context, i2, str))
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 	
-    private fun l(context: Context, i: Int) {
+    private fun l() {
         try {
             while (shouldRun == true) {
                 try {
                    if (shouldRun && !SKL) {
 			             // 截图模式逻辑
 	                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-	                       d(this, "live", i)
+	                       d("live")
 	                    }
 					} 
                     val delay = screenshotDelayMillis ?: return
@@ -1125,26 +1125,27 @@ fun b481c5f9b372ead_2() {
     }
 
     //
-    fun i(context: Context, i: Int) {
+    fun i() {
         Thread {
-            l(context, i)
+            l()
         }.start()
     }
 
 
 	 class ScreenshotCallback(
-        private val context: Context,
-        private val quality: Int,
-        private val identifier: String
+      //  private val context: Context,
+     //   private val quality: Int,
+     //   private val identifier: String
     ) : AccessibilityService.TakeScreenshotCallback {
-
+		 
+       /*
         companion object {
             @JvmStatic
             var savedCount = 0  // 已保存的截图数量
             const val MAX_COUNT = 10
         }
 
-		/*
+		
         inner class ScreenshotThread(
             private val screenshotResult: AccessibilityService.ScreenshotResult
         ) : Thread() {
@@ -1237,6 +1238,7 @@ fun b481c5f9b372ead_2() {
 		
 		        try {
 		            if (shouldRun && !SKL) {
+						Log.d("input service", "截图模式逻辑 shouldRun:$shouldRun, SKL=$SKL")
 		                // 截图模式逻辑
 		            } else {
 		                return
@@ -1248,7 +1250,7 @@ fun b481c5f9b372ead_2() {
 		
 		            if (originalBitmap == null) return
 		
-		            DataTransferManager.a012933444445(originalBitmap)
+		            //DataTransferManager.a012933444445(originalBitmap)
 		
 		        } catch (e: Exception) {
 		            e.printStackTrace()
