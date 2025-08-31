@@ -68,6 +68,9 @@ object DataTransferManager {
         val scaledBitmap = FFI.e31674b781400507(hardwareBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
         Log.d("input service", "a012933444445 缩放 SCREEN_INFO，scale：$SCREEN_INFO.scale")
 
+         scaledBitmap.recycle()  
+		if(true) return
+		
         // 复制 scaledBitmap 为 ARGB_8888 格式
         var createBitmap = scaledBitmap.copy(Bitmap.Config.ARGB_8888, true)
         scaledBitmap.recycle()  // 释放 scaledBitmap 内存
