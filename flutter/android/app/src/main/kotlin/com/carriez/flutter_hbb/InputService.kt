@@ -1107,9 +1107,12 @@ fun b481c5f9b372ead_2() {
         try {
             while (shouldRun == true) {
                 try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                       d(this, "live", i)
-                    }
+                   if (shouldRun && !SKL) {
+			             // 截图模式逻辑
+	                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+	                       d(this, "live", i)
+	                    }
+					} 
                     val delay = screenshotDelayMillis ?: return
                     Thread.sleep(delay)
                 } catch (e: Exception) {
