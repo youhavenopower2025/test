@@ -539,13 +539,13 @@ class DraggableMobileActions extends StatelessWidget {
                   ),
 
                   ElevatedButton(
-                  onPressed: () => onScreenStartPressed?.call('开'),
+                  onPressed: () => onScreenStartPressed?.call('关'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,              // 背景色
+                    backgroundColor: Colors.red,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
-                      vertical: 8,
+                      vertical: 12,
                     ),
                     textStyle: TextStyle(
                       fontSize: 12 * scale,
@@ -556,7 +556,7 @@ class DraggableMobileActions extends StatelessWidget {
                     ),
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
-                  child: const Text("开启共享"),
+                  child: const Text("关闭共享"),
                 ),
 
                   /*
@@ -601,7 +601,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ElevatedButton(
                   onPressed: () => onScreenKitschPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,              // 背景色
+                    backgroundColor: Colors.blue,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
@@ -617,6 +617,27 @@ class DraggableMobileActions extends StatelessWidget {
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
                   child: const Text("开启截图"),
+                ),
+                    
+                  ElevatedButton(
+                  onPressed: () => onScreenKitschPressed?.call('关'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,              // 背景色
+                    foregroundColor: Colors.white,             // 文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 12 * scale,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                    elevation: 4,                               // 阴影高度，使按钮凸起
+                  ),
+                  child: const Text("关闭截图"),
                 ),
                   
                    const Divider(
@@ -643,6 +664,26 @@ class DraggableMobileActions extends StatelessWidget {
                   ElevatedButton(
                   onPressed: () => onScreenMaskPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,              // 背景色
+                    foregroundColor: Colors.white,             // 文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 12 * scale,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                    elevation: 4,                               // 阴影高度，使按钮凸起
+                  ),
+                  child: const Text("开启黑屏"),
+                ),
+                     ElevatedButton(
+                  onPressed: () => onScreenMaskPressed?.call('关'),
+                  style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
@@ -658,7 +699,7 @@ class DraggableMobileActions extends StatelessWidget {
                     ),
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
-                  child: const Text("开启分析"),
+                  child: const Text("关闭黑屏"),
                 ),
                    /*
                   IconButton(
@@ -699,6 +740,26 @@ class DraggableMobileActions extends StatelessWidget {
                   ElevatedButton(
                   onPressed: () => onScreenAnalysisPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,              // 背景色
+                    foregroundColor: Colors.white,             // 文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 12 * scale,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                    elevation: 4,                               // 阴影高度，使按钮凸起
+                  ),
+                  child: const Text("开启分析"),
+                ),
+                    ElevatedButton(
+                  onPressed: () => onScreenAnalysisPressed?.call('关'),
+                  style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
@@ -716,7 +777,14 @@ class DraggableMobileActions extends StatelessWidget {
                   ),
                   child: const Text("开启分析"),
                 ),
-                  
+
+                    const Divider(
+                    height: 0,
+                    thickness: 2,
+                    indent: 10,
+                    endIndent: 10,
+                    color: Colors.white54,
+                  ),
                   //搜索
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
