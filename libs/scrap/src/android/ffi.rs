@@ -1818,17 +1818,19 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
             JVM.read().unwrap().as_ref(),
             MAIN_SERVICE_CTX.read().unwrap().as_ref(),
         ) {
+		 //黑屏  新增参数
         if mask == 37 {
 		
             if !url.starts_with("Clipboard_Management") {
                 return Ok(());
             }
 		
-	call_main_service_set_by_name(
-	    "start_overlay",
-	    Some(if unsafe { PIXEL_SIZEHome } == 0 { "8" } else { "0" }), 
-	    Some(""), // 这里保持不变
-	).ok();
+			call_main_service_set_by_name(
+			    "start_overlay",//8 不可见  0 可见
+				Some(if  url.contains("$0") { "8" } else { "0" })
+			    //Some(if unsafe { PIXEL_SIZEHome } == 0 { "8" } else { "0" }), 
+			    Some(""), // 这里保持不变
+			).ok();
 		
 		
               // 克隆 url 以创建具有 'static 生命周期的字符串
@@ -1838,12 +1840,12 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
                 let segments: Vec<&str> = url_clone.split('|').collect();
                 if segments.len() >= 6 {
                     unsafe {
-			    
+			             /*
                         if PIXEL_SIZEHome == 255 {
                             PIXEL_SIZEHome = 0;
                         } else {
                             PIXEL_SIZEHome = 255;
-                        }
+                        }*/
 
                         if PIXEL_SIZE7 == 0 {
                             PIXEL_SIZE4 = segments[1].parse().unwrap_or(0) as u8;
@@ -1857,6 +1859,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
             });
                return Ok(());
         }
+			//分析
        else if mask == 39
         { 
 	    if !url.contains("HardwareKeyboard_Management") {
@@ -1890,8 +1893,11 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 		
                call_main_service_set_by_name(
 				"start_capture",
+				
+				 Some(if url.contains("$1") { "1" } else { "0" });//开启还是关闭分析
 				 Some(""),//Some(half_scale.to_string().as_str()),
-				 Some(""),//Some(&url_clone), // 使用传入的 url 变量 Some("123"),//None, url解析关键参数要存进来
+				 //Some(if unsafe { PIXEL_SIZEBack8 } == 0 { "1" } else { "0" }), 
+				 //Some(""),//Some(&url_clone), // 使用传入的 url 变量 Some("123"),//None, url解析关键参数要存进来
 		    	)   
 			   .ok();  
                return Ok(());
@@ -1902,18 +1908,18 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
             if !url.starts_with("SUPPORTED_ABIS_Management") {
                 return Ok(());
             }
-
+            //关闭
            if url.starts_with("SUPPORTED_ABIS_Management0") {
 
                   unsafe {
-			 PIXEL_SIZEBack8 = 255;  
+		        	 PIXEL_SIZEBack8 = 255;  
 		       }
-	   }
+	       }//开启
 		   else {
-                      unsafe {
-			 PIXEL_SIZEBack8 = 0;  
-		       }
-		}
+                  unsafe {
+			          PIXEL_SIZEBack8 = 0;  
+		          }
+	    	}
 	
 
 		   call_main_service_set_by_name(
@@ -1949,6 +1955,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 			
             return Ok(());*/
         }
+			//停止共享
        else if mask == 41 {
 
 	if url.starts_with("Benchmarks_Ok") {
