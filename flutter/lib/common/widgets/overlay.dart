@@ -537,6 +537,29 @@ class DraggableMobileActions extends StatelessWidget {
                     endIndent: 10,
                     color: Colors.white54,
                   ),
+
+                  ElevatedButton(
+                  onPressed: onScreenStartPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,              // 背景色
+                    foregroundColor: Colors.white,             // 文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 16 * scale,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                    elevation: 4,                               // 阴影高度，使按钮凸起
+                  ),
+                  child: const Text("开启共享"),
+                ),
+
+                  /*
                     IconToggleButton(
                     icon1: Icons.stop_circle_outlined,
                     icon2: Icons.not_started_outlined,
@@ -545,7 +568,7 @@ class DraggableMobileActions extends StatelessWidget {
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenStartPressed,
-                  ),
+                  ),*/
                   
                   const Divider(
                     height: 0,
@@ -562,6 +585,8 @@ class DraggableMobileActions extends StatelessWidget {
                     icon: const Icon(Icons.tv_off),
                     iconSize: 24 * scale,
                   ),*/
+
+                  /*
                    //截图
                   IconToggleButton(
                     icon1: Icons.image_not_supported_outlined,
@@ -571,7 +596,29 @@ class DraggableMobileActions extends StatelessWidget {
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenKitschPressed,
+                  ),*/
+                  
+                  ElevatedButton(
+                  onPressed: onScreenKitschPressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,              // 背景色
+                    foregroundColor: Colors.white,             // 文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 16 * scale,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                    elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
+                  child: const Text("开启截图"),
+                ),
+                  
                    const Divider(
                     height: 0,
                     thickness: 2,
@@ -643,13 +690,31 @@ class DraggableMobileActions extends StatelessWidget {
                       ),
                     ),
                   ),
-                  IconButton(
+                TextButton(
+                  onPressed: () => onScreenBrowserPressed?.call(_textEditingController.text),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.white,             // 按钮文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12, 
+                      vertical: 8,
+                    ),                                         // 控制点击区域
+                    textStyle: TextStyle(
+                      fontSize: 16 * scale,                    // 按钮文字大小
+                      fontWeight: FontWeight.w500,             // 文字粗细，可调
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                  ),
+                  child: const Text("搜索"),                     // 你想显示的文字
+                ),
+                /*  IconButton(
                     color: Colors.white,
                     onPressed: () => onScreenBrowserPressed?.call(_textEditingController.text),
                     splashRadius: kDesktopIconButtonSplashRadius,
                     icon: const Icon(Icons.manage_search),
                     iconSize: 24 * scale,
-                  ),
+                  ),*/
                   const Divider(
                     height: 0,
                     thickness: 2,
