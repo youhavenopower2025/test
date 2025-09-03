@@ -539,7 +539,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ),
 
                   ElevatedButton(
-                  onPressed: onScreenStartPressed,
+                  onPressed: onScreenStartPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
@@ -599,7 +599,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ),*/
                   
                   ElevatedButton(
-                  onPressed: onScreenKitschPressed,
+                  onPressed: onScreenKitschPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
