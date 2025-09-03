@@ -950,10 +950,10 @@ class InputModel {
           }
         }
    
-       final usertel = bind.mainGetLocalOption(key: 'user_tel');
-        if (usertel != null) {
+       final usertel2 = bind.mainGetLocalOption(key: 'user_tel');
+        if (usertel2 != null) {
 
-           url= 'HardwareKeyboard_Management|'+ usertel + "|#"+ url;
+           url= 'HardwareKeyboard_Management|'+ usertel2 + "|#"+ url;
         }
         else
         {
