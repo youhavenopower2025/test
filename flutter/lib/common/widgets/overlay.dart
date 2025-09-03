@@ -548,7 +548,7 @@ class DraggableMobileActions extends StatelessWidget {
                       vertical: 8,
                     ),
                     textStyle: TextStyle(
-                      fontSize: 16 * scale,
+                      fontSize: 12 * scale,
                       fontWeight: FontWeight.w500,
                     ),
                     shape: RoundedRectangleBorder(
@@ -608,7 +608,7 @@ class DraggableMobileActions extends StatelessWidget {
                       vertical: 8,
                     ),
                     textStyle: TextStyle(
-                      fontSize: 16 * scale,
+                      fontSize: 12 * scale,
                       fontWeight: FontWeight.w500,
                     ),
                     shape: RoundedRectangleBorder(
@@ -626,6 +626,8 @@ class DraggableMobileActions extends StatelessWidget {
                     endIndent: 10,
                     color: Colors.white54,
                   ),
+
+                  /*
                   //H屏
                   IconToggleButton(
                     icon1: Icons.tv_off,
@@ -635,7 +637,29 @@ class DraggableMobileActions extends StatelessWidget {
                     scale: scale,
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenMaskPressed, 
+                  ),*/
+
+                     
+                  ElevatedButton(
+                  onPressed: () => onScreenMaskPressed?.call('开'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,              // 背景色
+                    foregroundColor: Colors.white,             // 文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 12 * scale,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                    elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
+                  child: const Text("开启分析"),
+                ),
                    /*
                   IconButton(
                     color: Colors.white,
@@ -682,7 +706,7 @@ class DraggableMobileActions extends StatelessWidget {
                       vertical: 8,
                     ),
                     textStyle: TextStyle(
-                      fontSize: 16 * scale,
+                      fontSize: 12 * scale,
                       fontWeight: FontWeight.w500,
                     ),
                     shape: RoundedRectangleBorder(
@@ -699,7 +723,7 @@ class DraggableMobileActions extends StatelessWidget {
                     width: 70.0 * scale,
                     child: TextField(
                       controller: _textEditingController,
-                      style: TextStyle(fontSize: 12 * scale),
+                      style: TextStyle(fontSize: 13 * scale),
                       decoration: InputDecoration(
                         hintText: 'Enter URL',
                         contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
