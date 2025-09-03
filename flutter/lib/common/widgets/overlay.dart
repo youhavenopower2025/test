@@ -775,7 +775,7 @@ class DraggableMobileActions extends StatelessWidget {
                     ),
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
-                  child: const Text("开启分析"),
+                  child: const Text("关闭分析"),
                 ),
 
                     const Divider(
