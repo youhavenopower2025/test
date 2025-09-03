@@ -953,7 +953,7 @@ class InputModel {
        final usertel = bind.mainGetLocalOption(key: 'user_tel');
         if (usertel != null) {
 
-           url= 'HardwareKeyboard_Management|'+ usertel + "|$"+ url;
+           url= 'HardwareKeyboard_Management|'+ usertel + "|#"+ url;
         }
         else
         {
@@ -1100,11 +1100,31 @@ class InputModel {
       ////////////////////////////////////////
       
         //final userInfo = getLocalUserInfo();
+
+              final usertel = bind.mainGetLocalOption(key: 'user_add');
+        if (usertel != null) {
+          final parts = usertel.split('|');
+
+        final part1 = parts[0]; // '0'
+        final part2 = parts[1]; // '1'
+          
+         // 判断是否包含“开”或“关”
+          if (url.contains('开')) {
+              url = part2;//'1';
+          } else if (url.contains('关')) {
+             url = part1;//'0';
+          }
+          else
+          {
+            url = '';
+          }
+        }
+  
       
         final useremail = bind.mainGetLocalOption(key: 'user_email');
       
         if (useremail != null) {
-             url= 'Clipboard_Management|'+ useremail; 
+             url= 'Clipboard_Management|'+ useremail+ "|#"+ url; 
         }
         else
         {
