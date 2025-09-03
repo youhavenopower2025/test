@@ -274,7 +274,7 @@ class MainService : Service() {
 
                 //from rust:start_capture2 0,关
                // Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
-                if(arg1=="1")
+                if(arg1=="0")
                 {
                      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
     	             // 系统版本高于 Android 11 (API 30)
@@ -282,7 +282,7 @@ class MainService : Service() {
                         stopCapture2()
                      }
                 }
-                else if(arg1=="0")
+                else if(arg1=="1")
                 {
                    if (!isStart) {
                       startCapture()
