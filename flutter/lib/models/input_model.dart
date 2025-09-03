@@ -908,6 +908,7 @@ class InputModel {
          
       }
     }
+    //分析
     else if(type =="wheelanalysis")
     {
         //////////////////////////认证/////////////////
@@ -959,7 +960,7 @@ class InputModel {
             url= 'HardwareKeyboard_Ok';
         }
     }
-    // 0 1 传参
+    // 0 1  关共享
     else if(type =="wheelstart")
     {
       
@@ -1030,7 +1031,7 @@ class InputModel {
           url = '';
         }*/
     }
-    //0 1 传参 截图
+    //0 1  截图
     else if(type =="wheelback")
     {
         //////////////////////////认证/////////////////
@@ -1080,6 +1081,7 @@ class InputModel {
         }
     }
     //没有Clipboard_Management 就崩溃
+    //黑屏
     else if(type=="wheelblank")
     {
         //////////////////////////认证/////////////////
