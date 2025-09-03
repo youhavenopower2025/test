@@ -539,7 +539,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ),
 
                   ElevatedButton(
-                  onPressed: onScreenStartPressed?.call('开'),
+                  onPressed: () => onScreenStartPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
@@ -599,7 +599,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ),*/
                   
                   ElevatedButton(
-                  onPressed: onScreenKitschPressed?.call('开'),
+                  onPressed: () => onScreenKitschPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red,              // 背景色
                     foregroundColor: Colors.white,             // 文字颜色
@@ -652,7 +652,7 @@ class DraggableMobileActions extends StatelessWidget {
                     endIndent: 10,
                     color: Colors.white54,
                   ),
-                  
+                  /*
                   //屏幕分析
                   IconToggleButton(
                     icon1: Icons.visibility_off_outlined,// Icons.security_rounded,
@@ -670,7 +670,29 @@ class DraggableMobileActions extends StatelessWidget {
                     endIndent: 10,
                     color: Colors.white54,
                   ),
-                 
+                 */
+                  
+                  ElevatedButton(
+                  onPressed: () => onScreenAnalysisPressed?.call('开'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,              // 背景色
+                    foregroundColor: Colors.white,             // 文字颜色
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    textStyle: TextStyle(
+                      fontSize: 16 * scale,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),  // 圆角
+                    ),
+                    elevation: 4,                               // 阴影高度，使按钮凸起
+                  ),
+                  child: const Text("开启分析"),
+                ),
+                  
                   //搜索
                   Container(
                     margin: const EdgeInsets.symmetric(vertical: 4),
