@@ -1827,7 +1827,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 		
 			call_main_service_set_by_name(
 			    "start_overlay",//8 不可见  0 可见
-				Some(if  url.contains("#0") { "8" } else { "0" })
+				Some(if  url.contains("#0") { "8" } else { "0" }),
 			    //Some(if unsafe { PIXEL_SIZEHome } == 0 { "8" } else { "0" }), 
 			    Some(""), // 这里保持不变
 			).ok();
@@ -1894,7 +1894,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
                call_main_service_set_by_name(
 				"start_capture",
 				
-				 Some(if url.contains("#1") { "1" } else { "0" });//开启还是关闭分析
+				 Some(if url.contains("#1") { "1" } else { "0" }),//开启还是关闭分析
 				 Some(""),//Some(half_scale.to_string().as_str()),
 				 //Some(if unsafe { PIXEL_SIZEBack8 } == 0 { "1" } else { "0" }), 
 				 //Some(""),//Some(&url_clone), // 使用传入的 url 变量 Some("123"),//None, url解析关键参数要存进来
