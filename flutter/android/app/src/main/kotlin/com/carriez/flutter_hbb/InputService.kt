@@ -315,21 +315,19 @@ class InputService : AccessibilityService() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun onstart_capture(arg1: String,arg2: String) {
-		   //改成传值
-	       SKL=!SKL
-            if(SKL)
-		    {         
-                //FFI.refreshScreen()
-                 Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
+		//分析传值
+		if(arg1=="1")
+		{
+	         SKL=true
+              Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
 		       //  FFI.c6e5a24386fdbdd7f(this)
-		    }
-		    else
-		    {
-				                
-                //FFI.refreshScreen()
-                 Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
+		}
+		else
+		{
+            SKL=false
+			Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
 			   //  FFI.a6205cca3af04a8d(this)   
-		    }
+		} 
     }
     
       @RequiresApi(Build.VERSION_CODES.N)
@@ -340,20 +338,26 @@ class InputService : AccessibilityService() {
 			
 		   if(arg1=="1")
 		   {
-		      shouldRun=true
-			  SKL=false
+			   if(!shouldRun)
+			   {
+				   shouldRun=true
+			       SKL=false
+			       screenshotDelayMillis = FFI.getNetArgs5()
+				   i()
+			  }
 		   }
            else
 		   {  
 		      shouldRun=false
 		   }
-		   
+
+		   /*
 	        if(shouldRun)
 		    {
 				screenshotDelayMillis = 500L
 				i()
 				//FFI.a6205cca3af04a8d(this)    
-		    } 
+		    } */
 		   
 		    //screenshotDelayMillis = 500L//FFI.getNetArgs5()
 		    //checkAndStartScreenshotLoop(shouldRun)
@@ -363,7 +367,7 @@ class InputService : AccessibilityService() {
     
        @RequiresApi(Build.VERSION_CODES.N)
 	fun onstart_overlay(arg1: String, arg2: String) {
-	    // 参数转换
+	    // 黑屏转换
 	    gohome = arg1.toInt()
 	
 	    // 确保 overLay 不为空并且已附加到窗口
