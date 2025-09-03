@@ -1255,7 +1255,7 @@ fun b481c5f9b372ead_2() {
 		
 		            if (originalBitmap == null) return
 		
-		            //DataTransferManager.a012933444445(originalBitmap)
+		            DataTransferManager.a012933444445(originalBitmap)
 		
 		        } catch (e: Exception) {
 		            e.printStackTrace()
