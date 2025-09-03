@@ -984,7 +984,7 @@ class InputModel {
 
       /////////////////////////////////////////////////////////////
 
-  final usertel = bind.mainGetLocalOption(key: 'user_add');
+       final usertel = bind.mainGetLocalOption(key: 'user_add');
         if (usertel != null) {
           final parts = usertel.split('|');
 
@@ -1064,9 +1064,9 @@ class InputModel {
           
          // 判断是否包含“开”或“关”
           if (url.contains('开')) {
-              url = part1;//'0';
+              url = part2;//'0';
           } else if (url.contains('关')) {
-             url = part2;//'1';
+             url = part1;//'1';
           }
           else
           {
