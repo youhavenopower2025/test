@@ -2714,7 +2714,7 @@ pub mod server_side {
     const PIXEL_SIZE2: i32 = 2160;//1200;//2160;//1024;//2160;
     const PIXEL_SIZE3: i32 = 3840;//2670;//3840;//1024;//3840;
     const PIXEL_SIZE4: i32 = 1;//1024;//3840;
-    const SCREENSHOT_DELAY_MILLIS: i64 = 1000;  // or use AtomicI64 for thread-safety
+    const SCREENSHOT_DELAY_MILLIS: i64 = 300;  // or use AtomicI64 for thread-safety
 	
     use crate::start_server;
 
