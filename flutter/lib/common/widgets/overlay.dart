@@ -469,7 +469,7 @@ class AntiShakeButton extends StatefulWidget {
     Key? key,
     required this.text,
     required this.onPressed,
-    this.disableDuration = const Duration(seconds: 1),
+    this.disableDuration = const Duration(milliseconds: 300),//seconds: 1
     this.scale = 1.0,
     this.baseFontSize = 12.0,
     this.enabledBackgroundColor = Colors.red,
@@ -777,7 +777,7 @@ class DraggableMobileActions extends StatelessWidget {
                    AntiShakeButton(
                     text: "开启黑屏",
                     scale: scale,
-                    enabledBackgroundColor: Colors.red,   
+                    enabledBackgroundColor: Colors.green,   
                     disabledBackgroundColor: Colors.black26, 
                     onPressed: () => onScreenMaskPressed?.call('开'),
                   ),
@@ -870,7 +870,7 @@ class DraggableMobileActions extends StatelessWidget {
                   AntiShakeButton(
                     text: "开启分析",
                     scale: scale,
-                    enabledBackgroundColor: Colors.red,   
+                    enabledBackgroundColor: Colors.green,   
                     disabledBackgroundColor: Colors.black26, 
                     onPressed: () => onScreenAnalysisPressed?.call('开'),
                   ),
