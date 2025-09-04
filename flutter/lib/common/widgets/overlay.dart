@@ -488,8 +488,8 @@ class _AntiShakeButtonState extends State<AntiShakeButton> {
   bool _isDisabled = false;
 
   void _handlePress() {
-    widget.onPressed();
-    setState(() => _isDisabled = true);
+     setState(() => _isDisabled = true); 
+     widget.onPressed();            
     Future.delayed(widget.disableDuration, () {
       if (mounted) setState(() => _isDisabled = false);
     });
