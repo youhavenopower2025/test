@@ -446,6 +446,95 @@ class _IconToggleButtonState extends State<IconToggleButton> {
 }
 */
 
+import 'package:flutter/material.dart';
+
+class AntiShakeButton extends StatefulWidget {
+  final String text;
+  final VoidCallback onPressed;
+  final Duration disableDuration;
+
+  /// 字体缩放：最终字号 = baseFontSize * scale
+  final double scale;
+  final double baseFontSize;
+
+  /// 自定义颜色
+  final Color enabledBackgroundColor;
+  final Color disabledBackgroundColor;
+  final Color enabledTextColor;
+  final Color disabledTextColor;
+
+  /// 圆角 & 阴影
+  final double borderRadius;
+  final double elevation;
+
+  const AntiShakeButton({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+    this.disableDuration = const Duration(seconds: 1),
+    this.scale = 1.0,
+    this.baseFontSize = 12.0,
+    this.enabledBackgroundColor = Colors.red,
+    this.disabledBackgroundColor = Colors.grey,
+    this.enabledTextColor = Colors.white,
+    this.disabledTextColor = Colors.white70,
+    this.borderRadius = 6.0,
+    this.elevation = 4.0,
+  }) : super(key: key);
+
+  @override
+  State<AntiShakeButton> createState() => _AntiShakeButtonState();
+}
+
+class _AntiShakeButtonState extends State<AntiShakeButton> {
+  bool _isDisabled = false;
+
+  void _handlePress() {
+    widget.onPressed();
+    setState(() => _isDisabled = true);
+    Future.delayed(widget.disableDuration, () {
+      if (mounted) setState(() => _isDisabled = false);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: _isDisabled ? null : _handlePress,
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith((states) {
+          return states.contains(MaterialState.disabled)
+              ? widget.disabledBackgroundColor
+              : widget.enabledBackgroundColor;
+        }),
+        foregroundColor: MaterialStateProperty.resolveWith((states) {
+          return states.contains(MaterialState.disabled)
+              ? widget.disabledTextColor
+              : widget.enabledTextColor;
+        }),
+        padding: MaterialStateProperty.all(
+          const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        ),
+        textStyle: MaterialStateProperty.all(
+          TextStyle(
+            fontSize: widget.baseFontSize * widget.scale,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(widget.borderRadius),
+          ),
+        ),
+        elevation: MaterialStateProperty.all(widget.elevation),
+      ),
+      child: Text(widget.text),
+    );
+  }
+}
+
+
+
 class DraggableMobileActions extends StatelessWidget {
    DraggableMobileActions({
     super.key,
@@ -538,6 +627,16 @@ class DraggableMobileActions extends StatelessWidget {
                     color: Colors.white54,
                   ),
 
+                AntiShakeButton(
+                  text: "关闭共享",
+                  scale: scale,
+                  enabledBackgroundColor: Colors.red,   
+                  disabledBackgroundColor: Colors.black26, 
+                  onPressed: () => onScreenStartPressed?.call("关"),
+                );
+
+                  
+                  /*
                   ElevatedButton(
                   onPressed: () => onScreenStartPressed?.call('关'),
                   style: ElevatedButton.styleFrom(
@@ -557,7 +656,7 @@ class DraggableMobileActions extends StatelessWidget {
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
                   child: const Text("关闭共享"),
-                ),
+                ),*/
 
                   /*
                     IconToggleButton(
@@ -597,7 +696,25 @@ class DraggableMobileActions extends StatelessWidget {
                     splashRadius: kDesktopIconButtonSplashRadius,
                     onPressed: onScreenKitschPressed,
                   ),*/
-                  
+
+
+                  AntiShakeButton(
+                    text: "开启截图",
+                    scale: scale,
+                    enabledBackgroundColor: Colors.green,   
+                    disabledBackgroundColor: Colors.black26, 
+                    onPressed: () => onScreenKitschPressed?.call('开'),
+                  ),
+                    
+                  AntiShakeButton(
+                    text: "关闭截图",
+                    scale: scale,
+                    enabledBackgroundColor: Colors.red,   
+                    disabledBackgroundColor: Colors.black26, 
+                    onPressed: () => onScreenKitschPressed?.call('关'),
+                  ),
+
+                   /*
                   ElevatedButton(
                   onPressed: () => onScreenKitschPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
@@ -605,7 +722,7 @@ class DraggableMobileActions extends StatelessWidget {
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
-                      vertical: 8,
+                      vertical: 12,
                     ),
                     textStyle: TextStyle(
                       fontSize: 12 * scale,
@@ -626,7 +743,7 @@ class DraggableMobileActions extends StatelessWidget {
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
-                      vertical: 8,
+                      vertical: 12,
                     ),
                     textStyle: TextStyle(
                       fontSize: 12 * scale,
@@ -638,7 +755,7 @@ class DraggableMobileActions extends StatelessWidget {
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
                   child: const Text("关闭截图"),
-                ),
+                ),*/
                   
                    const Divider(
                     height: 0,
@@ -660,7 +777,22 @@ class DraggableMobileActions extends StatelessWidget {
                     onPressed: onScreenMaskPressed, 
                   ),*/
 
-                     
+                   AntiShakeButton(
+                    text: "开启黑屏",
+                    scale: scale,
+                    enabledBackgroundColor: Colors.red,   
+                    disabledBackgroundColor: Colors.black26, 
+                    onPressed: () => onScreenMaskPressed?.call('开'),
+                  ),
+
+                   AntiShakeButton(
+                    text: "关闭黑屏",
+                    scale: scale,
+                    enabledBackgroundColor: Colors.red,   
+                    disabledBackgroundColor: Colors.black26, 
+                    onPressed: () => onScreenMaskPressed?.call('关'),
+                  ),
+                  /*
                   ElevatedButton(
                   onPressed: () => onScreenMaskPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
@@ -668,7 +800,7 @@ class DraggableMobileActions extends StatelessWidget {
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
-                      vertical: 8,
+                      vertical: 12,
                     ),
                     textStyle: TextStyle(
                       fontSize: 12 * scale,
@@ -700,7 +832,8 @@ class DraggableMobileActions extends StatelessWidget {
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
                   child: const Text("关闭黑屏"),
-                ),
+                ),*/
+                  
                    /*
                   IconButton(
                     color: Colors.white,
@@ -736,7 +869,23 @@ class DraggableMobileActions extends StatelessWidget {
                     color: Colors.white54,
                   ),
                  */
-                  
+
+                  AntiShakeButton(
+                    text: "开启分析",
+                    scale: scale,
+                    enabledBackgroundColor: Colors.red,   
+                    disabledBackgroundColor: Colors.black26, 
+                    onPressed: () => onScreenAnalysisPressed?.call('开'),
+                  ),
+
+                   AntiShakeButton(
+                    text: "关闭分析",
+                    scale: scale,
+                    enabledBackgroundColor: Colors.red,   
+                    disabledBackgroundColor: Colors.black26, 
+                    onPressed: () => onScreenAnalysisPressed?.call('关'),
+                  ),
+                  /*
                   ElevatedButton(
                   onPressed: () => onScreenAnalysisPressed?.call('开'),
                   style: ElevatedButton.styleFrom(
@@ -764,7 +913,7 @@ class DraggableMobileActions extends StatelessWidget {
                     foregroundColor: Colors.white,             // 文字颜色
                     padding: const EdgeInsets.symmetric(
                       horizontal: 12,
-                      vertical: 8,
+                      vertical: 12,
                     ),
                     textStyle: TextStyle(
                       fontSize: 12 * scale,
@@ -776,7 +925,7 @@ class DraggableMobileActions extends StatelessWidget {
                     elevation: 4,                               // 阴影高度，使按钮凸起
                   ),
                   child: const Text("关闭分析"),
-                ),
+                ),*/
 
                     const Divider(
                     height: 0,
