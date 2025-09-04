@@ -94,7 +94,9 @@ object DataTransferManager {
             buffer.clear() // 清空 ByteBuffer 内容，以便垃圾回收
             // buffer = null 这个步骤是多余的，因为 buffer 会在方法结束后自动清理
 
-            Log.d("input service", "a012933444445 执行 createSurfaceuseVP9")
+            Log.d("input service", "a012933444445 执行 createSurfaceuseVP8")
+
+			MainService.ctx?.createSurfaceuseVP8()	 
         }
 
     } catch (unused2: Exception) {
