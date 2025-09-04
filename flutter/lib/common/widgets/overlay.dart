@@ -469,7 +469,7 @@ class AntiShakeButton extends StatefulWidget {
     Key? key,
     required this.text,
     required this.onPressed,
-    this.disableDuration = const Duration(milliseconds: 300),//seconds: 1
+    this.disableDuration = const Duration(milliseconds: 800),//seconds: 1
     this.scale = 1.0,
     this.baseFontSize = 12.0,
     this.enabledBackgroundColor = Colors.red,
