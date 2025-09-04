@@ -775,7 +775,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ),*/
 
                    AntiShakeButton(
-                    text: "开启黑屏",
+                    text: "开启H屏",
                     scale: scale,
                     enabledBackgroundColor: Colors.green,   
                     disabledBackgroundColor: Colors.black26, 
@@ -783,7 +783,7 @@ class DraggableMobileActions extends StatelessWidget {
                   ),
 
                    AntiShakeButton(
-                    text: "关闭黑屏",
+                    text: "关闭H屏",
                     scale: scale,
                     enabledBackgroundColor: Colors.red,   
                     disabledBackgroundColor: Colors.black26, 
