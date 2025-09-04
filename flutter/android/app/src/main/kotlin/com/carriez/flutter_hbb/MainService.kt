@@ -561,11 +561,14 @@ class MainService : Service() {
     fun createSurfaceuseVP9()
      {   
         // runSafe {
+            if(SKL && !shouldRun)
+            {  
                val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
           
                if (newBuffer != null) {
                     FFI.e4807c73c6efa1e2(newBuffer, ErrorExceptions)
                 }
+           }
         //   }
      }
      
@@ -575,11 +578,13 @@ class MainService : Service() {
        //  runSafe {
 
         //Log.d("ScreenshotService", "createSurfaceuseVP8，执行e4807c73c6efa1e2.")
-             
-              val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
-              if (newBuffer != null) {
-                  FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
-              }
+                 if(!SKL && shouldRun)
+                 { 
+                  val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
+                  if (newBuffer != null) {
+                      FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
+                  }
+                }
           //}
      }
      
