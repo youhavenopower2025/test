@@ -327,7 +327,7 @@ class InputService : AccessibilityService() {
 		else
 		{
             SKL=false
-			//if(Wt&&!shouldRun){ shouldRun=true}  
+			if(Wt&&!shouldRun){ shouldRun=true}  
 			Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
 			   //  FFI.a6205cca3af04a8d(this)   
 		} 
