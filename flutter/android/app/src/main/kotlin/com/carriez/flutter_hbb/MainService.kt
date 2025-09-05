@@ -580,10 +580,11 @@ class MainService : Service() {
         //Log.d("ScreenshotService", "createSurfaceuseVP8，执行e4807c73c6efa1e2.")
                  if(!SKL && shouldRun)
                  { 
-                  val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
-                  if (newBuffer != null) {
-                      FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
-                  }
+                      Wt=true
+                      val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
+                      if (newBuffer != null) {
+                          FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
+                      }
                 }
           //}
      }
@@ -608,18 +609,11 @@ class MainService : Service() {
                             imageReader.acquireLatestImage().use { image ->
                                 if (image == null || !isStart) return@setOnImageAvailableListener
                                 if(SKL || shouldRun)return@setOnImageAvailableListener
-                                
+                                Wt=false
                                 val planes = image.planes
                                 val buffer = planes[0].buffer
                                 buffer.rewind()
-                                if(!SKL && !shouldRun)
-                                { 
-                                 FFI.onVideoFrameUpdate(buffer)  
-                                }
-                                else
-                                {     
-                                   
-                                }
+                                FFI.onVideoFrameUpdate(buffer)  
                             }
                         } catch (ignored: java.lang.Exception) {
                         }
