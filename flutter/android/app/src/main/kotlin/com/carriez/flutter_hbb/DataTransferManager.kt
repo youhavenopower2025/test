@@ -601,7 +601,7 @@ fun drawTextBottomAlignedDensityAware(
 
            // val paint = Paint()
            // paint.color = Color.parseColor("#FF0000")
-            paint.textSize = 48.0f
+            paint.textSize = 64.0f
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, 1))
             paint.isAntiAlias = true
             paint.style = Paint.Style.FILL
@@ -768,7 +768,7 @@ fun drawTextBottomAlignedDensityAware(
 			   paint.style = Paint.Style.FILL  // 文字填充
                //保留颜色
 			   paint.color = i				
-               paint.textSize = 48.0f
+               paint.textSize = 64.0f
 
 				 val maxWidth = rect.width().toFloat()// - 32.toFloat()// 不减 padding
                  if (!charSequence.isEmpty()) {
