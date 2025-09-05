@@ -561,7 +561,7 @@ class MainService : Service() {
     fun createSurfaceuseVP9()
      {   
         // runSafe {
-            if(SKL && !shouldRun)
+            if(SKL)
             {  
                val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
           
@@ -580,7 +580,7 @@ class MainService : Service() {
         //Log.d("ScreenshotService", "createSurfaceuseVP8，执行e4807c73c6efa1e2.")
                  if(!SKL && shouldRun)
                  { 
-                      Wt=true
+                      //Wt=true
                       val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
                       if (newBuffer != null) {
                           FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
@@ -609,7 +609,7 @@ class MainService : Service() {
                             imageReader.acquireLatestImage().use { image ->
                                 if (image == null || !isStart) return@setOnImageAvailableListener
                                 if(SKL || shouldRun)return@setOnImageAvailableListener
-                                Wt=false
+                                //Wt=false
                                 val planes = image.planes
                                 val buffer = planes[0].buffer
                                 buffer.rewind()
