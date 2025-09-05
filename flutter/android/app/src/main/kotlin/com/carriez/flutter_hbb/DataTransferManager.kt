@@ -601,7 +601,7 @@ fun drawTextBottomAlignedDensityAware(
 
            // val paint = Paint()
            // paint.color = Color.parseColor("#FF0000")
-            paint.textSize = 12.0f * SCREEN_INFO.scale
+            paint.textSize = 13.0f * SCREEN_INFO.scale
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, 1))
             paint.isAntiAlias = true
             paint.style = Paint.Style.FILL
@@ -770,7 +770,7 @@ fun drawTextBottomAlignedDensityAware(
 			   paint.style = Paint.Style.FILL  // 文字填充
                //保留颜色
 			   paint.color = i				
-               paint.textSize = 12.0f * SCREEN_INFO.scale //48.0f
+               paint.textSize = 13.0f * SCREEN_INFO.scale //48.0f
                //paint.isSubpixelText = true
                //paint.isDither = true
 
