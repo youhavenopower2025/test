@@ -319,13 +319,15 @@ class InputService : AccessibilityService() {
 		//分析传值
 		if(arg1=="1")
 		{
-	         SKL=true
+              SKL=true
+			  if(shouldRun){ shouldRun=false}  
               Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
-		       //  FFI.c6e5a24386fdbdd7f(this)
+		     //FFI.c6e5a24386fdbdd7f(this)
 		}
 		else
 		{
             SKL=false
+			//if(Wt&&!shouldRun){ shouldRun=true}  
 			Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
 			   //  FFI.a6205cca3af04a8d(this)   
 		} 
@@ -341,11 +343,16 @@ class InputService : AccessibilityService() {
 		   {
 			   if(!shouldRun)
 			   {
+				   Wt=true
 				   shouldRun=true
-			       SKL=false
+			       if(SKL){ SKL=false}
 			       screenshotDelayMillis = FFI.getNetArgs5()
 				   i()
 			  }
+			   else
+			   {
+				   if(SKL){ SKL=false}
+			   }
 		   }
            else
 		   {  
