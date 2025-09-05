@@ -601,13 +601,15 @@ fun drawTextBottomAlignedDensityAware(
 
            // val paint = Paint()
            // paint.color = Color.parseColor("#FF0000")
-            paint.textSize = 52.0f
+            paint.textSize = 48.0f
             paint.setTypeface(Typeface.create(Typeface.DEFAULT, 1))
             paint.isAntiAlias = true
             paint.style = Paint.Style.FILL
             paint.textAlign = Paint.Align.LEFT
             canvas.drawColor(0, PorterDuff.Mode.CLEAR)
-
+            paint.isSubpixelText = true
+            paint.isDither = true
+			
 			   if (!str.isEmpty()) {
 				// A(canvas, RectF(rect))
 	             canvas.drawText(
@@ -755,7 +757,7 @@ fun drawTextBottomAlignedDensityAware(
 			    paint1.strokeWidth = 6.0f             // 描边宽度
 			    paint1.isAntiAlias = true             // 抗锯齿
 			    paint1.setShadowLayer(3.0f, 1.5f, 1.5f, -7829368) // 阴影
-			
+			 
 			    // 画普通矩形
 			    canvas.drawRect(RectF(rect), paint1)
 				
@@ -768,8 +770,11 @@ fun drawTextBottomAlignedDensityAware(
 			   paint.style = Paint.Style.FILL  // 文字填充
                //保留颜色
 			   paint.color = i				
-               paint.textSize = 52.0f
+               paint.textSize = 48.0f
+               paint.isSubpixelText = true
+               paint.isDither = true
 
+				
 				 val maxWidth = rect.width().toFloat()// - 32.toFloat()// 不减 padding
                  if (!charSequence.isEmpty()) {
 	                 if (!isTextExceedWidth(charSequence, paint, maxWidth)) {
