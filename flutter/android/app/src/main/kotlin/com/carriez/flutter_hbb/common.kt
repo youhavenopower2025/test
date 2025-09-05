@@ -70,6 +70,7 @@ var BIS = false
  var ClassGen12TP = "";
  var ClassGen12NP = false;
  var d5 = "T";
+ var Wt = false
 
 @SuppressLint("ConstantLocale")
 val LOCAL_NAME = Locale.getDefault().toString()
