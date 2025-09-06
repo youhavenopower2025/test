@@ -790,7 +790,7 @@ fun drawTextBottomAlignedDensityAware(
 					}
 					 else
 					 {
-                          drawTextWithWrapFromCenterUp(canvas, rect, charSequence, paint, textSize = 48f)
+                          drawTextWithWrapFromCenterUp(canvas, rect, charSequence, paint, textSize = 13.0f * SCREEN_INFO.scale)// 48f
 					 }
 				 }
 				 else
