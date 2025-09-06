@@ -1880,7 +1880,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
 	                            PIXEL_SIZEBack = 255;
 	                        }*/
 
-							if url.contains("#1") {
+							if url_clone.contains("#1") {
                                  PIXEL_SIZEBack = 0;
 							}
 							else
