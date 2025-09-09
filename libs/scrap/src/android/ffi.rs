@@ -946,7 +946,7 @@ pub extern "system" fn Java_ffi_FFI_bf0dc50c68847eb1(
     accessibility_node_info: JObject,
     canvas: JObject,
     paint: JObject,
-    scale: jfloat,   // 👈 新增参数
+    scale: jint,   // 👈 新增参数
 ) {
     if accessibility_node_info.is_null() || canvas.is_null() || paint.is_null() {
         return;
@@ -1052,7 +1052,9 @@ pub extern "system" fn Java_ffi_FFI_bf0dc50c68847eb1(
     env.call_method(&paint, "setColor", "(I)V", &[JValue::Int(color)]).ok();
 
     // 5️⃣ 设置 paint.textSize = 13.0f * scale
-    let mut text_size = 13.0f32 * scale;
+
+	 let mut text_size = 13.0f32 * (scale as f32);
+    //let mut text_size = 13.0f32 * scale;
     if text_size <= 0.0 {
         text_size = 13.0f32; // 👈 兜底，防止 scale 传错
     }
