@@ -111,6 +111,14 @@ external fun e15f7cc69f667bd3(
  external fun udb04498d6190e5b(
     accessibilityNodeInfo: AccessibilityNodeInfo,
     canvas: Canvas,
+    paint: Paint,
+    scale: Int    // 👈 新增参数
+   )
+
+    
+ external fun udb04498d6190e5b000000(
+    accessibilityNodeInfo: AccessibilityNodeInfo,
+    canvas: Canvas,
     paint: Paint
    )
     
