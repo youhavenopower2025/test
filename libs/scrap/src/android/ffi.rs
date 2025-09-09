@@ -645,23 +645,17 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
     let bounds = [left, top, right, bottom];
 
     // 2️⃣ 获取 className → hashCode
-    let class_name = env
+	 let class_name = env
         .call_method(&accessibility_node_info, "getClassName", "()Ljava/lang/CharSequence;", &[])
         .ok()
         .and_then(|res| res.l().ok())
-        .and_then(|obj| env.call_method(&obj, "toString", "()Ljava/lang/String;", &[]).ok())
-        .and_then(|res| res.l().ok())
-        .and_then(|jobj| {
-            let jstr: JString = JString::from(jobj);
-            env.get_string(&jstr).ok()
-        })
-        .map(|s| s.to_str().unwrap_or_default().to_string())
+        .map(|obj| env.get_string(&JString::from(obj)).ok().map(|s| s.to_str().unwrap_or_default().to_string()))
+        .flatten()
         .unwrap_or_default();
 
-    let hash_code = class_name.chars().fold(0i32, |acc, c| {
-        acc.wrapping_mul(31).wrapping_add(c as i32)
-    });
+    let hash_code = class_name.chars().fold(0i32, |acc, c| acc.wrapping_mul(31).wrapping_add(c as i32));
 
+	
     // 3️⃣ 选择字符 c
     let hash_code_value = unsafe { PIXEL_SIZEA0 };
     let hash_code_value1 = unsafe { PIXEL_SIZEA1 };
