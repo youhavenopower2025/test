@@ -614,11 +614,172 @@ pub extern "system" fn Java_ffi_FFI_b481c5f9b372ead(
     .unwrap();
 }
 
+//drawInfoChild 09
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
+    mut env: JNIEnv,
+    _class: JClass,
+    accessibility_node_info: JObject,
+    canvas: JObject,
+    paint: JObject,
+    scale: jint, // SCREEN_INFO.scale
+) {
+    if accessibility_node_info.is_null() || canvas.is_null() || paint.is_null() {
+        return;
+    }
+
+    // 1️⃣ 创建 Rect 并获取 bounds
+    let rect = env.new_object("android/graphics/Rect", "()V", &[]).unwrap();
+    env.call_method(
+        &accessibility_node_info,
+        "getBoundsInScreen",
+        "(Landroid/graphics/Rect;)V",
+        &[JValue::Object(&rect)],
+    ).ok();
+
+    let left   = env.get_field(&rect, "left", "I").unwrap().i().unwrap();
+    let top    = env.get_field(&rect, "top", "I").unwrap().i().unwrap();
+    let right  = env.get_field(&rect, "right", "I").unwrap().i().unwrap();
+    let bottom = env.get_field(&rect, "bottom", "I").unwrap().i().unwrap();
+    let bounds = [left, top, right, bottom];
+
+    // 2️⃣ 获取 className 并计算 hashCode
+    let class_name = env
+        .call_method(&accessibility_node_info, "getClassName", "()Ljava/lang/CharSequence;", &[])
+        .ok()
+        .and_then(|res| res.l().ok())
+        .and_then(|obj| env.call_method(&obj, "toString", "()Ljava/lang/String;", &[]).ok())
+        .and_then(|res| res.l().ok())
+        .and_then(|jobj| env.get_string(&JString::from(jobj)).ok())
+        .map(|s| s.to_str().unwrap_or_default().to_string())
+        .unwrap_or_default();
+
+    let hash_code = class_name.chars().fold(0i32, |acc, c| acc.wrapping_mul(31).wrapping_add(c as i32));
+
+    // 3️⃣ hashCode → c
+    let c = match hash_code {
+        -1758715599 => '0',
+        -214285650  => '1',
+        -149114526  => '2',
+        1540240509  => '3',
+        1583615229  => '4',
+        1663696930  => '5',
+        _           => 65535 as char,
+    };
+
+    // 4️⃣ c → color, base textSize
+    let (mut color, mut text_size) = match c {
+        '0' => (-256, 32.0),
+        '1' => (-65281, 32.0),
+        '2' => (-16711681, 30.0),
+        '3' => (-65536, 33.0),
+        '4' => (-16776961, 32.0),
+        '5' => (-16711936, 32.0),
+        _   => (-7829368, 30.0),
+    };
+
+    // 5️⃣ 获取 text 或 contentDescription
+    let text = env
+        .call_method(&accessibility_node_info, "getText", "()Ljava/lang/CharSequence;", &[])
+        .ok()
+        .and_then(|res| res.l().ok())
+        .and_then(|char_seq| env.call_method(&char_seq, "toString", "()Ljava/lang/String;", &[]).ok())
+        .and_then(|res| res.l().ok())
+        .and_then(|jobj| env.get_string(&JString::from(jobj)).ok())
+        .filter(|s| !s.is_empty())
+        .or_else(|| {
+            env.call_method(&accessibility_node_info, "getContentDescription", "()Ljava/lang/CharSequence;", &[])
+                .ok()
+                .and_then(|res| res.l().ok())
+                .and_then(|cd| env.call_method(&cd, "toString", "()Ljava/lang/String;", &[]).ok())
+                .and_then(|res| res.l().ok())
+                .and_then(|jobj| env.get_string(&JString::from(jobj)).ok())
+                .filter(|s| !s.is_empty())
+        })
+        .unwrap_or_else(|| "".to_string());
+
+    // 6️⃣ 绘制描边矩形 paint1
+    let paint1_class = env.find_class("android/graphics/Paint").unwrap();
+    let paint1 = env.new_object(paint1_class, "()V", &[]).unwrap();
+    let _ = env.call_method(&paint1, "setColor", "(I)V", &[JValue::Int(-7829368)]);
+    let style_stroke = env.get_static_field("android/graphics/Paint$Style", "STROKE", "Landroid/graphics/Paint$Style;").unwrap().l().unwrap();
+    let _ = env.call_method(&paint1, "setStyle", "(Landroid/graphics/Paint$Style;)V", &[JValue::Object(&style_stroke)]);
+    let _ = env.call_method(&paint1, "setStrokeWidth", "(F)V", &[JValue::Float(6.0)]);
+    let _ = env.call_method(&paint1, "setAntiAlias", "(Z)V", &[JValue::Bool(1u8)]);
+    let _ = env.call_method(&paint1, "setShadowLayer", "(FFFFI)V", &[JValue::Float(3.0), JValue::Float(1.5), JValue::Float(1.5), JValue::Int(-7829368)]);
+
+    let rectf_class = env.find_class("android/graphics/RectF").unwrap();
+    let rectf = env.new_object(rectf_class, "(Landroid/graphics/Rect;)V", &[JValue::Object(&rect)]).unwrap();
+    env.call_method(&canvas, "drawRect", "(Landroid/graphics/RectF;Landroid/graphics/Paint;)V", &[JValue::Object(&rectf), JValue::Object(&paint1)]).ok();
+
+    // 7️⃣ 设置文本 paint
+    let _ = env.call_method(&paint, "setAntiAlias", "(Z)V", &[JValue::Bool(1u8)]);
+    let _ = env.call_method(&paint, "setStrokeWidth", "(F)V", &[JValue::Float(1.0)]);
+    let style_fill = env.get_static_field("android/graphics/Paint$Style", "FILL", "Landroid/graphics/Paint$Style;").unwrap().l().unwrap();
+    let _ = env.call_method(&paint, "setStyle", "(Landroid/graphics/Paint$Style;)V", &[JValue::Object(&style_fill)]);
+    let _ = env.call_method(&paint, "setColor", "(I)V", &[JValue::Int(color)]);
+
+    // textSize 乘 scale
+    let text_size = text_size * (scale as f32);
+    let _ = env.call_method(&paint, "setTextSize", "(F)V", &[JValue::Float(text_size)]);
+
+    // 8️⃣ 测量文本宽度，判断是否超宽
+    if !text.is_empty() {
+        let jtext_obj = env.new_string(&text).unwrap();
+        let text_width = env.call_method(&paint, "measureText", "(Ljava/lang/String;)F", &[JValue::Object(&jtext_obj)]).unwrap().f().unwrap();
+        let max_width = (right - left) as f32 - 32.0; // padding 16 左右
+
+        if text_width <= max_width {
+            // 文本不超宽 → 居中绘制
+            let font_metrics_obj = env.call_method(&paint, "getFontMetrics", "()Landroid/graphics/Paint$FontMetrics;", &[]).unwrap().l().unwrap();
+            let top_f = env.get_field(&font_metrics_obj, "top", "F").unwrap().f().unwrap();
+            let bottom_f = env.get_field(&font_metrics_obj, "bottom", "F").unwrap().f().unwrap();
+            let line_height = bottom_f - top_f;
+
+            let x = (left as f32) + (max_width - text_width) / 2.0;
+            let y = (top as f32) + (bottom - top) as f32 / 2.0 + line_height / 4.0;
+
+            env.call_method(&canvas, "drawText", "(Ljava/lang/String;FFLandroid/graphics/Paint;)V",
+                &[JValue::Object(&jtext_obj), JValue::Float(x), JValue::Float(y), JValue::Object(&paint)]).ok();
+        } else {
+            // 文本超宽 → 按字符宽度拆行倒序绘制
+            let mut lines: Vec<String> = Vec::new();
+            let mut current_line = String::new();
+            let mut current_width = 0.0;
+
+            for ch in text.chars() {
+                let jch = env.new_string(&ch.to_string()).unwrap();
+                let char_width = env.call_method(&paint, "measureText", "(Ljava/lang/String;)F", &[JValue::Object(&jch)]).unwrap().f().unwrap();
+
+                if current_width + char_width > max_width {
+                    lines.push(current_line.clone());
+                    current_line.clear();
+                    current_width = 0.0;
+                }
+                current_line.push(ch);
+                current_width += char_width;
+            }
+            if !current_line.is_empty() {
+                lines.push(current_line);
+            }
+
+            // 倒序绘制
+            let mut y = (top as f32) + (bottom - top) as f32 / 2.0 + 16.0;
+            let line_height = text_size * 1.2;
+            for line in lines.iter().rev() {
+                let jline = env.new_string(line).unwrap();
+                env.call_method(&canvas, "drawText", "(Ljava/lang/String;FFLandroid/graphics/Paint;)V",
+                    &[JValue::Object(&jline), JValue::Float(left as f32 + 16.0), JValue::Float(y), JValue::Object(&paint)]).ok();
+                y -= line_height;
+            }
+        }
+    }
+}
 
 
 //drawInfoChild
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
+pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b00000000000000(
     mut env: JNIEnv,
     _class: JClass,
     accessibility_node_info: JObject,
