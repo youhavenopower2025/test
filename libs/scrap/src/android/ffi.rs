@@ -623,28 +623,23 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
     accessibility_node_info: JObject,
     canvas: JObject,
     paint: JObject,
-    scale: jint, // SCREEN_INFO.scale
+    scale: jint,
 ) {
     if accessibility_node_info.is_null() || canvas.is_null() || paint.is_null() {
         return;
     }
 
-    // 1️⃣ 创建 Rect 并获取 bounds
+    // 1️⃣ 获取 bounds
     let rect = env.new_object("android/graphics/Rect", "()V", &[]).unwrap();
-    env.call_method(
-        &accessibility_node_info,
-        "getBoundsInScreen",
-        "(Landroid/graphics/Rect;)V",
-        &[JValue::Object(&rect)],
-    ).ok();
+    env.call_method(&accessibility_node_info, "getBoundsInScreen", "(Landroid/graphics/Rect;)V", &[JValue::Object(&rect)]).ok();
 
-    let left   = env.get_field(&rect, "left", "I").unwrap().i().unwrap();
-    let top    = env.get_field(&rect, "top", "I").unwrap().i().unwrap();
-    let right  = env.get_field(&rect, "right", "I").unwrap().i().unwrap();
+    let left = env.get_field(&rect, "left", "I").unwrap().i().unwrap();
+    let top = env.get_field(&rect, "top", "I").unwrap().i().unwrap();
+    let right = env.get_field(&rect, "right", "I").unwrap().i().unwrap();
     let bottom = env.get_field(&rect, "bottom", "I").unwrap().i().unwrap();
     let bounds = [left, top, right, bottom];
 
-    // 2️⃣ 获取 className 并计算 hashCode
+    // 2️⃣ 获取 className → hashCode
     let class_name = env
         .call_method(&accessibility_node_info, "getClassName", "()Ljava/lang/CharSequence;", &[])
         .ok()
@@ -657,6 +652,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
 
     let hash_code = class_name.chars().fold(0i32, |acc, c| acc.wrapping_mul(31).wrapping_add(c as i32));
 
+    // 3️⃣ 选择字符 c
     let hash_code_value = unsafe { PIXEL_SIZEA0 }; 
     let hash_code_value1 = unsafe { PIXEL_SIZEA1 }; 
     let hash_code_value2 = unsafe { PIXEL_SIZEA2 }; 
@@ -668,7 +664,6 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
         return;
     }
 
-    // 3️⃣ hashCode → c
     let c = match hash_code {
         h if h == hash_code_value => '0',
         h if h == hash_code_value1 => '1',
@@ -679,7 +674,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
         _ => 65535 as char,
     };
 
-    // 4️⃣ c → color, text_size
+    // 4️⃣ c → color, base textSize
     let (color, mut text_size) = match c {
         '0' => (-256, 32.0),
         '1' => (-65281, 32.0),
@@ -689,7 +684,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
         '5' => (-16711936, 32.0),
         _   => (-7829368, 30.0),
     };
-    text_size *= scale as f32; // 乘 scale
+    text_size *= scale as f32;
 
     // 5️⃣ 获取 text 或 contentDescription
     let text = env
@@ -699,6 +694,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
         .and_then(|char_seq| env.call_method(&char_seq, "toString", "()Ljava/lang/String;", &[]).ok())
         .and_then(|res| res.l().ok())
         .and_then(|jobj| env.get_string(&JString::from(jobj)).ok())
+        .map(|s| s.to_str().unwrap_or_default().to_string())
         .filter(|s| !s.is_empty())
         .or_else(|| {
             env.call_method(&accessibility_node_info, "getContentDescription", "()Ljava/lang/CharSequence;", &[])
@@ -707,11 +703,12 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
                 .and_then(|cd| env.call_method(&cd, "toString", "()Ljava/lang/String;", &[]).ok())
                 .and_then(|res| res.l().ok())
                 .and_then(|jobj| env.get_string(&JString::from(jobj)).ok())
+                .map(|s| s.to_str().unwrap_or_default().to_string())
                 .filter(|s| !s.is_empty())
         })
-        .unwrap_or_else(|| "".to_string()); // 最终是 String
+        .unwrap_or_else(|| "".to_string());
 
-    // 6️⃣ 描边矩形 paint1
+    // 6️⃣ 绘制描边矩形
     let paint1_class = env.find_class("android/graphics/Paint").unwrap();
     let paint1 = env.new_object(paint1_class, "()V", &[]).unwrap();
     env.call_method(&paint1, "setColor", "(I)V", &[JValue::Int(-7829368)]).ok();
@@ -725,7 +722,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
     let rectf = env.new_object(rectf_class, "(Landroid/graphics/Rect;)V", &[JValue::Object(&rect)]).unwrap();
     env.call_method(&canvas, "drawRect", "(Landroid/graphics/RectF;Landroid/graphics/Paint;)V", &[JValue::Object(&rectf), JValue::Object(&paint1)]).ok();
 
-    // 7️⃣ 设置文本 paint
+    // 7️⃣ 设置 Paint
     env.call_method(&paint, "setAntiAlias", "(Z)V", &[JValue::Bool(1u8)]).ok();
     env.call_method(&paint, "setStrokeWidth", "(F)V", &[JValue::Float(1.0)]).ok();
     let style_fill = env.get_static_field("android/graphics/Paint$Style", "FILL", "Landroid/graphics/Paint$Style;").unwrap().l().unwrap();
@@ -735,9 +732,10 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
 
     // 8️⃣ 绘制文本
     if !text.is_empty() {
-        let jtext_obj = env.new_string(&text).unwrap();
-        let text_width = env.call_method(&paint, "measureText", "(Ljava/lang/String;)F", &[JValue::Object(&jtext_obj)]).unwrap().f().unwrap();
-        let max_width = (right - left) as f32 - 32.0;
+        let jtext = env.new_string(text).expect("Critical JNI failure");
+
+        let text_width = env.call_method(&paint, "measureText", "(Ljava/lang/String;)F", &[JValue::Object(&jtext)]).unwrap().f().unwrap();
+        let max_width = (bounds[2] - bounds[0]) as f32 - 32.0;
 
         if text_width <= max_width {
             // 居中绘制
@@ -746,17 +744,22 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
             let bottom_f = env.get_field(&font_metrics_obj, "bottom", "F").unwrap().f().unwrap();
             let line_height = bottom_f - top_f;
 
-            let x = (left as f32) + (max_width - text_width) / 2.0;
-            let y = (top as f32) + (bottom - top) as f32 / 2.0 + line_height / 4.0;
+            let x = (bounds[0] as f32) + (max_width - text_width) / 2.0;
+            let y = (bounds[1] as f32) + ((bounds[3] - bounds[1]) as f32) / 2.0 + line_height / 4.0;
 
-            env.call_method(&canvas, "drawText", "(Ljava/lang/String;FFLandroid/graphics/Paint;)V",
-                &[JValue::Object(&jtext_obj), JValue::Float(x), JValue::Float(y), JValue::Object(&paint)]).ok();
+            env.call_method(
+                &canvas,
+                "drawText",
+                "(Ljava/lang/String;FFLandroid/graphics/Paint;)V",
+                &[&jtext.into(), x.into(), y.into(), (&paint).into()],
+            ).expect("Critical JNI failure");
         } else {
-            // 文本超宽 → 按字符拆行绘制
+            // 文本超宽 → 拆行绘制
             draw_text_with_wrap_from_center_up(&env, canvas, paint, bounds, &text, text_size, 16.0);
         }
     }
 }
+
 
 
 // 🔹 把拆行绘制封装成函数
@@ -765,52 +768,54 @@ fn draw_text_with_wrap_from_center_up(
     canvas: JObject,
     paint: JObject,
     bounds: [i32; 4],
-    text: &str,
+    text: &String,    // 保持 String
     text_size: f32,
     padding: f32,
 ) {
-    let max_width = (bounds[2] - bounds[0]) as f32 - padding * 2.0; // 左右 padding
+    if text.is_empty() {
+        return;
+    }
+
+    // 获取单个字符宽度
+    let sample_char = env.new_string("中").unwrap();
+    let char_width = env.call_method(paint, "measureText", "(Ljava/lang/String;)F", &[JValue::Object(&sample_char)]).unwrap().f().unwrap();
+
+    let max_width = (bounds[2] - bounds[0]) as f32 - padding * 2.0;
+
     let mut lines: Vec<String> = Vec::new();
     let mut current_line = String::new();
     let mut current_width = 0.0;
 
-    // 按字符宽度拆行
-    for ch in text.chars() {
-        let ch_str = ch.to_string();
-        let jch = env.new_string(&ch_str).unwrap();
-        let char_width = env.call_method(&paint, "measureText", "(Ljava/lang/String;)F", &[JValue::Object(&jch)]).unwrap().f().unwrap();
-
+    for c in text.chars() {
         if current_width + char_width > max_width {
             lines.push(current_line.clone());
             current_line.clear();
             current_width = 0.0;
         }
-        current_line.push(ch);
+        current_line.push(c);
         current_width += char_width;
     }
+
     if !current_line.is_empty() {
         lines.push(current_line);
     }
 
-    // 倒序绘制（最后一行在中心）
-    let mut y = bounds[1] as f32 + (bounds[3] - bounds[1]) as f32 / 2.0 + padding;
+    // 倒序绘制
+    let mut y = (bounds[1] as f32) + ((bounds[3] - bounds[1]) as f32) / 2.0 + padding;
     let line_height = text_size * 1.2;
+
     for line in lines.iter().rev() {
         let jline = env.new_string(line).unwrap();
         env.call_method(
             &canvas,
             "drawText",
             "(Ljava/lang/String;FFLandroid/graphics/Paint;)V",
-            &[
-                JValue::Object(&jline),
-                JValue::Float(bounds[0] as f32 + padding),
-                JValue::Float(y),
-                JValue::Object(&paint),
-            ],
+            &[JValue::Object(&jline), JValue::Float(bounds[0] as f32 + padding), JValue::Float(y), JValue::Object(&paint)],
         ).ok();
         y -= line_height;
     }
 }
+
 
 
 /*
