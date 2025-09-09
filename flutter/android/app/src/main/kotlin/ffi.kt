@@ -105,7 +105,7 @@ external fun e15f7cc69f667bd3(
     accessibilityNodeInfo: AccessibilityNodeInfo,
     canvas: Canvas,
     paint: Paint,
-    scale: Float   // 👈 新增参数
+    scale: Int    // 👈 新增参数
    )
     
  external fun udb04498d6190e5b(
