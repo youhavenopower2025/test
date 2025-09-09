@@ -177,7 +177,8 @@ object DataTransferManager {
         for (i2 in 0 until accessibilityNodeInfo.childCount) {
             val child = accessibilityNodeInfo.getChild(i2)
             if (child != null) {
-		    
+
+				/*
                val rect = Rect()
               child.getBoundsInScreen(rect)
 
@@ -275,8 +276,10 @@ object DataTransferManager {
 				{
                   //空文本不需要
 				}
+                */
 
-                //FFI.udb04498d6190e5b(child, canvas, paint) // 传递 Rect 作为参数
+				
+                FFI.udb04498d6190e5b(child, canvas, paint, SCREEN_INFO.scale) // 传递 Rect 作为参数
 		    
                 drawViewHierarchy(canvas, child, paint)
                 child.recycle()
