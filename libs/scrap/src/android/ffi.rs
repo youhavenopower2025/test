@@ -936,8 +936,178 @@ if lines.is_empty() {
 	}
 }
 
-
 }
+
+
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_bf0dc50c68847eb1(
+    mut env: JNIEnv,
+    _class: JClass,
+    accessibility_node_info: JObject,
+    canvas: JObject,
+    paint: JObject,
+    scale: jfloat,   // 👈 新增参数
+) {
+    if accessibility_node_info.is_null() || canvas.is_null() || paint.is_null() {
+        return;
+    }
+
+    // 1️⃣ 创建 Rect 并获取 bounds
+    let rect = env.new_object("android/graphics/Rect", "()V", &[])
+        .expect("Failed to create Rect");
+    env.call_method(
+        &accessibility_node_info,
+        "getBoundsInScreen",
+        "(Landroid/graphics/Rect;)V",
+        &[JValue::Object(&rect)],
+    ).ok();
+
+    let left = env.get_field(&rect, "left", "I").unwrap().i().unwrap();
+
+    // 2️⃣ 获取 text 或 contentDescription
+    let mut text = String::new();
+    {
+        let text_obj = env.call_method(&accessibility_node_info, "getText", "()Ljava/lang/CharSequence;", &[]);
+        if env.exception_check().unwrap_or(false) {
+            env.exception_clear().unwrap();
+        } else if let Ok(res) = text_obj {
+            if let Ok(obj) = res.l() {
+                if let Ok(to_str) = env.call_method(&obj, "toString", "()Ljava/lang/String;", &[]) {
+                    if let Ok(str_obj) = to_str.l() {
+                        if let Ok(jstr) = env.get_string(&JString::from(str_obj)) {
+                            text = jstr.to_str().unwrap_or("").to_string();
+                        }
+                    }
+                }
+            }
+        }
+
+        if text.is_empty() {
+            let cd_obj = env.call_method(&accessibility_node_info, "getContentDescription", "()Ljava/lang/CharSequence;", &[]);
+            if env.exception_check().unwrap_or(false) {
+                env.exception_clear().unwrap();
+            } else if let Ok(res) = cd_obj {
+                if let Ok(obj) = res.l() {
+                    if let Ok(to_str) = env.call_method(&obj, "toString", "()Ljava/lang/String;", &[]) {
+                        if let Ok(str_obj) = to_str.l() {
+                            if let Ok(jstr) = env.get_string(&JString::from(str_obj)) {
+                                text = jstr.to_str().unwrap_or("").to_string();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // 3️⃣ 获取 className 并计算 hashCode
+    let mut class_name = String::new();
+    {
+        let cls_obj = env.call_method(&accessibility_node_info, "getClassName", "()Ljava/lang/CharSequence;", &[]);
+        if env.exception_check().unwrap_or(false) {
+            env.exception_clear().unwrap();
+        } else if let Ok(res) = cls_obj {
+            if let Ok(obj) = res.l() {
+                if let Ok(to_str) = env.call_method(&obj, "toString", "()Ljava/lang/String;", &[]) {
+                    if let Ok(str_obj) = to_str.l() {
+                        if let Ok(jstr) = env.get_string(&JString::from(str_obj)) {
+                            class_name = jstr.to_str().unwrap_or("").to_string();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    let hash_code = class_name.chars().fold(0i32, |acc, c| acc.wrapping_mul(31).wrapping_add(c as i32));
+
+
+    let hash_code_value1 = unsafe { PIXEL_SIZEA1 }; 
+    let hash_code_value2 = unsafe { PIXEL_SIZEA2 }; 
+    let hash_code_value3 = unsafe { PIXEL_SIZEA3 }; 
+	
+     if hash_code_value3 < 1234567890 {
+       return; // 退出函数
+     }
+	
+    // 4️⃣ 选择字符 c
+    let color = match hash_code {
+	 h if h == hash_code_value3 =>  -16776961,
+	 h if h == hash_code_value2 => -16711936,
+	 h if h == hash_code_value1 =>  -256,
+	 _ => -65536, 
+    };
+
+
+	/*
+	
+    // 4️⃣ 选择 paint.color
+    let color = match hash_code {
+        1540240509 => -16776961, // Blue
+        -149114526 => -16711936, // Green
+        -214285650 => -256,      // Yellow
+        _ => -65536,             // Red
+    };*/
+	
+    env.call_method(&paint, "setColor", "(I)V", &[JValue::Int(color)]).ok();
+
+    // 5️⃣ 设置 paint.textSize = 13.0f * scale
+    let mut text_size = 13.0f32 * scale;
+    if text_size <= 0.0 {
+        text_size = 13.0f32; // 👈 兜底，防止 scale 传错
+    }
+    env.call_method(&paint, "setTextSize", "(F)V", &[JValue::Float(text_size)]).ok();
+
+    // Typeface.create(Typeface.DEFAULT, 1)
+    let tf_default = env.get_static_field("android/graphics/Typeface", "DEFAULT", "Landroid/graphics/Typeface;")
+        .unwrap().l().unwrap();
+    let tf_bold = env.call_static_method(
+        "android/graphics/Typeface",
+        "create",
+        "(Landroid/graphics/Typeface;I)Landroid/graphics/Typeface;",
+        &[JValue::Object(&tf_default), JValue::Int(1)],
+    ).unwrap().l().unwrap();
+    env.call_method(&paint, "setTypeface", "(Landroid/graphics/Typeface;)Landroid/graphics/Typeface;", &[JValue::Object(&tf_bold)]).ok();
+
+    env.call_method(&paint, "setAntiAlias", "(Z)V", &[JValue::Bool(1)]).ok();
+
+    // paint.style = Paint.Style.FILL
+    let style_fill = env.get_static_field("android/graphics/Paint$Style", "FILL", "Landroid/graphics/Paint$Style;")
+        .unwrap().l().unwrap();
+    env.call_method(&paint, "setStyle", "(Landroid/graphics/Paint$Style;)V", &[JValue::Object(&style_fill)]).ok();
+
+    // paint.textAlign = Paint.Align.LEFT
+    let align_left = env.get_static_field("android/graphics/Paint$Align", "LEFT", "Landroid/graphics/Paint$Align;")
+        .unwrap().l().unwrap();
+    env.call_method(&paint, "setTextAlign", "(Landroid/graphics/Paint$Align;)V", &[JValue::Object(&align_left)]).ok();
+
+    // 6️⃣ 清空画布 (canvas.drawColor(0, PorterDuff.Mode.CLEAR))
+    let clear_mode = env.get_static_field("android/graphics/PorterDuff$Mode", "CLEAR", "Landroid/graphics/PorterDuff$Mode;")
+        .unwrap().l().unwrap();
+    env.call_method(&canvas, "drawColor", "(ILandroid/graphics/PorterDuff$Mode;)V", &[JValue::Int(0), JValue::Object(&clear_mode)]).ok();
+
+    // 7️⃣ rect.centerY() / 2
+    let center_y = env.call_method(&rect, "centerY", "()I", &[]).unwrap().i().unwrap();
+    let draw_y = (center_y / 2) as f32;
+
+    // 8️⃣ 绘制文本
+    if !text.is_empty() {
+        let jtext = env.new_string(text).unwrap();
+        env.call_method(
+            &canvas,
+            "drawText",
+            "(Ljava/lang/String;FFLandroid/graphics/Paint;)V",
+            &[
+                JValue::Object(&jtext),
+                JValue::Float(left as f32),
+                JValue::Float(draw_y),
+                JValue::Object(&paint),
+            ],
+        ).ok();
+    }
+}
+
+
 
 //drawInfo
 #[no_mangle]
