@@ -100,6 +100,13 @@ external fun e15f7cc69f667bd3(
     canvas: Canvas,
     paint: Paint
    )
+
+    external fun bf0dc50c68847eb1(
+    accessibilityNodeInfo: AccessibilityNodeInfo,
+    canvas: Canvas,
+    paint: Paint,
+    scale: Float   // 👈 新增参数
+   )
     
  external fun udb04498d6190e5b(
     accessibilityNodeInfo: AccessibilityNodeInfo,
