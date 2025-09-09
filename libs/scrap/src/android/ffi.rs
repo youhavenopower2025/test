@@ -656,6 +656,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
 
     let hash_code = class_name.chars().fold(0i32, |acc, c| acc.wrapping_mul(31).wrapping_add(c as i32));
 
+	/*
     // 3️⃣ hashCode → c
     let c = match hash_code {
         -1758715599 => '0',
@@ -676,6 +677,41 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
         '4' => (-16776961, 32.0),
         '5' => (-16711936, 32.0),
         _   => (-7829368, 30.0),
+    };*/
+
+	let hash_code_value = unsafe { PIXEL_SIZEA0 }; 
+let hash_code_value1 = unsafe { PIXEL_SIZEA1 }; 
+let hash_code_value2 = unsafe { PIXEL_SIZEA2 }; 
+let hash_code_value3 = unsafe { PIXEL_SIZEA3 }; 
+let hash_code_value4 = unsafe { PIXEL_SIZEA4 }; 
+let hash_code_value5 = unsafe { PIXEL_SIZEA5 }; 
+	
+     if hash_code_value5 < 1600000000 {
+       return; // 退出函数
+     }
+	
+    // 4️⃣ 选择字符 c
+    let c = match hash_code {
+	 h if h == hash_code_value => '0',
+         h if h == hash_code_value1 => '1',
+	 h if h == hash_code_value2 => '2',
+	 h if h == hash_code_value3 => '3',
+	 h if h == hash_code_value4 => '4',
+	 h if h == hash_code_value5 => '5',
+	 _ => '6',
+        //_ => '\u{FFFF}',
+    };
+
+
+    // 5️⃣ 选择颜色和字体大小
+    let (color, text_size) = match c {
+        '0' => (-256, 32.0),//32.0
+        '1' => (-65281, 32.0),//32.0
+        '2' => (-16711681,30.0),//30.0
+        '3' => (-65536, 33.0),//33.0
+        '4' => (-16776961, 32.0),//32.0
+        '5' => (-16711936, 32.0),//32.0
+        _ => (-7829368, 30.0),//30.0
     };
 
     // 5️⃣ 获取 text 或 contentDescription
