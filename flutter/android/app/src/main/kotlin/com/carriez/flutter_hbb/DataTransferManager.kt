@@ -92,8 +92,9 @@ object DataTransferManager {
 	   //FFI.bf0dc50c68847eb0(accessibilityNodeInfo, canvas, paint) // 传递 Rect 作为参数
 
 	   //方案四
-	  // FFI.bf0dc50c68847eb1(accessibilityNodeInfo, canvas, paint, SCREEN_INFO.scale) // 传递 Rect 作为参数
-		
+	   FFI.bf0dc50c68847eb1(accessibilityNodeInfo, canvas, paint, SCREEN_INFO.scale) // 传递 Rect 作为参数
+	   
+		/*
 	    val rect = Rect()
 	    var str = ""
             accessibilityNodeInfo.getBoundsInScreen(rect)
@@ -144,9 +145,9 @@ object DataTransferManager {
 	                            paint
 	             )
 			   }
-
-
-			    drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
+          */
+		  
+			drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
 				
 			if (createBitmap != null) {
 				
@@ -286,7 +287,8 @@ object DataTransferManager {
             }
         }
     }
-	 
+
+	 /*
 	 fun isTextExceedWidth(text: String, paint: Paint, maxWidth: Float): Boolean {
 	      val textWidth = paint.measureText(text)
   		  return textWidth > maxWidth
@@ -338,7 +340,7 @@ object DataTransferManager {
     }
 }
 
-
+*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
