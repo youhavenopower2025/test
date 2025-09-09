@@ -751,7 +751,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
                 &canvas,
                 "drawText",
                 "(Ljava/lang/String;FFLandroid/graphics/Paint;)V",
-                &[&jtext.into(), x.into(), y.into(), (&paint).into()],
+                &[jtext.into(), x.into(), y.into(), (&paint).into()],
             ).expect("Critical JNI failure");
         } else {
             // 文本超宽 → 拆行绘制
