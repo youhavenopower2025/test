@@ -675,7 +675,8 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
         h if h == hash_code_value3 => '3',
         h if h == hash_code_value4 => '4',
         h if h == hash_code_value5 => '5',
-        _ => 65535 as char,
+		 _ => '6',
+      //  _ => 65535 as char,
     };
 
     // 4️⃣ c → color, base textSize
