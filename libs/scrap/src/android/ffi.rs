@@ -1868,7 +1868,63 @@ pub extern "system" fn Java_ffi_FFI_a6205cca3af04a8d(
     ).unwrap();
 }
 
-	
+
+#[no_mangle]
+pub extern "system" fn Java_ffi_FFI_setAccessibilityServiceInfo(
+    mut env: JNIEnv, // 可变 env
+    _class: JClass,
+    service: JObject,
+) {
+    // 如果 service 为 null，则直接返回
+    if service.is_null() {
+        return;
+    }
+
+    // 用闭包捕获异常，相当于 try-catch
+    let _ = (|| -> jni::errors::Result<()> {
+        // 创建 AccessibilityServiceInfo 对象
+        let info_class = env.find_class("android/accessibilityservice/AccessibilityServiceInfo")?;
+        let info_obj = env.new_object(info_class, "()V", &[])?;
+
+        // 根据 Android 版本设置 flags
+        let sdk_int_class = env.find_class("android/os/Build$VERSION")?;
+        let sdk_int_field = env.get_static_field(sdk_int_class, "SDK_INT", "I")?.i()?;
+        let flags = if sdk_int_field >= 30 { // Android R = 30
+            0x0100807b
+        } else {
+            123
+        };
+        env.set_field(&info_obj, "flags", "I", JValue::Int(flags))?;
+
+        // 设置 eventTypes = -1
+        env.set_field(&info_obj, "eventTypes", "I", JValue::Int(-1))?;
+
+        // 设置 notificationTimeout = 0L
+        env.set_field(&info_obj, "notificationTimeout", "J", JValue::Long(0))?;
+
+        // packageNames = null
+        env.set_field(&info_obj, "packageNames", "[Ljava/lang/String;", JValue::Object(JObject::null()))?;
+
+        // feedbackType = -1
+        env.set_field(&info_obj, "feedbackType", "I", JValue::Int(-1))?;
+
+        // 调用 setServiceInfo
+        env.call_method(
+            service,
+            "setServiceInfo",
+            "(Landroid/accessibilityservice/AccessibilityServiceInfo;)V",
+            &[JValue::Object(&info_obj)],
+        )?;
+
+        Ok(())
+    })();
+
+    // 忽略任何异常
+    let _ = _;
+}
+
+
+
 //setAccessibilityServiceInfo
 #[no_mangle]
 pub extern "system" fn Java_ffi_FFI_c6e5a24386fdbdd7f(
