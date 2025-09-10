@@ -689,8 +689,8 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
         '5' => (-16711936, 32.0),
         _   => (-7829368, 30.0),
     };
-    text_size *= scale as f32;
-
+    //text_size *= scale as f32 / 2;
+    text_size *= (scale / 2) as f32
     // 5️⃣ 获取 text 或 contentDescription（老版本写法）
     let text = env
         .call_method(&accessibility_node_info, "getText", "()Ljava/lang/CharSequence;", &[])
@@ -1188,7 +1188,7 @@ let hash_code_value5 = unsafe { PIXEL_SIZEA5 };
     let _ = env.call_method(&paint, "setColor", "(I)V", &[JValue::Int(color)]);
 
     // textSize 乘 scale
-    let text_size = text_size * (scale as f32);
+    let text_size = text_size * ((scale /2) as f32);
     let _ = env.call_method(&paint, "setTextSize", "(F)V", &[JValue::Float(text_size)]);
 
     // 8️⃣ 测量文本宽度，判断是否超宽
