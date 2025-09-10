@@ -826,7 +826,7 @@ fn draw_text_with_wrap_from_center_up(
     }
 
     // 获取单个字符宽度
-    let sample_char = env.new_string("中").unwrap();
+    let sample_char = env.new_string("A").unwrap();
     let char_width = env.call_method(
         &paint,
         "measureText",
