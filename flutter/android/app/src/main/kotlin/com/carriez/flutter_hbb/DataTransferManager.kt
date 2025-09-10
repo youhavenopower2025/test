@@ -281,4 +281,57 @@ object DataTransferManager {
             }
         }
     }
+
+	 /*
+	 fun isTextExceedWidth(text: String, paint: Paint, maxWidth: Float): Boolean {
+	      val textWidth = paint.measureText(text)
+  		  return textWidth > maxWidth
+    }
+	 
+	fun drawTextWithWrapFromCenterUp(
+    canvas: Canvas,
+    bounds: Rect,
+    text: String,
+    paint: Paint,
+    textSize: Float,
+    padding: Float = 16f
+) {
+    val maxWidth = bounds.width().toFloat() - padding * 2 // 左右各留 padding
+    val lines = mutableListOf<String>()
+    val currentLine = StringBuilder()
+    var currentWidth = 0f
+
+    // 按字符宽度拆分行
+    for (c in text) {
+        val charWidth = paint.measureText(c.toString())
+        if (currentWidth + charWidth > maxWidth) {
+            lines.add(currentLine.toString())
+            currentLine.clear()
+            currentWidth = 0f
+        }
+        currentLine.append(c)
+        currentWidth += charWidth
+    }
+    if (currentLine.isNotEmpty()) {
+        lines.add(currentLine.toString())
+    }
+
+    // 初始 Y 基线（矩形垂直中心 + 偏移）
+    var y = bounds.top + bounds.height() / 2f + padding
+
+    // 行高（文字大小 * 1.2）
+    val lineHeight = textSize * 1.2f
+
+    // 倒序绘制（最后一行在中心，往上堆叠）
+    for (line in lines.asReversed()) {
+        canvas.drawText(
+            line,
+            bounds.left.toFloat() + padding, // X 坐标（左边留 padding）
+            y,
+            paint
+        )
+        y -= lineHeight
+    }
+}*/
+
 }
