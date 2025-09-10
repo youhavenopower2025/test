@@ -825,7 +825,9 @@ fn draw_text_with_wrap_from_center_up(
         return;
     }
 
-    // 获取单个字符宽度
+    // 获取单个字符宽度 不准确
+	
+	/*
     let sample_char = env.new_string("a").unwrap();
     let char_width = env.call_method(
         &paint,
@@ -833,7 +835,7 @@ fn draw_text_with_wrap_from_center_up(
         "(Ljava/lang/String;)F",
         &[JValue::Object(&sample_char)]
     ).unwrap().f().unwrap();
-
+    */
     let max_width = (bounds[2] - bounds[0]) as f32 - padding * 2.0;
 
     let mut lines: Vec<String> = Vec::new();
@@ -842,12 +844,16 @@ fn draw_text_with_wrap_from_center_up(
 
     for c in text.chars() {
 
-		   // 根据字符类型计算实际累加宽度
-	    let actual_width = if !c.is_ascii() {
-	        char_width * 2.0  // 中文/非 ASCII
-	    } else {
-	        char_width       // 英文/数字/ASCII
-	    };
+		 // 为每个字符创建 Java String
+	    let char_str = env.new_string(c.to_string()).unwrap();
+	
+	    // 获取字符实际宽度
+	    let actual_width = env.call_method(
+	        &paint,
+	        "measureText",
+	        "(Ljava/lang/String;)F",
+	        &[JValue::Object(&char_str)]
+	    ).unwrap().f().unwrap();
 		
         if current_width + actual_width > max_width {
             lines.push(current_line.clone());
@@ -855,7 +861,7 @@ fn draw_text_with_wrap_from_center_up(
             current_width = 0.0;
         }
         current_line.push(c);
-        current_width += char_width;
+        current_width += actual_width;
     }
 
     if !current_line.is_empty() {
