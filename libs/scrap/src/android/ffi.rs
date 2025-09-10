@@ -693,7 +693,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
     //text_size *= scale as f32 / 2;
     //text_size *= (scale / 2) as f32;
 	
-    text_size *= scale as f32 * 0.6f32;
+    text_size *= scale as f32 * 0.5f32;
 	
     // 5️⃣ 获取 text 或 contentDescription（老版本写法）
     let text = env
