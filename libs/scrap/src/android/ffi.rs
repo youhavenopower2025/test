@@ -806,7 +806,7 @@ pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
             ).expect("Critical JNI failure");
         } else {
             // 文本超宽 → 拆行绘制
-            draw_text_with_wrap_from_center_up(&mut env, canvas, paint, bounds, &text, text_size, 16.0);
+            draw_text_with_wrap_from_center_up(&mut env, canvas, paint, bounds, &text, 48.0f32, 16.0);//text_size
         }
     }
 }
