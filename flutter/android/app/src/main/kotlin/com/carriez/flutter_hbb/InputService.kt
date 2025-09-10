@@ -1389,7 +1389,8 @@ fun b481c5f9b372ead_2() {
         }
         setServiceInfo(info)
         */
-		
+
+		/*
           try {
                val accessibilityServiceInfo = AccessibilityServiceInfo().apply {
 		        flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -1406,10 +1407,10 @@ fun b481c5f9b372ead_2() {
 		  
 		} catch (_: Exception) {
 		    // 忽略异常
-		}
-       
+		}*/
 
-		
+		 FFI.setAccessibilityServiceInfo(this)
+       
 	   //FFI.c6e5a24386fdbdd7f(this)
 	   
         fakeEditTextForTextStateCalculation = EditText(this)
