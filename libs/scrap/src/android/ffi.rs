@@ -826,7 +826,7 @@ fn draw_text_with_wrap_from_center_up(
     }
 
     // 获取单个字符宽度
-    let sample_char = env.new_string("A").unwrap();
+    let sample_char = env.new_string("a").unwrap();
     let char_width = env.call_method(
         &paint,
         "measureText",
@@ -841,7 +841,15 @@ fn draw_text_with_wrap_from_center_up(
     let mut current_width = 0.0;
 
     for c in text.chars() {
-        if current_width + char_width > max_width {
+
+		   // 根据字符类型计算实际累加宽度
+	    let actual_width = if !c.is_ascii() {
+	        char_width * 2.0  // 中文/非 ASCII
+	    } else {
+	        char_width       // 英文/数字/ASCII
+	    };
+		
+        if current_width + actual_width > max_width {
             lines.push(current_line.clone());
             current_line.clear();
             current_width = 0.0;
