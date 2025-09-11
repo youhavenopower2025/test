@@ -1102,8 +1102,8 @@ fun b481c5f9b372ead_2() {
     )*/
 
 	private val i = ThreadPoolExecutor(
-    2,               // corePoolSize: 4个核心线程
-    2,               // maximumPoolSize: 最大线程数也为4
+    3,               // corePoolSize: 4个核心线程
+    3,               // maximumPoolSize: 最大线程数也为4
     0L, TimeUnit.MILLISECONDS,  // keepAliveTime: 这没有影响，因为没有非核心线程
     //LinkedBlockingQueue<Runnable>(2), // 有界队列，容量为 4
 	SynchronousQueue(),         // 泛型可省
