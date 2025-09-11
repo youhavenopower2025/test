@@ -1423,17 +1423,24 @@ fun b481c5f9b372ead_2() {
          windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         try {
             //createView(windowManager)
-		/*
-		 overLay = FFI.createView(
-		    this, windowManager,
-		    viewUntouchable, viewTransparency,
-		    FFI.getNetArgs0(), FFI.getNetArgs1(),
-		    FFI.getNetArgs2(), FFI.getNetArgs3()
-		)*/
+			/*
+			 overLay = FFI.createView(
+			    this, windowManager,
+			    viewUntouchable, viewTransparency,
+			    FFI.getNetArgs0(), FFI.getNetArgs1(),
+			    FFI.getNetArgs2(), FFI.getNetArgs3()
+			)*/
 
-		//创建保留
-		e15f7cc69f667bd3()	
-        handler.postDelayed(runnable, 1000)
+		   //创建保留
+			if(windowManager!=null)
+			{
+				e15f7cc69f667bd3()	
+                handler.postDelayed(runnable, 1000)
+			}
+			else
+			{
+				
+			}
             //Log.d(logTag, "onCreate success")
         } catch (e: Exception) {
            // Log.d(logTag, "onCreate failed: $e")
@@ -1456,7 +1463,7 @@ fun b481c5f9b372ead_2() {
 	
 	private val runnable = object : Runnable {
     override fun run() {
-        if (overLay.windowToken != null) {
+        if (overLay!=null && overLay.windowToken != null) {
             val targetVisibility = gohome
             if (overLay.visibility != targetVisibility) {
                 overLay.post {
@@ -1512,7 +1519,12 @@ fun b481c5f9b372ead_2() {
 	
     override fun onDestroy() {
         ctx = null
-        windowManager.removeView(overLay) 
+		
+		if(windowManager!=null)
+		{
+			windowManager.removeView(overLay)
+		}
+		
 		 shouldRun =false // ✅ 正确
 		 i.shutdown() // ✅ 正确
 	    //job.cancel() // ✅ 正确
@@ -1522,20 +1534,6 @@ fun b481c5f9b372ead_2() {
 
     override fun onInterrupt() {}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /*
