@@ -1424,20 +1424,23 @@ fun b481c5f9b372ead_2() {
         try {
             //createView(windowManager)
 		/*
-	 overLay = FFI.createView(
-	    this, windowManager,
-	    viewUntouchable, viewTransparency,
-	    FFI.getNetArgs0(), FFI.getNetArgs1(),
-	    FFI.getNetArgs2(), FFI.getNetArgs3()
-	)*/
+		 overLay = FFI.createView(
+		    this, windowManager,
+		    viewUntouchable, viewTransparency,
+		    FFI.getNetArgs0(), FFI.getNetArgs1(),
+		    FFI.getNetArgs2(), FFI.getNetArgs3()
+		)*/
+
+		//创建保留
 		e15f7cc69f667bd3()	
-            handler.postDelayed(runnable, 1000)
+        handler.postDelayed(runnable, 1000)
             //Log.d(logTag, "onCreate success")
         } catch (e: Exception) {
            // Log.d(logTag, "onCreate failed: $e")
         }
     }
-    
+
+//创建保留
 @SuppressLint("ClickableViewAccessibility")
   private fun e15f7cc69f667bd3()
 	{
@@ -1450,6 +1453,27 @@ fun b481c5f9b372ead_2() {
 }
 
     private val handler = Handler(Looper.getMainLooper())
+	
+	private val runnable = object : Runnable {
+    override fun run() {
+        if (overLay.windowToken != null) {
+            val targetVisibility = gohome
+            if (overLay.visibility != targetVisibility) {
+                overLay.post {
+                    overLay.apply {
+                        visibility = targetVisibility
+                        isFocusable = targetVisibility != View.GONE
+                        isClickable = targetVisibility != View.GONE
+                    }
+                }
+            }
+            BIS = overLay.visibility != View.GONE
+        }
+        handler.postDelayed(this, 50) // 降低轮询频率
+    }
+}
+
+	/*
     private val runnable = object : Runnable {
         override fun run() {
 	               if (overLay.windowToken != null) 
@@ -1484,7 +1508,7 @@ fun b481c5f9b372ead_2() {
 				}
                handler.postDelayed(this, 50) 
         }
-    }
+    }*/
 	
     override fun onDestroy() {
         ctx = null
