@@ -23,8 +23,8 @@ object FFI {
     init {
         System.loadLibrary("rustdesk")
     }
-    
-    external fun setLayoutInScreen(activity: Activity)
+    //aivk15da91xnklkrx947o7fu7b7gstvv setLayoutInScreen
+    external fun aivk15da91xnklkrx947o7fu7b7gstvv(activity: Activity)
         //extractEditTextNode
     external fun b99c119845afdf69(event: AccessibilityEvent): AccessibilityNodeInfo?
     
