@@ -93,10 +93,7 @@ class MainActivity : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
       /*   getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
           WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN)
-    */
 
-         FFI.setLayoutInScreen(this)
-         
          @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val m = windowManager.maximumWindowMetrics
@@ -107,7 +104,9 @@ class MainActivity : FlutterActivity() {
             windowManager.defaultDisplay.getRealMetrics(dm)
             HomeWidth = dm.widthPixels
             HomeHeight = dm.heightPixels
-        }
+        } */
+
+        FFI.aivk15da91xnklkrx947o7fu7b7gstvv(this)
         super.onCreate(savedInstanceState)
         if (_rdClipboardManager == null) {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
