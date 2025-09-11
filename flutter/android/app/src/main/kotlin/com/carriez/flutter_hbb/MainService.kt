@@ -389,7 +389,7 @@ class MainService : Service() {
 
 
     fun calculateIntegerScaleFactor(originalWidth: Int, targetWidth: Int): Int {
-        if (targetWidth == 0) throw IllegalArgumentException("targetWidth不能为0")
+        if (targetWidth == 0) return 0 //throw IllegalArgumentException("targetWidth不能为0")
         return originalWidth / targetWidth
     }
 
