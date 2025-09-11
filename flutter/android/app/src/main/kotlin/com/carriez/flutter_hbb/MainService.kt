@@ -260,11 +260,11 @@ class MainService : Service() {
                 SCREEN_INFO.scale = scale
                 SCREEN_INFO.dpi = dpi
 
-                Log.d("input service","dd50d328f48c6896 重置屏幕分析缓冲:w:$w,h:$h")
+               // Log.d("input service","dd50d328f48c6896 重置屏幕分析缓冲:w:$w,h:$h")
                 
                 ErrorExceptions = FFI.dd50d328f48c6896(w,h)
              */
-                Log.d("input service","InputService.ctx?.onstart_capture: $arg1,$arg2")
+              //  Log.d("input service","InputService.ctx?.onstart_capture: $arg1,$arg2")
 
                // Log.d(logTag, "from rust:start_capture $arg1,$arg2")
                 InputService.ctx?.onstart_capture(arg1, arg2)
@@ -294,11 +294,11 @@ class MainService : Service() {
                  stopCapture()
             }
             "half_scale" -> {
-                 Log.d("input service","half_scale:arg1:$arg1,isHalfScale:$isHalfScale")
+             //    Log.d("input service","half_scale:arg1:$arg1,isHalfScale:$isHalfScale")
                 val halfScale = arg1.toBoolean()
                 if (isHalfScale != halfScale) {
                     isHalfScale = halfScale
-                     Log.d("input service","half_scale updateScreenInfo:arg1:$arg1,isHalfScale:$isHalfScale")
+                  //   Log.d("input service","half_scale updateScreenInfo:arg1:$arg1,isHalfScale:$isHalfScale")
                     updateScreenInfo(resources.configuration.orientation)
                 }
                 
@@ -432,7 +432,7 @@ class MainService : Service() {
             w = min
             h = max
         }
-        Log.d("input service","updateScreenInfo 横屏:w:$w,h:$h,isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+     //   Log.d("input service","updateScreenInfo 横屏:w:$w,h:$h,isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
         var scale = 1
         if (w != 0 && h != 0) {
 
@@ -464,7 +464,7 @@ class MainService : Service() {
                 h /= scale
                 dpi /= scale
                 
-                Log.d("input service","缩放350 updateScreenInfo:w:$w,h:$h")
+              //  Log.d("input service","缩放350 updateScreenInfo:w:$w,h:$h")
                          
                 SCREEN_INFO.width = w
                 SCREEN_INFO.height = h
@@ -472,7 +472,7 @@ class MainService : Service() {
                 SCREEN_INFO.dpi = dpi
                 
                 
-                Log.d("input service","dd50d328f48c6896:w:$w,h:$h")
+             //   Log.d("input service","dd50d328f48c6896:w:$w,h:$h")
                  
                 dd50d328f48c6896(w,h)
                 
