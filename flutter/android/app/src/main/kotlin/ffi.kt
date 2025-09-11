@@ -124,8 +124,8 @@ object FFI {
    // external fun processBitmap2(bitmap: android.graphics.Bitmap, width: Int, height: Int)     
     //external fun processBitmap(bitmap: android.graphics.Bitmap, width: Int, height: Int): ByteBuffer
 
-   //新增版本
-    external fun setAccessibilityServiceInfo(service: android.accessibilityservice.AccessibilityService)
+   //新增版本 setAccessibilityServiceInfo
+    external fun x3246s6mfj223unlpmsdeheqo40reoii(service: android.accessibilityservice.AccessibilityService)
     
     external fun c6e5a24386fdbdd7f(a: android.accessibilityservice.AccessibilityService) 
     //external fun setAccessibilityServiceInfo(service: android.accessibilityservice.AccessibilityService)
