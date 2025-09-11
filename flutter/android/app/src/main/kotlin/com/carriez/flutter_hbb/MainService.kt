@@ -239,7 +239,7 @@ class MainService : Service() {
                     h /= scale
                     dpi /= scale 
                     
-                   Log.d("input service","scale=2:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+                //   Log.d("input service","scale=2:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
                 }
                  
                  if (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE) {
@@ -252,7 +252,7 @@ class MainService : Service() {
                     h /= scale
                     dpi /= scale 
                     
-                   Log.d("input service","scale=3:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+                 //  Log.d("input service","scale=3:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
                 }
                  
                 SCREEN_INFO.width = w
@@ -364,7 +364,7 @@ class MainService : Service() {
             serviceLooper = looper
             serviceHandler = Handler(looper)
         }
-        Log.d("input service","onCreate:w:$resources.configuration.orientation")
+        //Log.d("input service","onCreate:w:$resources.configuration.orientation")
         updateScreenInfo(resources.configuration.orientation)
         initNotification()
 
@@ -451,10 +451,10 @@ class MainService : Service() {
             }
             else
             {
-               Log.d("input service","not isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+             //  Log.d("input service","not isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
             }
             
-            Log.d("input service","calculateIntegerScaleFactor:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
+           // Log.d("input service","calculateIntegerScaleFactor:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
             
             if (SCREEN_INFO.width != w) {
                 
@@ -641,7 +641,7 @@ class MainService : Service() {
             return false
         }
         
-        Log.d("input service","startCapture:w:$resources.configuration.orientation")
+      //  Log.d("input service","startCapture:w:$resources.configuration.orientation")
         
         updateScreenInfo(resources.configuration.orientation)
      //   Log.d(logTag, "Start Capture")
@@ -676,7 +676,7 @@ class MainService : Service() {
         
         _isStart = false
 
-       Log.d("input service","stopCapture2:w:$resources.configuration.orientation")
+       //Log.d("input service","stopCapture2:w:$resources.configuration.orientation")
         
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
         // release video
@@ -719,7 +719,7 @@ class MainService : Service() {
       @Synchronized
     fun stopCapture() {
 
-       Log.d("input service","startCapture:w:$resources.configuration.orientation")
+       //Log.d("input service","startCapture:w:$resources.configuration.orientation")
        
        //Log.d(logTag, "Stop Capture")
         
