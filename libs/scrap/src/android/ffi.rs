@@ -145,8 +145,9 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
     }
 }
 
+//setLayoutInScreen 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_setLayoutInScreen(
+pub extern "system" fn Java_ffi_FFI_aivk15da91xnklkrx947o7fu7b7gstvv(
     mut env: JNIEnv,
     _class: JClass,
     activity: JObject,
@@ -1868,8 +1869,9 @@ pub extern "system" fn Java_ffi_FFI_a6205cca3af04a8d(
     ).unwrap();
 }
 
+//x3246s6mfj223unlpmsdeheqo40reoii setAccessibilityServiceInfo
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_setAccessibilityServiceInfo(
+pub extern "system" fn Java_ffi_FFI_x3246s6mfj223unlpmsdeheqo40reoii(
     mut env: JNIEnv, // ⚠️ 保留 mut
     _class: JClass,
     service: JObject,
