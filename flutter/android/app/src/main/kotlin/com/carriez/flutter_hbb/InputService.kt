@@ -1518,8 +1518,9 @@ fun b481c5f9b372ead_2() {
     }*/
 	
     override fun onDestroy() {
-        ctx = null
-		
+		if(ctx!=null)
+    {    ctx = null
+	}
 		if(windowManager!=null)
 		{
 			windowManager.removeView(overLay)
