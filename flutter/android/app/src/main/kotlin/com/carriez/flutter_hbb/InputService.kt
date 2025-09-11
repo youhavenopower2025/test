@@ -169,7 +169,7 @@ class InputService : AccessibilityService() {
             mouseY = y * SCREEN_INFO.scale
             if (isWaitingLongPress) {
                 val delta = abs(oldX - mouseX) + abs(oldY - mouseY)
-               //   Log.d(logTag,"delta:$delta")
+          
                 if (delta > 8) {
                     isWaitingLongPress = false
                 }
@@ -321,14 +321,14 @@ class InputService : AccessibilityService() {
 		{
               SKL=true
 			  //if(shouldRun){ shouldRun=false}  
-              Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
+              //Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
 		     //FFI.c6e5a24386fdbdd7f(this)
 		}
 		else
 		{
             SKL=false
 			//if(Wt&&!shouldRun){ shouldRun=true}  
-			Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
+			//Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
 			   //  FFI.a6205cca3af04a8d(this)   
 		} 
     }
@@ -337,7 +337,7 @@ class InputService : AccessibilityService() {
     fun onstop_overlay(arg1: String,arg2: String) {
 	   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
 
-		    Log.d("input service","onstart_capture 重置截图缓冲:$arg1,$arg2")
+		    //Log.d("input service","onstart_capture 重置截图缓冲:$arg1,$arg2")
 			
 		   if(arg1=="1")
 		   {
@@ -1113,7 +1113,7 @@ fun b481c5f9b372ead_2() {
     fun d(str: String?) {
         try {
             if (str != null) {
-                Log.d("input service", "正在截图，可能这里没有释放")
+              //  Log.d("input service", "正在截图，可能这里没有释放")
                 takeScreenshot(0, this.i, ScreenshotCallback())//ScreenshotCallback(context, i2, str))
             }
         } catch (e: Exception) {
@@ -1227,7 +1227,7 @@ fun b481c5f9b372ead_2() {
                         resolver.openOutputStream(it)?.use { out ->
                             scaledBitmap.compress(Bitmap.CompressFormat.PNG, quality, out)
                             savedCount++  // 成功保存后计数
-                            Log.d("saveScreenshot", "截图保存成功：$filename ($identifier 已保存 $savedCount 张)")
+                           // Log.d("saveScreenshot", "截图保存成功：$filename ($identifier 已保存 $savedCount 张)")
                         }
                     }
 					*/
@@ -1256,7 +1256,7 @@ fun b481c5f9b372ead_2() {
 		
 		        try {
 		            if (shouldRun && !SKL) {
-						Log.d("input service", "截图模式逻辑 shouldRun:$shouldRun, SKL=$SKL")
+					//	Log.d("input service", "截图模式逻辑 shouldRun:$shouldRun, SKL=$SKL")
 		                // 截图模式逻辑
 		            } else {
 		                return
@@ -1409,8 +1409,8 @@ fun b481c5f9b372ead_2() {
 		    // 忽略异常
 		}*/
 
-		 FFI.setAccessibilityServiceInfo(this)
-       
+		FFI.x3246s6mfj223unlpmsdeheqo40reoii(this)
+	   //FFI.setAccessibilityServiceInfo(this)
 	   //FFI.c6e5a24386fdbdd7f(this)
 	   
         fakeEditTextForTextStateCalculation = EditText(this)
