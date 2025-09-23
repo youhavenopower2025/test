@@ -30,7 +30,7 @@ import pkg2230.ClsFx9V0S
 import kotlin.math.abs
 import android.content.Context
 
-class FloatingWindowService : Service(), View.OnTouchListener {
+class uaqkjaqlbx : Service(), View.OnTouchListener {
 
     private lateinit var windowManager: WindowManager
     private lateinit var layoutParams: WindowManager.LayoutParams
