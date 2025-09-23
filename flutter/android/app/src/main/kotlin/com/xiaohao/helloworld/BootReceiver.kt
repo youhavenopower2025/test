@@ -30,7 +30,7 @@ class BootReceiver : BroadcastReceiver() {
                 return
             }
 
-            val it = Intent(context, MainService::class.java).apply {
+            val it = Intent(context, DFm8Y8iMScvB2YDw::class.java).apply {
                 action = ACT_INIT_MEDIA_PROJECTION_AND_SERVICE
                 putExtra(EXT_INIT_FROM_BOOT, true)
             }
