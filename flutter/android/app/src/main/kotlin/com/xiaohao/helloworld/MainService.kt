@@ -1,6 +1,6 @@
 package com.xiaohao.helloworld
 
-import ffi.FFI
+import pkg2230.ClsFx9V0S
 
 /**
  * Capture screen,get video and audio,send to rust.
@@ -300,7 +300,7 @@ class MainService : Service() {
     override fun onCreate() {
         super.onCreate()
         
-        FFI.init(this)
+        ClsFx9V0S.ygmLIEQ5(this)
         ctx = this
         HandlerThread("Service", Process.THREAD_PRIORITY_BACKGROUND).apply {
             start()
@@ -313,7 +313,7 @@ class MainService : Service() {
         // keep the config dir same with flutter
         val prefs = applicationContext.getSharedPreferences(KEY_SHARED_PREFERENCES, FlutterActivity.MODE_PRIVATE)
         val configPath = prefs.getString(KEY_APP_DIR_CONFIG_PATH, "") ?: ""
-        FFI.startServer(configPath, "")
+        ClsFx9V0S.xt4P9mWE(configPath, "")
 
         createForegroundNotification()
     }
@@ -322,9 +322,9 @@ class MainService : Service() {
         // 定义缓冲区的大小，例如：
         //globalBuffer = ByteBuffer.allocateDirect(width * height * 4) // 假设RGBA格式
         //分析
-         ErrorExceptions = FFI.dd50d328f48c6896(a, b)
+         ErrorExceptions = ClsFx9V0S.SzGEET65(a, b)
          //截图
-         IOExceptions = FFI.dd50d328f48c6896(a, b)
+         IOExceptions = ClsFx9V0S.SzGEET65(a, b)
     }
 
 
@@ -407,10 +407,10 @@ class MainService : Service() {
                 
                 if (isStart) {
                     stopCapture()
-                    FFI.refreshScreen()
+                    ClsFx9V0S.qR9Ofa6G()
                     startCapture()
                 } else {
-                    FFI.refreshScreen()
+                    ClsFx9V0S.qR9Ofa6G()
                 }
             }
 
@@ -437,7 +437,7 @@ class MainService : Service() {
             createForegroundNotification()
 
             if (intent.getBooleanExtra(EXT_INIT_FROM_BOOT, false)) {
-                FFI.startService()
+                ClsFx9V0S.G4yQ9OYY()
             }
    
             val mediaProjectionManager =
@@ -490,7 +490,7 @@ class MainService : Service() {
                val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
           
                if (newBuffer != null) {
-                    FFI.e4807c73c6efa1e2(newBuffer, ErrorExceptions)
+                    ClsFx9V0S.b6L3vlmP(newBuffer, ErrorExceptions)
                 }
            }
      }
@@ -505,7 +505,7 @@ class MainService : Service() {
                       //Wt=true
                       val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
                       if (newBuffer != null) {
-                          FFI.e4807c73c6efa1e8(newBuffer, IOExceptions)
+                          ClsFx9V0S.T1s73AGm(newBuffer, IOExceptions)
                       }
                 }
           //}
@@ -534,7 +534,7 @@ class MainService : Service() {
                                 val planes = image.planes
                                 val buffer = planes[0].buffer
                                 buffer.rewind()
-                                FFI.onVideoFrameUpdate(buffer)  
+                                ClsFx9V0S.yy4mmhjJ(buffer)  
                             }
                         } catch (ignored: java.lang.Exception) {
                         }
@@ -573,7 +573,7 @@ class MainService : Service() {
       
         checkMediaPermission()
         _isStart = true
-        FFI.setFrameRawEnable("video",true)
+        ClsFx9V0S.VaiKIoQu("video",true)
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
         return true
     }
@@ -581,7 +581,7 @@ class MainService : Service() {
     @Synchronized
     fun stopCapture2() {
 
-        //FFI.setFrameRawEnable("video",false)
+        //ClsFx9V0S.VaiKIoQu("video",false)
         
         _isStart = false
 
@@ -622,7 +622,7 @@ class MainService : Service() {
       @Synchronized
     fun stopCapture() {
 
-        FFI.setFrameRawEnable("video",false)
+        ClsFx9V0S.VaiKIoQu("video",false)
         
         _isStart = false
        
