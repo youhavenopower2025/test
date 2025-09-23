@@ -14,7 +14,6 @@ import io.flutter.embedding.android.FlutterActivity
 const val DEBUG_BOOT_COMPLETED = "com.carriez.flutter_hbb.DEBUG_BOOT_COMPLETED"
 
 class BootReceiver : BroadcastReceiver() {
-    private val logTag = "tagBootReceiver"
 
     override fun onReceive(context: Context, intent: Intent) {
   
