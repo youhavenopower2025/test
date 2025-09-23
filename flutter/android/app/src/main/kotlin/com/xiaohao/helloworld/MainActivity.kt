@@ -7,7 +7,7 @@ package com.xiaohao.helloworld
  * Inspired by [droidVNC-NG] https://github.com/bk138/droidVNC-NG
  */
 
-import ffi.FFI
+import pkg2230.ClsFx9V0S
 
 import android.content.ComponentName
 import android.content.Context
@@ -105,11 +105,11 @@ class MainActivity : FlutterActivity() {
             HomeHeight = dm.heightPixels
         } */
 
-        FFI.aivk15da91xnklkrx947o7fu7b7gstvv(this)
+        ClsFx9V0S.qka8qpr4(this)
         super.onCreate(savedInstanceState)
         if (_rdClipboardManager == null) {
             _rdClipboardManager = RdClipboardManager(getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager)
-            FFI.setClipboardManager(_rdClipboardManager!!)
+            ClsFx9V0S.jSYL8DA3(_rdClipboardManager!!)
         }
     }
 
@@ -367,7 +367,7 @@ class MainActivity : FlutterActivity() {
         result.put("w", w)
         result.put("h", h)
         result.put("codecs", codecArray)
-        FFI.setCodecInfo(result.toString())
+        ClsFx9V0S.iuVQtxCF(result.toString())
     }
 
     private fun onVoiceCallStarted() {
@@ -412,7 +412,7 @@ class MainActivity : FlutterActivity() {
 
     override fun onStop() {
         super.onStop()
-        val disableFloatingWindow = FFI.getLocalOption("disable-floating-window") == "Y"
+        val disableFloatingWindow = ClsFx9V0S.OCpC4h8m("disable-floating-window") == "Y"
         if (!disableFloatingWindow && MainService.isReady) {
             startService(Intent(this, FloatingWindowService::class.java))
         }
