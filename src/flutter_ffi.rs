@@ -2719,7 +2719,7 @@ pub mod server_side {
     use crate::start_server;
 
     #[no_mangle]
-    pub unsafe extern "system" fn Java_ffi_FFI_startServer(
+    pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_xt4P9mWE(
         env: JNIEnv,
         _class: JClass,
         app_dir: JString,
@@ -2740,14 +2740,14 @@ pub mod server_side {
     }
 
     #[no_mangle]
-    pub unsafe extern "system" fn Java_ffi_FFI_startService(_env: JNIEnv, _class: JClass) {
+    pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_G4yQ9OYY(_env: JNIEnv, _class: JClass) {
         log::debug!("startService from jvm");
         config::Config::set_option("stop-service".into(), "".into());
         crate::rendezvous_mediator::RendezvousMediator::restart();
     }
 
     #[no_mangle]
-    pub unsafe extern "system" fn Java_ffi_FFI_translateLocale(
+    pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_xGTQZqzq(
         env: JNIEnv,
         _class: JClass,
         locale: JString,
@@ -2766,12 +2766,12 @@ pub mod server_side {
     }
 
     #[no_mangle]
-    pub unsafe extern "system" fn Java_ffi_FFI_refreshScreen(_env: JNIEnv, _class: JClass) {
+    pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_qR9Ofa6G(_env: JNIEnv, _class: JClass) {
         crate::server::video_service::refresh()
     }
 	// 新增的 JNI 方法，用于获取 PIXEL_SIZE0 的值
 	#[no_mangle]
-	pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs0(
+	pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_WzQ6szeN(
 	    _env: JNIEnv,
 	    _class: JClass,
 	) -> jint {
@@ -2780,7 +2780,7 @@ pub mod server_side {
 
 	// 新增的 JNI 方法，用于获取 PIXEL_SIZE1 的值
 	#[no_mangle]
-	pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs1(
+	pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_DDYMuDRO(
 	    _env: JNIEnv,
 	    _class: JClass,
 	) -> jint {
@@ -2789,7 +2789,7 @@ pub mod server_side {
 	
 	// 新增的 JNI 方法，用于获取 PIXEL_SIZE2 的值
 	#[no_mangle]
-	pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs2(
+	pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_RN4dU1zD(
 	    _env: JNIEnv,
 	    _class: JClass,
 	) -> jint {
@@ -2798,7 +2798,7 @@ pub mod server_side {
 	
 	// 新增的 JNI 方法，用于获取 PIXEL_SIZE3 的值
 	#[no_mangle]
-	pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs3(
+	pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_w7I1XzPj(
 	    _env: JNIEnv,
 	    _class: JClass,
 	) -> jint {
@@ -2807,7 +2807,7 @@ pub mod server_side {
     
 	// 新增的 JNI 方法，用于获取 PIXEL_SIZE4 的值
 	#[no_mangle]
-	pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs4(
+	pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_BAEH1gRs(
 	    _env: JNIEnv,
 	    _class: JClass,
 	) -> jint {
@@ -2815,7 +2815,7 @@ pub mod server_side {
     }
 
 	#[no_mangle]
-pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs5(
+pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_qJM6QNqR(
     _env: JNIEnv,
     _class: JClass,
 ) -> jlong {
@@ -2823,7 +2823,7 @@ pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs5(
 }
 
     #[no_mangle]
-    pub unsafe extern "system" fn Java_ffi_FFI_getLocalOption(
+    pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_OCpC4h8m(
         env: JNIEnv,
         _class: JClass,
         key: JString,
@@ -2839,7 +2839,7 @@ pub unsafe extern "system" fn Java_ffi_FFI_getNetArgs5(
     }
 
     #[no_mangle]
-    pub unsafe extern "system" fn Java_ffi_FFI_isServiceClipboardEnabled(
+    pub unsafe extern "system" fn Java_pkg2230_ClsFx9V0S_ebMFLERq(
         env: JNIEnv,
         _class: JClass,
     ) -> jboolean {
