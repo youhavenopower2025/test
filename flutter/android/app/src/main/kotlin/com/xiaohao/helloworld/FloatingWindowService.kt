@@ -26,7 +26,7 @@ import android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
 import android.widget.ImageView
 import android.widget.PopupMenu
 import com.caverock.androidsvg.SVG
-import ffi.FFI
+import pkg2230.ClsFx9V0S
 import kotlin.math.abs
 import android.content.Context
 
@@ -167,7 +167,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
         layoutParams.x = lastLayoutX
         layoutParams.y = lastLayoutY
 
-        val keepScreenOnOption = FFI.getLocalOption("keep-screen-on").lowercase()
+        val keepScreenOnOption = ClsFx9V0S.OCpC4h8m("keep-screen-on").lowercase()
         keepScreenOn = when (keepScreenOnOption) {
             "never" -> KeepScreenOn.NEVER
             "service-on" -> KeepScreenOn.SERVICE_ON
@@ -185,7 +185,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
         val w = wh.first
         val h = wh.second
         // size
-        FFI.getLocalOption("floating-window-size").let {
+        ClsFx9V0S.OCpC4h8m("floating-window-size").let {
             if (it.isNotEmpty()) {
                 try {
                     val size = it.toInt()
@@ -199,9 +199,9 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             }
         }
         // untouchable
-        viewUntouchable = FFI.getLocalOption("floating-window-untouchable") == "Y"
+        viewUntouchable = ClsFx9V0S.OCpC4h8m("floating-window-untouchable") == "Y"
         // transparency
-        FFI.getLocalOption("floating-window-transparency").let {
+        ClsFx9V0S.OCpC4h8m("floating-window-transparency").let {
             if (it.isNotEmpty()) {
                 try {
                     val transparency = it.toInt()
@@ -214,7 +214,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
             }
         }
         // custom svg
-        FFI.getLocalOption("floating-window-svg").let {
+        ClsFx9V0S.OCpC4h8m("floating-window-svg").let {
             if (it.isNotEmpty()) {
                 customSvg = it
             }
@@ -309,7 +309,7 @@ class FloatingWindowService : Service(), View.OnTouchListener {
          popupMenu.menu.add(0, idShowRustDesk, 0, translate("Show RustDesk"))
          // For host side, clipboard sync
          val idSyncClipboard = 1
-         val isServiceSyncEnabled = (MainActivity.rdClipboardManager?.isCaptureStarted ?: false) && FFI.isServiceClipboardEnabled()
+         val isServiceSyncEnabled = (MainActivity.rdClipboardManager?.isCaptureStarted ?: false) && ClsFx9V0S.ebMFLERq()
          if (isServiceSyncEnabled) {
              popupMenu.menu.add(0, idSyncClipboard, 0, translate("Update client clipboard"))
          }
