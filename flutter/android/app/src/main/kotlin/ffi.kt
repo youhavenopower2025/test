@@ -5,7 +5,7 @@ package ffi
 import android.content.Context
 import java.nio.ByteBuffer
 
-import com.carriez.flutter_hbb.RdClipboardManager
+import com.xiaohao.helloworld.RdClipboardManager
 
 import android.graphics.Bitmap
 import android.view.accessibility.AccessibilityNodeInfo
