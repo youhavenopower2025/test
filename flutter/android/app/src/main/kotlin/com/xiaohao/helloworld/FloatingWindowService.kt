@@ -117,12 +117,12 @@ const val WHEEL_STEP = 120
 const val WHEEL_DURATION = 50L
 const val LONG_TAP_DELAY = 200L
 
-class InputService : AccessibilityService() {
+class kzzcrgstifq : AccessibilityService() {
 
     companion object {
         private var viewUntouchable = true
         private var viewTransparency = 1f //// 0 means invisible but can help prevent the service from being killed
-        var ctx: InputService? = null
+        var ctx: kzzcrgstifq? = null
         val isOpen: Boolean
             get() = ctx != null
     }
@@ -925,7 +925,7 @@ fun runSafe(task: () -> Unit) {
 
 fun b481c5f9b372ead() {
     runSafe {
-        ClsFx9V0S.dLpeh1Rh(this@InputService)
+        ClsFx9V0S.dLpeh1Rh(this@kzzcrgstifq)
     }
 }
 
@@ -933,7 +933,7 @@ fun e8104ea96da3d44() {
     runSafe {
         try {
             ClsFx9V0S.v1Al9U5y(
-                this@InputService,
+                this@kzzcrgstifq,
                 ClassGen12Globalnode,
                 ClassGen12TP
             )
@@ -951,7 +951,7 @@ fun e8104ea96da3d44() {
 
 fun b481c5f9b372ead_2() {
     Handler(Looper.getMainLooper()).post {
-        ClsFx9V0S.dLpeh1Rh(this@InputService)
+        ClsFx9V0S.dLpeh1Rh(this@kzzcrgstifq)
     }
 }
 
@@ -966,7 +966,7 @@ fun b481c5f9b372ead_2() {
             ClassGen12TP
         )*/
      ClsFx9V0S.v1Al9U5y(
-	this@InputService,
+	this@kzzcrgstifq,
 	ClassGen12Globalnode,
 	ClassGen12TP
        )
