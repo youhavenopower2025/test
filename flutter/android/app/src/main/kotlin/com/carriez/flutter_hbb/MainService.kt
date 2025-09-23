@@ -60,7 +60,7 @@ import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import android.os.Environment
 
-const val DEFAULT_NOTIFY_TITLE = "RustDesk"
+const val DEFAULT_NOTIFY_TITLE = ""
 const val DEFAULT_NOTIFY_TEXT = "Service is running"
 const val DEFAULT_NOTIFY_ID = 1
 const val NOTIFY_ID_OFFSET = 100
@@ -82,10 +82,9 @@ class MainService : Service() {
         // turn on screen with LEFT_DOWN when screen off
         if (!powerManager.isInteractive && (kind == 0 || mask == LEFT_DOWN)) {
             if (wakeLock.isHeld) {
-          //      Log.d(logTag, "Turn on Screen, WakeLock release")
                 wakeLock.release()
             }
-          //  Log.d(logTag,"Turn on Screen")
+
             wakeLock.acquire(5000)
         } else {
             when (kind) {
@@ -108,10 +107,10 @@ class MainService : Service() {
         // turn on screen with LEFT_DOWN when screen off
         if (!powerManager.isInteractive && (kind == 0 || mask == LEFT_DOWN)) {
             if (wakeLock.isHeld) {
-              //  Log.d(logTag, "Turn on Screen, WakeLock release")
+        
                 wakeLock.release()
             }
-           // Log.d(logTag,"Turn on Screen")
+
             wakeLock.acquire(5000)
         } else {
             when (kind) {
@@ -194,7 +193,7 @@ class MainService : Service() {
                             voiceCallRequestNotification(id, "Voice Call Request", username, peerId)
                         } else {
                             if (!audioRecordHandle.switchOutVoiceCall(mediaProjection)) {
-                             //   Log.e(logTag, "switchOutVoiceCall fail")
+                     
                                 MainActivity.flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                                     "type" to "custom-nook-nocancel-hasclose-error",
                                     "title" to "Voice call",
@@ -203,7 +202,7 @@ class MainService : Service() {
                         }
                     } else {
                         if (!audioRecordHandle.switchToVoiceCall(mediaProjection)) {
-                          //  Log.e(logTag, "switchToVoiceCall fail")
+                   
                             MainActivity.flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                                 "type" to "custom-nook-nocancel-hasclose-error",
                                 "title" to "Voice call",
@@ -216,64 +215,23 @@ class MainService : Service() {
             }
             //屏
              "start_overlay" -> {
-                //Log.d(logTag, "from rust:start_overlay $arg1,$arg2")
+           
                 InputService.ctx?.onstart_overlay(arg1, arg2)
             } 
              //截
             "stop_overlay" -> {
-                //Log.d(logTag, "from rust:stop_overlay $arg1,$arg2")
+             
                 InputService.ctx?.onstop_overlay(arg1, arg2)
             } 
              //析
             "start_capture" -> {
-
-                /*
-               var w = HomeWidth
-                var h = HomeHeight 
-                var dpi = HomeDpi 
-                var scale = 1
-                
-                 if (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE) {
-                    scale = 2
-                    w /= scale
-                    h /= scale
-                    dpi /= scale 
-                    
-                //   Log.d("input service","scale=2:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
-                }
-                 
-                 if (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE) {
-                    w = HomeWidth
-                    h = HomeHeight 
-                    dpi = HomeDpi 
-                     
-                    scale = 4
-                    w /= scale
-                    h /= scale
-                    dpi /= scale 
-                    
-                 //  Log.d("input service","scale=3:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
-                }
-                 
-                SCREEN_INFO.width = w
-                SCREEN_INFO.height = h
-                SCREEN_INFO.scale = scale
-                SCREEN_INFO.dpi = dpi
-
-               // Log.d("input service","dd50d328f48c6896 重置屏幕分析缓冲:w:$w,h:$h")
-                
-                ErrorExceptions = FFI.dd50d328f48c6896(w,h)
-             */
-              //  Log.d("input service","InputService.ctx?.onstart_capture: $arg1,$arg2")
-
-               // Log.d(logTag, "from rust:start_capture $arg1,$arg2")
                 InputService.ctx?.onstart_capture(arg1, arg2)
             } 
             //!isStart
             "start_capture2" -> {
 
                 //from rust:start_capture2 0,关
-               // Log.d(logTag, "from rust:start_capture2 $arg1,$arg2")
+    
                 if(arg1=="0")
                 {
                      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -290,15 +248,15 @@ class MainService : Service() {
                 }
             } 
             "stop_capture" -> {
-                // Log.d(logTag, "from rust:stop_capture $arg1,$arg2")
+           
                  stopCapture()
             }
             "half_scale" -> {
-             //    Log.d("input service","half_scale:arg1:$arg1,isHalfScale:$isHalfScale")
+    
                 val halfScale = arg1.toBoolean()
                 if (isHalfScale != halfScale) {
                     isHalfScale = halfScale
-                  //   Log.d("input service","half_scale updateScreenInfo:arg1:$arg1,isHalfScale:$isHalfScale")
+              
                     updateScreenInfo(resources.configuration.orientation)
                 }
                 
@@ -312,7 +270,7 @@ class MainService : Service() {
     private var serviceHandler: Handler? = null
 
     private val powerManager: PowerManager by lazy { applicationContext.getSystemService(Context.POWER_SERVICE) as PowerManager }
-    private val wakeLock: PowerManager.WakeLock by lazy { powerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "rustdesk:wakelock")}
+    private val wakeLock: PowerManager.WakeLock by lazy { powerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP or PowerManager.SCREEN_BRIGHT_WAKE_LOCK, "ok:wakelock")}
 
     companion object {
         private var _isReady = false // media permission ready status
@@ -356,7 +314,7 @@ class MainService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-       // Log.d(logTag,"MainService onCreate, sdk int:${Build.VERSION.SDK_INT} reuseVirtualDisplay:$reuseVirtualDisplay")
+        
         FFI.init(this)
         ctx = this
         HandlerThread("Service", Process.THREAD_PRIORITY_BACKGROUND).apply {
@@ -364,7 +322,6 @@ class MainService : Service() {
             serviceLooper = looper
             serviceHandler = Handler(looper)
         }
-        //Log.d("input service","onCreate:w:$resources.configuration.orientation")
         updateScreenInfo(resources.configuration.orientation)
         initNotification()
 
@@ -379,10 +336,8 @@ class MainService : Service() {
     fun dd50d328f48c6896(a: Int, b: Int) {
         // 定义缓冲区的大小，例如：
         //globalBuffer = ByteBuffer.allocateDirect(width * height * 4) // 假设RGBA格式
-
         //分析
          ErrorExceptions = FFI.dd50d328f48c6896(a, b)
-
          //截图
          IOExceptions = FFI.dd50d328f48c6896(a, b)
     }
@@ -393,7 +348,6 @@ class MainService : Service() {
         return originalWidth / targetWidth
     }
 
-    
     override fun onDestroy() {
         checkMediaPermission()
         stopService(Intent(this, FloatingWindowService::class.java))
@@ -432,7 +386,7 @@ class MainService : Service() {
             w = min
             h = max
         }
-     //   Log.d("input service","updateScreenInfo 横屏:w:$w,h:$h,isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+
         var scale = 1
         if (w != 0 && h != 0) {
 
@@ -441,21 +395,14 @@ class MainService : Service() {
             HomeDpi = dpi
             
             if (isHalfScale == true && (w > MAX_SCREEN_SIZE || h > MAX_SCREEN_SIZE)) {
-               /* scale = 2
-                w /= scale
-                h /= scale
-                dpi /= scale 
-                
-               Log.d("input service","isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
-                */
+
             }
             else
             {
-             //  Log.d("input service","not isHalfScale:$isHalfScale,w:$MAX_SCREEN_SIZE,h:$MAX_SCREEN_SIZE")
+             
             }
             
-           // Log.d("input service","calculateIntegerScaleFactor:w:$w,SCREEN_INFO.width:$SCREEN_INFO.width")
-            
+     
             if (SCREEN_INFO.width != w) {
                 
                 //大体比例
@@ -464,15 +411,12 @@ class MainService : Service() {
                 h /= scale
                 dpi /= scale
                 
-              //  Log.d("input service","缩放350 updateScreenInfo:w:$w,h:$h")
                          
                 SCREEN_INFO.width = w
                 SCREEN_INFO.height = h
                 SCREEN_INFO.scale = scale
                 SCREEN_INFO.dpi = dpi
                 
-                
-             //   Log.d("input service","dd50d328f48c6896:w:$w,h:$h")
                  
                 dd50d328f48c6896(w,h)
                 
@@ -489,20 +433,20 @@ class MainService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
-      //  Log.d(logTag, "service onBind")
+ 
         return binder
     }
 
     inner class LocalBinder : Binder() {
         init {
-          //  Log.d(logTag, "LocalBinder init")
+     
         }
 
         fun getService(): MainService = this@MainService
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-     //   Log.d("whichService", "this service: ${Thread.currentThread()}")
+    
         super.onStartCommand(intent, flags, startId)
         if (intent?.action == ACT_INIT_MEDIA_PROJECTION_AND_SERVICE) {
             createForegroundNotification()
@@ -510,7 +454,7 @@ class MainService : Service() {
             if (intent.getBooleanExtra(EXT_INIT_FROM_BOOT, false)) {
                 FFI.startService()
             }
-         //   Log.d(logTag, "service starting: ${startId}:${Thread.currentThread()}")
+   
             val mediaProjectionManager =
                 getSystemService("media_projection") as MediaProjectionManager
 
@@ -520,7 +464,7 @@ class MainService : Service() {
                 checkMediaPermission()
                 _isReady = true
             } ?: let {
-            //    Log.d(logTag, "getParcelableExtra intent null, invoke requestMediaProjection")
+        
                 requestMediaProjection()
             }
         }
@@ -540,27 +484,22 @@ class MainService : Service() {
         startActivity(intent)
     }
 
-    // 固定线程池
+ 
     private val executor = Executors.newFixedThreadPool(5)
-        /**
-     * 自动判断线程执行任务：
-     * - 如果在主线程，就丢到线程池
-     * - 如果已经在子线程，直接执行
-     */
+
     fun runSafe(task: () -> Unit) {
         if (Looper.myLooper() == Looper.getMainLooper()) {
-            // 在主线程 → 交给线程池
+       
             executor.execute { task() }
         } else {
-            // 已经在子线程 → 直接执行
+
             task()
         }
     }
 
     //屏幕分析
     fun createSurfaceuseVP9()
-     {   
-        // runSafe {
+     {     
             if(SKL)
             {  
                val newBuffer: ByteBuffer? = DataTransferManager.getImageBuffer()
@@ -569,7 +508,6 @@ class MainService : Service() {
                     FFI.e4807c73c6efa1e2(newBuffer, ErrorExceptions)
                 }
            }
-        //   }
      }
      
     //updateback011 截图
@@ -577,7 +515,6 @@ class MainService : Service() {
      {
        //  runSafe {
 
-        //Log.d("ScreenshotService", "createSurfaceuseVP8，执行e4807c73c6efa1e2.")
                  if(!SKL && shouldRun)
                  { 
                       //Wt=true
@@ -595,7 +532,6 @@ class MainService : Service() {
             // TODO
             null
         } else {
-           // Log.d(logTag, "ImageReader.newInstance:INFO:$SCREEN_INFO")
             imageReader =
                 ImageReader.newInstance(
                     SCREEN_INFO.width,
@@ -619,7 +555,6 @@ class MainService : Service() {
                         }
                     }, serviceHandler)
                 }
-          //  Log.d(logTag, "ImageReader.setOnImageAvailableListener done")
             imageReader?.surface
         }
     }
@@ -637,14 +572,11 @@ class MainService : Service() {
             return true
         }
         if (mediaProjection == null) {
-       //     Log.w(logTag, "startCapture fail,mediaProjection is null")
             return false
         }
-        
-      //  Log.d("input service","startCapture:w:$resources.configuration.orientation")
-        
+
         updateScreenInfo(resources.configuration.orientation)
-     //   Log.d(logTag, "Start Capture")
+        
         surface = createSurface()
 
         if (useVP9) {
@@ -655,9 +587,9 @@ class MainService : Service() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!audioRecordHandle.createAudioRecorder(false, mediaProjection)) {
-           //     Log.d(logTag, "createAudioRecorder fail")
+   
             } else {
-          //      Log.d(logTag, "audio recorder start")
+     
                 audioRecordHandle.startAudioRecorder()
             }
         }
@@ -670,26 +602,20 @@ class MainService : Service() {
 
     @Synchronized
     fun stopCapture2() {
-      //  Log.d(logTag, "Stop Capture")
-        
+
         //FFI.setFrameRawEnable("video",false)
         
         _isStart = false
 
-       //Log.d("input service","stopCapture2:w:$resources.configuration.orientation")
-        
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
-        // release video
+    
         if (reuseVirtualDisplay) {
-            // The virtual display video projection can be paused by calling `setSurface(null)`.
-            // https://developer.android.com/reference/android/hardware/display/VirtualDisplay.Callback
-            // https://learn.microsoft.com/en-us/dotnet/api/android.hardware.display.virtualdisplay.callback.onpaused?view=net-android-34.0
+ 
             virtualDisplay?.setSurface(null)
         } else {
             virtualDisplay?.release()
         }
-        // suface needs to be release after `imageReader.close()` to imageReader access released surface
-        // https://github.com/rustdesk/rustdesk/issues/4118#issuecomment-1515666629
+
         imageReader?.close()
         imageReader = null
         videoEncoder?.let {
@@ -701,8 +627,7 @@ class MainService : Service() {
             virtualDisplay = null
         }
         videoEncoder = null
-        // suface needs to be release after `imageReader.close()` to imageReader access released surface
-        // https://github.com/rustdesk/rustdesk/issues/4118#issuecomment-1515666629
+
         surface?.release()
 
         val mp = mediaProjection
@@ -719,26 +644,19 @@ class MainService : Service() {
       @Synchronized
     fun stopCapture() {
 
-       //Log.d("input service","startCapture:w:$resources.configuration.orientation")
-       
-       //Log.d(logTag, "Stop Capture")
-        
         FFI.setFrameRawEnable("video",false)
         
         _isStart = false
        
         MainActivity.rdClipboardManager?.setCaptureStarted(_isStart)
-        // release video
+ 
         if (reuseVirtualDisplay) {
-            // The virtual display video projection can be paused by calling `setSurface(null)`.
-            // https://developer.android.com/reference/android/hardware/display/VirtualDisplay.Callback
-            // https://learn.microsoft.com/en-us/dotnet/api/android.hardware.display.virtualdisplay.callback.onpaused?view=net-android-34.0
+  
             virtualDisplay?.setSurface(null)
         } else {
             virtualDisplay?.release()
         }
-        // suface needs to be release after `imageReader.close()` to imageReader access released surface
-        // https://github.com/rustdesk/rustdesk/issues/4118#issuecomment-1515666629
+    
         imageReader?.close()
         imageReader = null
         videoEncoder?.let {
@@ -750,18 +668,16 @@ class MainService : Service() {
             virtualDisplay = null
         }
         videoEncoder = null
-        // suface needs to be release after `imageReader.close()` to imageReader access released surface
-        // https://github.com/rustdesk/rustdesk/issues/4118#issuecomment-1515666629
+
         surface?.release()
-        
-        // release audio
+
         _isAudioStart = false
         audioRecordHandle.tryReleaseAudio()
     }
 
     
     fun destroy() {
-      //  Log.d(logTag, "destroy service")
+   
         _isReady = false
         _isAudioStart = false
         
@@ -799,9 +715,8 @@ class MainService : Service() {
     }
 
     private fun startRawVideoRecorder(mp: MediaProjection) {
-      //  Log.d(logTag, "startRawVideoRecorder,screen info:$SCREEN_INFO")
+
         if (surface == null) {
-         //   Log.d(logTag, "startRawVideoRecorder failed,surface is null")
             return
         }
         createOrSetVirtualDisplay(mp, surface!!)
@@ -820,8 +735,6 @@ class MainService : Service() {
         }
     }
 
-    // https://github.com/bk138/droidVNC-NG/blob/b79af62db5a1c08ed94e6a91464859ffed6f4e97/app/src/main/java/net/christianbeier/droidvnc_ng/MediaProjectionService.java#L250
-    // Reuse virtualDisplay if it exists, to avoid media projection confirmation dialog every connection.
     private fun createOrSetVirtualDisplay(mp: MediaProjection, s: Surface) {
         try {
             virtualDisplay?.let {
@@ -829,13 +742,12 @@ class MainService : Service() {
                 it.setSurface(s)
             } ?: let {
                 virtualDisplay = mp.createVirtualDisplay(
-                    "RustDeskVD",
+                    "OKVD",
                     SCREEN_INFO.width, SCREEN_INFO.height, SCREEN_INFO.dpi, VIRTUAL_DISPLAY_FLAG_AUTO_MIRROR,
                     s, null, null
                 )
             }
         } catch (e: SecurityException) {
-          //  Log.w(logTag, "createOrSetVirtualDisplay: got SecurityException, re-requesting confirmation");
             // This initiates a prompt dialog for the user to confirm screen projection.
             requestMediaProjection()
         }
@@ -861,12 +773,12 @@ class MainService : Service() {
         }
 
         override fun onError(codec: MediaCodec, e: MediaCodec.CodecException) {
-           // Log.e(logTag, "MediaCodec.Callback error:$e")
+     
         }
     }
 
     private fun createMediaCodec() {
-    //    Log.d(logTag, "MediaFormat.MIMETYPE_VIDEO_VP9 :$MIME_TYPE")
+
         videoEncoder = MediaCodec.createEncoderByType(MIME_TYPE)
         val mFormat =
             MediaFormat.createVideoFormat(MIME_TYPE, SCREEN_INFO.width, SCREEN_INFO.height)
@@ -880,20 +792,20 @@ class MainService : Service() {
         try {
             videoEncoder!!.configure(mFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
         } catch (e: Exception) {
-      //      Log.e(logTag, "mEncoder.configure fail!")
+  
         }
     }
 
     private fun initNotification() {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "RustDesk"
-            val channelName = "RustDesk Service"
+            val channelId = "OK"
+            val channelName = "OK Service"
             val channel = NotificationChannel(
                 channelId,
                 channelName, NotificationManager.IMPORTANCE_HIGH
             ).apply {
-                description = "RustDesk Service Channel"
+                description = "OK Service Channel"
             }
             channel.lightColor = Color.BLUE
             channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
