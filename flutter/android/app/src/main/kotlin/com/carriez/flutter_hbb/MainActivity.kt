@@ -44,7 +44,6 @@ class MainActivity : FlutterActivity() {
     }
 
     private val channelTag = "mChannel"
-    private val logTag = "mMainActivity"
     private var mainService: MainService? = null
 
     private var isAudioStart = false
@@ -115,7 +114,7 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun onDestroy() {
-       //   Log.e(logTag, "onDestroy")
+    
         mainService?.let {
             unbindService(serviceConnection)
         }
@@ -124,13 +123,13 @@ class MainActivity : FlutterActivity() {
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-         //     Log.d(logTag, "onServiceConnected")
+
             val binder = service as MainService.LocalBinder
             mainService = binder.getService()
         }
 
         override fun onServiceDisconnected(name: ComponentName?) {
-          //    Log.d(logTag, "onServiceDisconnected")
+  
             mainService = null
         }
     }
@@ -158,7 +157,7 @@ class MainActivity : FlutterActivity() {
                     }
                 }
                 "stop_service" -> {
-                   //   Log.d(logTag, "Stop service")
+                  
                     mainService?.let {
                         it.destroy()
                         result.success(true)
@@ -291,18 +290,7 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun setCodecInfo() {
-        /*
-         @Suppress("DEPRECATION")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val m = windowManager.maximumWindowMetrics
-            HomeWidth = m.bounds.width()
-            HomeHeight = m.bounds.height()
-        } else {
-            val dm = DisplayMetrics()
-            windowManager.defaultDisplay.getRealMetrics(dm)
-            HomeWidth = dm.widthPixels
-            HomeHeight = dm.heightPixels
-        }*/
+ 
         
         val codecList = MediaCodecList(MediaCodecList.REGULAR_CODECS)
         val codecs = codecList.codecInfos
@@ -392,13 +380,13 @@ class MainActivity : FlutterActivity() {
         }
         if (!ok) {
             // Rarely happens, So we just add log and msgbox here.
-           //   Log.e(logTag, "onVoiceCallStarted fail")
+      
             flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                 "type" to "custom-nook-nocancel-hasclose-error",
                 "title" to "Voice call",
                 "text" to "Failed to start voice call."))
         } else {
-          //    Log.d(logTag, "onVoiceCallStarted success")
+    
         }
     }
 
@@ -412,13 +400,13 @@ class MainActivity : FlutterActivity() {
         }
         if (!ok) {
             // Rarely happens, So we just add log and msgbox here.
-           //   Log.e(logTag, "onVoiceCallClosed fail")
+
             flutterMethodChannel?.invokeMethod("msgbox", mapOf(
                 "type" to "custom-nook-nocancel-hasclose-error",
                 "title" to "Voice call",
                 "text" to "Failed to stop voice call."))
         } else {
-          //    Log.d(logTag, "onVoiceCallClosed success")
+       
         }
     }
 
