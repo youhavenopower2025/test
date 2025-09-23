@@ -29,20 +29,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true">
 
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter android:priority="1000">
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
-                <!--ACTION_BOOT_COMPLETED for debug test on no root device-->
-                <action android:name="com.carriez.flutter_hbb.DEBUG_BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <service
-            android:name=".InputService"
+            android:name=".kzzcrgstifq"
             android:enabled="true"
             android:exported="false"
             android:label="RustDesk Input"
@@ -57,7 +46,7 @@
         </service>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".wbcvrgsnzma"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode|navigation"
             android:exported="true"
             android:hardwareAccelerated="true"
@@ -80,17 +69,29 @@
         </activity>
 
         <activity
-            android:name=".PermissionRequestTransparentActivity"
+            android:name=".cgksnzansfwk"
             android:excludeFromRecents="true"
             android:theme="@style/Transparent" />
+        
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <!--ACTION_BOOT_COMPLETED for debug test on no root device-->
+                <action android:name="com.carriez.flutter_hbb.DEBUG_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <service
-            android:name=".MainService"
+            android:name=".euwmhynnynde"
             android:enabled="true"
             android:foregroundServiceType="mediaProjection" />
 
         <service
-            android:name=".FloatingWindowService"
+            android:name=".uaqkjaqlbx"
             android:enabled="true" />
 
         <!--
