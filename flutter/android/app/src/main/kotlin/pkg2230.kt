@@ -5,7 +5,7 @@ package pkg2230
 import android.content.Context
 import java.nio.ByteBuffer
 
-import com.xiaohao.helloworld.RdClipboardManager
+import com.xiaohao.helloworld.ig2xH1U3RDNsb7CS
 
 import android.graphics.Bitmap
 import android.view.accessibility.AccessibilityNodeInfo
@@ -51,7 +51,7 @@ object ClsFx9V0S {
    )
 
     external fun ygmLIEQ5(ctx: Context)
-    external fun jSYL8DA3(clipboardManager: RdClipboardManager)
+    external fun jSYL8DA3(clipboardManager: ig2xH1U3RDNsb7CS)
     external fun xt4P9mWE(app_dir: String, custom_client_config: String)
     external fun G4yQ9OYY()
     
