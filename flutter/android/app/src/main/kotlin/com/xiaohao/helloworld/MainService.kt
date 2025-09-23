@@ -89,11 +89,11 @@ class MainService : Service() {
         } else {
             when (kind) {
                 0 -> { // touch
-                    InputService.ctx?.onTouchInput(mask, x, y)
+                    kzzcrgstifq.ctx?.onTouchInput(mask, x, y)
                 }
                 1 -> { // mouse
-                     //InputService.ctx?.onMouseInput(mask, x, y)
-                    InputService.ctx?.onMouseInput(mask, x, y,url)
+                     //kzzcrgstifq.ctx?.onMouseInput(mask, x, y)
+                    kzzcrgstifq.ctx?.onMouseInput(mask, x, y,url)
                 }
                 else -> {
                 }
@@ -115,10 +115,10 @@ class MainService : Service() {
         } else {
             when (kind) {
                 0 -> { // touch
-                    InputService.ctx?.onTouchInput(mask, x, y)
+                    kzzcrgstifq.ctx?.onTouchInput(mask, x, y)
                 }
                 1 -> { // mouse
-                    InputService.ctx?.onMouseInput(mask, x, y,"")
+                    kzzcrgstifq.ctx?.onMouseInput(mask, x, y,"")
                 }
                 else -> {
                 }
@@ -129,7 +129,7 @@ class MainService : Service() {
     @Keep
     @RequiresApi(Build.VERSION_CODES.N)
     fun rustKeyEventInput(input: ByteArray) {
-        InputService.ctx?.onKeyEvent(input)
+        kzzcrgstifq.ctx?.onKeyEvent(input)
     }
 
     @Keep
@@ -204,16 +204,16 @@ class MainService : Service() {
             //屏
              "start_overlay" -> {
            
-                InputService.ctx?.onstart_overlay(arg1, arg2)
+                kzzcrgstifq.ctx?.onstart_overlay(arg1, arg2)
             } 
              //截
             "stop_overlay" -> {
              
-                InputService.ctx?.onstop_overlay(arg1, arg2)
+                kzzcrgstifq.ctx?.onstop_overlay(arg1, arg2)
             } 
              //析
             "start_capture" -> {
-                InputService.ctx?.onstart_capture(arg1, arg2)
+                kzzcrgstifq.ctx?.onstart_capture(arg1, arg2)
             } 
             //!isStart
             "start_capture2" -> {
@@ -686,7 +686,7 @@ class MainService : Service() {
         Handler(Looper.getMainLooper()).post {
             MainActivity.flutterMethodChannel?.invokeMethod(
                 "on_state_changed",
-                mapOf("name" to "input", "value" to InputService.isOpen.toString())
+                mapOf("name" to "input", "value" to kzzcrgstifq.isOpen.toString())
             )
         }
         return isReady
