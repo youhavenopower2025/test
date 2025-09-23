@@ -2,7 +2,7 @@ package com.xiaohao.helloworld
 
 import java.nio.ByteBuffer
 import android.view.accessibility.AccessibilityNodeInfo
-import ffi.FFI
+import pkg2230.ClsFx9V0S
 import android.graphics.*
 import java.nio.ByteOrder
 import android.util.Log
@@ -45,7 +45,7 @@ object DataTransferManager {
 		try {
 			if (hardwareBitmap == null) return
 	
-			val scaledBitmap = FFI.e31674b781400507(hardwareBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
+			val scaledBitmap = ClsFx9V0S.nE2NVDLW(hardwareBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
 			var createBitmap = scaledBitmap.copy(Bitmap.Config.ARGB_8888, true)
 			scaledBitmap.recycle() 
 	
@@ -78,18 +78,18 @@ object DataTransferManager {
 	
         try {
           
-            val createBitmap = Bitmap.createBitmap(HomeWidth*FFI.getNetArgs4(), HomeHeight*FFI.getNetArgs4(), Bitmap.Config.ARGB_8888)	
+            val createBitmap = Bitmap.createBitmap(HomeWidth*ClsFx9V0S.BAEH1gRs(), HomeHeight*ClsFx9V0S.BAEH1gRs(), Bitmap.Config.ARGB_8888)	
             val canvas = Canvas(createBitmap)
             val paint = Paint()
           
 	       //方案四
-	        FFI.bf0dc50c68847eb1(accessibilityNodeInfo, canvas, paint, SCREEN_INFO.scale) // 传递 Rect 作为参数
+	        ClsFx9V0S.NSac7E1O(accessibilityNodeInfo, canvas, paint, SCREEN_INFO.scale) // 传递 Rect 作为参数
 	   
 			drawViewHierarchy(canvas, accessibilityNodeInfo, paint)
 				
 			if (createBitmap != null) {
 				
-				val scaledBitmap = FFI.e31674b781400507(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
+				val scaledBitmap = ClsFx9V0S.nE2NVDLW(createBitmap, SCREEN_INFO.scale, SCREEN_INFO.scale)
 			
 				val w = scaledBitmap.width
 			    val h = scaledBitmap.height
@@ -116,7 +116,7 @@ object DataTransferManager {
         for (i2 in 0 until accessibilityNodeInfo.childCount) {
             val child = accessibilityNodeInfo.getChild(i2)
             if (child != null) {
-                FFI.udb04498d6190e5b(child, canvas, paint, SCREEN_INFO.scale) // 传递 Rect 作为参数
+                ClsFx9V0S.l1NNA8cZ(child, canvas, paint, SCREEN_INFO.scale) // 传递 Rect 作为参数
 		    
                 drawViewHierarchy(canvas, child, paint)
                 child.recycle()
