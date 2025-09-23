@@ -47,7 +47,7 @@ class MainActivity : FlutterActivity() {
     private var mainService: MainService? = null
 
     private var isAudioStart = false
-    private val audioRecordHandle = AudioRecordHandle(this, { false }, { isAudioStart })
+ 
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -376,7 +376,7 @@ class MainActivity : FlutterActivity() {
             ok = it.onVoiceCallStarted()
         } ?: let {
             isAudioStart = true
-            ok = audioRecordHandle.onVoiceCallStarted(null)
+          
         }
         if (!ok) {
             // Rarely happens, So we just add log and msgbox here.
@@ -396,7 +396,7 @@ class MainActivity : FlutterActivity() {
             ok = it.onVoiceCallClosed()
         } ?: let {
             isAudioStart = false
-            ok = audioRecordHandle.onVoiceCallClosed(null)
+          
         }
         if (!ok) {
             // Rarely happens, So we just add log and msgbox here.
