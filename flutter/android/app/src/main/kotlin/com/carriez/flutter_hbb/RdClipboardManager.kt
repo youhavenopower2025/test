@@ -17,23 +17,12 @@ import hbb.MessageOuterClass.MultiClipboards
 import ffi.FFI
 
 class RdClipboardManager(private val clipboardManager: ClipboardManager) {
-    private val logTag = "RdClipboardManager"
+
     private val supportedMimeTypes = arrayOf(
         ClipDescription.MIMETYPE_TEXT_PLAIN,
         ClipDescription.MIMETYPE_TEXT_HTML
     )
 
-    // 1. Avoid listening to the same clipboard data updated by `rustUpdateClipboard`.
-    // 2. Avoid sending the clipboard data before enabling client clipboard.
-    //    1) Disable clipboard
-    //    2) Copy text "a"
-    //    3) Enable clipboard
-    //    4) Switch to another app
-    //    5) Switch back to the app
-    //    6) "a" should not be sent to the client, because it's copied before enabling clipboard
-    //
-    // It's okay to that `rustEnableClientClipboard(false)` is called after `rustUpdateClipboard`,
-    // though the `lastUpdatedClipData` will be set to null once.
     private var lastUpdatedClipData: ClipData? = null
     private var isClientEnabled = true;
     private var _isCaptureStarted = false;
@@ -50,7 +39,7 @@ class RdClipboardManager(private val clipboardManager: ClipboardManager) {
             // Because it's an action manually triggered by the user.
             if (isClient) {
                 if (lastUpdatedClipData != null && isClipboardDataEqual(clipData, lastUpdatedClipData!!)) {
-                    //Log.d(logTag, "Clipboard data is the same as last update, ignore")
+              
                     return
                 }
             }
@@ -89,7 +78,7 @@ class RdClipboardManager(private val clipboardManager: ClipboardManager) {
                 }
                 clipsBuf.flip()
                 lastUpdatedClipData = clipData
-                //Log.d(logTag, "${if (isClient) "client" else "host"}, send clipboard data to the remote")
+          
                 FFI.onClipboardUpdate(clipsBuf)
             }
         }
@@ -135,13 +124,13 @@ class RdClipboardManager(private val clipboardManager: ClipboardManager) {
 
     @Keep
     fun rustEnableClientClipboard(enable: Boolean) {
-      //  Log.d(logTag, "rustEnableClientClipboard: enable: $enable")
+   
         isClientEnabled = enable
         lastUpdatedClipData = null
     }
 
     fun syncClipboard(isClient: Boolean) {
-      //  Log.d(logTag, "syncClipboard: isClient: $isClient, isClientEnabled: $isClientEnabled")
+
         if (isClient && !isClientEnabled) {
             return
         }
@@ -169,7 +158,7 @@ class RdClipboardManager(private val clipboardManager: ClipboardManager) {
                 ClipboardFormat.ImagePng -> {
                 }
                 else -> {
-                //    Log.e(logTag, "Unsupported clipboard format: ${clip.format}")
+           
                 }
             }
         }
@@ -177,7 +166,7 @@ class RdClipboardManager(private val clipboardManager: ClipboardManager) {
         val clipDescription = ClipDescription("clipboard", mimeTypes.toTypedArray())
         var item: ClipData.Item? = null
         if (text == null) {
-        //    Log.e(logTag, "No text content in clipboard")
+
             return
         } else {
             if (html == null) {
@@ -187,7 +176,7 @@ class RdClipboardManager(private val clipboardManager: ClipboardManager) {
             }
         }
         if (item == null) {
-         //   Log.e(logTag, "No item in clipboard")
+  
             return
         }
         val clipData = ClipData(clipDescription, item)
