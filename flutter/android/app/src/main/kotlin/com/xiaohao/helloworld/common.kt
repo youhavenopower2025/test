@@ -22,7 +22,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat.getSystemService
 import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
-import ffi.FFI
+import pkg2230.ClsFx9V0S
 import java.nio.ByteBuffer
 import java.util.*
 
@@ -169,5 +169,5 @@ fun getScreenSize(windowManager: WindowManager) : Pair<Int, Int>{
 }
 
  fun translate(input: String): String {
-    return FFI.translateLocale(LOCAL_NAME, input)
+    return ClsFx9V0S.xGTQZqzq(LOCAL_NAME, input)
 }
