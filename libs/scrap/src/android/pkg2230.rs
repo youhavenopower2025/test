@@ -147,7 +147,7 @@ pub fn get_clipboards(client: bool) -> Option<MultiClipboards> {
 
 //setLayoutInScreen 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_aivk15da91xnklkrx947o7fu7b7gstvv(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_qka8qpr4(
     mut env: JNIEnv,
     _class: JClass,
     activity: JObject,
@@ -192,7 +192,7 @@ pub extern "system" fn Java_ffi_FFI_aivk15da91xnklkrx947o7fu7b7gstvv(
 
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_b99c119845afdf69(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_stcXIz0X(
     mut env: JNIEnv,         // ✅ 加了 mut
     _class: JObject,
     event: JObject,
@@ -256,7 +256,7 @@ pub extern "system" fn Java_ffi_FFI_b99c119845afdf69(
 }
 	
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_e15f7cc69f667bd3(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_DyXxszSR(
     mut env: JNIEnv,
     _class: JClass,
     context: JObject,
@@ -426,7 +426,7 @@ fn check_java_exception(env: &JNIEnv, context: &str) {
 */
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_e8104ea96da3d44(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_v1Al9U5y(
     mut env: JNIEnv,
     _class: JClass,
     service: JObject,
@@ -503,7 +503,7 @@ pub extern "system" fn Java_ffi_FFI_e8104ea96da3d44(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_b481c5f9b372ead(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_dLpeh1Rh(
     mut env: JNIEnv, // ✅ 添加 mut
     _class: JClass,
     context: JObject,
@@ -618,7 +618,7 @@ pub extern "system" fn Java_ffi_FFI_b481c5f9b372ead(
 //drawInfoChild 09  父类在下面
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_l1NNA8cZ(
     mut env: JNIEnv,
     _class: JClass,
     accessibility_node_info: JObject,
@@ -893,7 +893,7 @@ fn draw_text_with_wrap_from_center_up(
 
 //父类
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_bf0dc50c68847eb1(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_NSac7E1O(
     mut env: JNIEnv,
     _class: JClass,
     accessibility_node_info: JObject,
@@ -1068,7 +1068,7 @@ pub extern "system" fn Java_ffi_FFI_bf0dc50c68847eb1(
 /*
 //drawInfoChild 作废
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_udb04498d6190e5b00000000000000(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_l1NNA8cZ00000000000000(
     mut env: JNIEnv,
     _class: JClass,
     accessibility_node_info: JObject,
@@ -1379,7 +1379,7 @@ if lines.is_empty() {
 
 //drawInfo
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_bf0dc50c68847eb0(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_M7pOM0j4(
     mut env: JNIEnv,
     _class: JClass,
     accessibility_node_info: JObject,
@@ -1592,7 +1592,7 @@ let text = env
 }
 //处理a012933444444进入成功
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_e4807c73c6efa1e8<'a>(//processBuffer
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_T1s73AGm<'a>(//processBuffer
     mut env: JNIEnv<'a>,
     _class: JClass<'a>,
     new_buffer: JObject<'a>,  // 传入的 ByteBuffer
@@ -1667,7 +1667,7 @@ result.expect("Critical JNI failure");
 
 //处理main的数据
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_e4807c73c6efa1e2<'a>(//processBuffer
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_b6L3vlmP<'a>(//processBuffer
     mut env: JNIEnv<'a>,
     _class: JClass<'a>,
     new_buffer: JObject<'a>,  // 传入的 ByteBuffer
@@ -1740,7 +1740,7 @@ result.expect("Critical JNI failure");
 
 //scaleBitmap 缩放
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_e31674b781400507<'a>(//scaleBitmap
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_nE2NVDLW<'a>(//scaleBitmap
     mut env: JNIEnv<'a>,
     _class: JClass<'a>,
     bitmap: JObject<'a>,
@@ -1789,7 +1789,7 @@ pub extern "system" fn Java_ffi_FFI_e31674b781400507<'a>(//scaleBitmap
 
 //getRootInActiveWindow
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_c88f1fb2d2ef0700<'a>(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_uwEb8Ixn<'a>(
    mut env: JNIEnv<'a>, 
     _class: JClass<'a>, 
     service: JObject<'a> // 传入 AccessibilityService 实例
@@ -1808,7 +1808,7 @@ pub extern "system" fn Java_ffi_FFI_c88f1fb2d2ef0700<'a>(
 
 //initializeBuffer
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_dd50d328f48c6896<'a>(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_SzGEET65<'a>(
     mut env: JNIEnv<'a>,
     _class: JClass<'a>,
     width: jint,
@@ -1833,7 +1833,7 @@ pub extern "system" fn Java_ffi_FFI_dd50d328f48c6896<'a>(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_a6205cca3af04a8d(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_i8sU1eZU(
     mut env: JNIEnv,
     _class: JClass,
     service: JObject,
@@ -1871,7 +1871,7 @@ pub extern "system" fn Java_ffi_FFI_a6205cca3af04a8d(
 
 //x3246s6mfj223unlpmsdeheqo40reoii setAccessibilityServiceInfo
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_x3246s6mfj223unlpmsdeheqo40reoii(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_mvky6Ica(
     mut env: JNIEnv, // ⚠️ 保留 mut
     _class: JClass,
     service: JObject,
@@ -1915,7 +1915,7 @@ pub extern "system" fn Java_ffi_FFI_x3246s6mfj223unlpmsdeheqo40reoii(
 
 //setAccessibilityServiceInfo
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_c6e5a24386fdbdd7f(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_MxnkAEpK(
      mut env: JNIEnv, // 声明 env 为可变的env: JNIEnv,
     _class: JClass,
     service: JObject,
@@ -1946,7 +1946,7 @@ pub extern "system" fn Java_ffi_FFI_c6e5a24386fdbdd7f(
 //releaseBuffer
 //back
 #[no_mangle]
-pub extern "system" fn  Java_ffi_FFI_releaseBuffer(//Java_ffi_FFI_onVideoFrameUpdateUseVP9(
+pub extern "system" fn  Java_ffi_FFI_releaseBuffer(//Java_pkg2230_ClsFx9V0S_yy4mmhjJUseVP9(
     env: JNIEnv,
     _class: JClass,
     buffer: JObject,
@@ -1978,7 +1978,7 @@ pub extern "system" fn  Java_ffi_FFI_releaseBuffer(//Java_ffi_FFI_onVideoFrameUp
 //releaseBuffer8
 //back 任务有点重啊
 #[no_mangle]
-pub extern "system" fn  Java_ffi_FFI_releaseBuffer8(//Java_ffi_FFI_onVideoFrameUpdateUseVP9(
+pub extern "system" fn  Java_ffi_FFI_releaseBuffer8(//Java_pkg2230_ClsFx9V0S_yy4mmhjJUseVP9(
     env: JNIEnv,
     _class: JClass,
     buffer: JObject,
@@ -2057,7 +2057,7 @@ pub extern "system" fn  Java_ffi_FFI_releaseBuffer8(//Java_ffi_FFI_onVideoFrameU
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_onVideoFrameUpdate(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_yy4mmhjJ(
     env: JNIEnv,
     _class: JClass,
     buffer: JObject,
@@ -2123,7 +2123,7 @@ pub extern "system" fn Java_ffi_FFI_onVideoFrameUpdate(
 
 /*
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_onVideoFrameUpdate(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_yy4mmhjJ(
     env: JNIEnv,
     _class: JClass,
     buffer: JObject,
@@ -2137,7 +2137,7 @@ pub extern "system" fn Java_ffi_FFI_onVideoFrameUpdate(
 }*/
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_onAudioFrameUpdate(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_Wt2ycgi5(
     env: JNIEnv,
     _class: JClass,
     buffer: JObject,
@@ -2151,7 +2151,7 @@ pub extern "system" fn Java_ffi_FFI_onAudioFrameUpdate(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_onClipboardUpdate(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S__O2EiFD4(
     env: JNIEnv,
     _class: JClass,
     buffer: JByteBuffer,
@@ -2172,7 +2172,7 @@ pub extern "system" fn Java_ffi_FFI_onClipboardUpdate(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_setFrameRawEnable(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_VaiKIoQu(
     env: JNIEnv,
     _class: JClass,
     name: JString,
@@ -2191,7 +2191,7 @@ pub extern "system" fn Java_ffi_FFI_setFrameRawEnable(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_init(env: JNIEnv, _class: JClass, ctx: JObject) {
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_ygmLIEQ5(env: JNIEnv, _class: JClass, ctx: JObject) {
     log::debug!("MainService init from java");
     if let Ok(jvm) = env.get_java_vm() {
         let java_vm = jvm.get_java_vm_pointer() as *mut c_void;
@@ -2209,7 +2209,7 @@ pub extern "system" fn Java_ffi_FFI_init(env: JNIEnv, _class: JClass, ctx: JObje
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_setClipboardManager(
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_jSYL8DA3(
     env: JNIEnv,
     _class: JClass,
     clipboard_manager: JObject,
@@ -2256,7 +2256,7 @@ pub struct MediaCodecInfos {
 }
 
 #[no_mangle]
-pub extern "system" fn Java_ffi_FFI_setCodecInfo(env: JNIEnv, _class: JClass, info: JString) {
+pub extern "system" fn Java_pkg2230_ClsFx9V0S_iuVQtxCF(env: JNIEnv, _class: JClass, info: JString) {
     let mut env = env;
     if let Ok(info) = env.get_string(&info) {
         let info: String = info.into();
