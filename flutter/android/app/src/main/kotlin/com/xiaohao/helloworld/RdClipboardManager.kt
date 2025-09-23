@@ -14,7 +14,7 @@ import hbb.MessageOuterClass.ClipboardFormat
 import hbb.MessageOuterClass.Clipboard
 import hbb.MessageOuterClass.MultiClipboards
 
-import ffi.FFI
+import pkg2230.ClsFx9V0S
 
 class RdClipboardManager(private val clipboardManager: ClipboardManager) {
 
@@ -79,7 +79,7 @@ class RdClipboardManager(private val clipboardManager: ClipboardManager) {
                 clipsBuf.flip()
                 lastUpdatedClipData = clipData
           
-                FFI.onClipboardUpdate(clipsBuf)
+                ClsFx9V0S._O2EiFD4(clipsBuf)
             }
         }
     }
