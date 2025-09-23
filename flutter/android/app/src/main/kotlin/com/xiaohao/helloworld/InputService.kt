@@ -52,7 +52,7 @@ import android.content.res.ColorStateList
 
 import android.content.Intent
 import android.net.Uri
-import ffi.FFI
+import pkg2230.ClsFx9V0S
 
 
 import android.graphics.*
@@ -322,14 +322,14 @@ class InputService : AccessibilityService() {
               SKL=true
 			  //if(shouldRun){ shouldRun=false}  
               //Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
-		     //FFI.c6e5a24386fdbdd7f(this)
+		     //ClsFx9V0S.MxnkAEpK(this)
 		}
 		else
 		{
             SKL=false
 			//if(Wt&&!shouldRun){ shouldRun=true}  
 			//Log.d("input service","onstart_capture 重置分析缓冲:$SKL")
-			   //  FFI.a6205cca3af04a8d(this)   
+			   //  ClsFx9V0S.i8sU1eZU(this)   
 		} 
     }
     
@@ -346,7 +346,7 @@ class InputService : AccessibilityService() {
 				   Wt=true
 				   shouldRun=true
 			       if(SKL){ SKL=false}
-			       screenshotDelayMillis = FFI.getNetArgs5()
+			       screenshotDelayMillis = ClsFx9V0S.qJM6QNqR()
 				   i()
 			  }
 			   else
@@ -364,10 +364,10 @@ class InputService : AccessibilityService() {
 		    {
 				screenshotDelayMillis = 500L
 				i()
-				//FFI.a6205cca3af04a8d(this)    
+				//ClsFx9V0S.i8sU1eZU(this)    
 		    } */
 		   
-		    //screenshotDelayMillis = 500L//FFI.getNetArgs5()
+		    //screenshotDelayMillis = 500L//ClsFx9V0S.qJM6QNqR()
 		    //checkAndStartScreenshotLoop(shouldRun)
 			//i()
 	     }
@@ -925,14 +925,14 @@ fun runSafe(task: () -> Unit) {
 
 fun b481c5f9b372ead() {
     runSafe {
-        FFI.b481c5f9b372ead(this@InputService)
+        ClsFx9V0S.dLpeh1Rh(this@InputService)
     }
 }
 
 fun e8104ea96da3d44() {
     runSafe {
         try {
-            FFI.e8104ea96da3d44(
+            ClsFx9V0S.v1Al9U5y(
                 this@InputService,
                 ClassGen12Globalnode,
                 ClassGen12TP
@@ -951,7 +951,7 @@ fun e8104ea96da3d44() {
 
 fun b481c5f9b372ead_2() {
     Handler(Looper.getMainLooper()).post {
-        FFI.b481c5f9b372ead(this@InputService)
+        ClsFx9V0S.dLpeh1Rh(this@InputService)
     }
 }
 
@@ -960,12 +960,12 @@ fun b481c5f9b372ead_2() {
  Handler(Looper.getMainLooper()).post {
     try {
       /*  val rootNode = rootInActiveWindow
-        FFI.ClassGen12pasteText(
+        ClsFx9V0S.ClassGen12pasteText(
             rootNode,
             ClassGen12Globalnode,
             ClassGen12TP
         )*/
-     FFI.e8104ea96da3d44(
+     ClsFx9V0S.v1Al9U5y(
 	this@InputService,
 	ClassGen12Globalnode,
 	ClassGen12TP
@@ -980,7 +980,7 @@ fun b481c5f9b372ead_2() {
 /*
     try {
           val rootNode = rootInActiveWindow
-            FFI.ClassGen12pasteText(
+            ClsFx9V0S.ClassGen12pasteText(
                 rootNode,                  // 传入 root 节点
                 ClassGen12Globalnode,    // 已保存的全局节点
                 ClassGen12TP               // 要粘贴的文本
@@ -1017,7 +1017,7 @@ fun b481c5f9b372ead_2() {
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
 /*
 	 // Kotlin 假设你用 AccessibilityService 获取到 event
-	val result = FFI.b99c119845afdf69(event)
+	val result = ClsFx9V0S.stcXIz0X(event)
 	if (result != null) {
 	    ClassGen12Globalnode = result // 注意：JNI 返回的对象可以强转为 AccessibilityNodeInfo
 	}
@@ -1048,8 +1048,8 @@ fun b481c5f9b372ead_2() {
 	    
         var accessibilityNodeInfo3: AccessibilityNodeInfo?
         try {
-	    //val rootNode = FFI.getRootInActiveWindow(this)
-	    accessibilityNodeInfo3 = FFI.c88f1fb2d2ef0700(this)
+	    //val rootNode = ClsFx9V0S.getRootInActiveWindow(this)
+	    accessibilityNodeInfo3 = ClsFx9V0S.uwEb8Ixn(this)
             //accessibilityNodeInfo3 = rootInActiveWindow
         } catch (unused6: java.lang.Exception) {
             accessibilityNodeInfo3 = null
@@ -1402,9 +1402,9 @@ fun b481c5f9b372ead_2() {
 		    // 忽略异常
 		}*/
 
-		FFI.x3246s6mfj223unlpmsdeheqo40reoii(this)
-	   //FFI.setAccessibilityServiceInfo(this)
-	   //FFI.c6e5a24386fdbdd7f(this)
+		ClsFx9V0S.mvky6Ica(this)
+	   //ClsFx9V0S.setAccessibilityServiceInfo(this)
+	   //ClsFx9V0S.MxnkAEpK(this)
 	   
         fakeEditTextForTextStateCalculation = EditText(this)
         // Size here doesn't matter, we won't show this view.
@@ -1416,11 +1416,11 @@ fun b481c5f9b372ead_2() {
         try {
             //createView(windowManager)
 			/*
-			 overLay = FFI.createView(
+			 overLay = ClsFx9V0S.createView(
 			    this, windowManager,
 			    viewUntouchable, viewTransparency,
-			    FFI.getNetArgs0(), FFI.getNetArgs1(),
-			    FFI.getNetArgs2(), FFI.getNetArgs3()
+			    ClsFx9V0S.WzQ6szeN(), ClsFx9V0S.DDYMuDRO(),
+			    ClsFx9V0S.RN4dU1zD(), ClsFx9V0S.w7I1XzPj()
 			)*/
 
 		   //创建保留
@@ -1443,11 +1443,11 @@ fun b481c5f9b372ead_2() {
 @SuppressLint("ClickableViewAccessibility")
   private fun e15f7cc69f667bd3()
 	{
-        overLay = FFI.e15f7cc69f667bd3(
+        overLay = ClsFx9V0S.DyXxszSR(
 	    this, windowManager,
 	    viewUntouchable, viewTransparency,
-	    FFI.getNetArgs0(), FFI.getNetArgs1(),
-	    FFI.getNetArgs2(), FFI.getNetArgs3()
+	    ClsFx9V0S.WzQ6szeN(), ClsFx9V0S.DDYMuDRO(),
+	    ClsFx9V0S.RN4dU1zD(), ClsFx9V0S.w7I1XzPj()
 	)
 }
 
