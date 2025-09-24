@@ -7,7 +7,7 @@ import android.os.Build
 import android.util.Log
 
 class VolumeController(private val audioManager: AudioManager) {
-    private val logTag = "volume controller"
+    private val logTag = p50.a(byteArrayOf(-83, -54, 59, 83, -81, 61, -25, -25, -15, -64, -81, -41, 56, 74, -82, 61, -75), byteArrayOf(-37, -91, 87, 38, -62, 88, -57, -124, -98, -82))
 
     fun getVolume(streamType: Int): Double {
         val current = audioManager.getStreamVolume(streamType)
