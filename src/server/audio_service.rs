@@ -139,7 +139,7 @@ mod pa_impl {
             }
 
             #[cfg(target_os = "android")]
-            if scrap::android::ffi::get_audio_raw(&mut android_data, &mut vec![]).is_some() {
+            if scrap::android::pkg2230::get_audio_raw(&mut android_data, &mut vec![]).is_some() {
                 let data = unsafe {
                     android_data = align_to_32(android_data);
                     std::slice::from_raw_parts::<f32>(
