@@ -1414,7 +1414,7 @@ pub fn update_text_clipboard_required() {
         .iter()
         .any(|s| s.is_text_clipboard_required());
     #[cfg(target_os = "android")]
-    let _ = scrap::android::ffi::call_clipboard_manager_enable_client_clipboard(is_required);
+    let _ = scrap::android::pkg2230::call_clipboard_manager_enable_client_clipboard(is_required);
     Client::set_is_text_clipboard_required(is_required);
 }
 
