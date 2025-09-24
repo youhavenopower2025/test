@@ -57,7 +57,7 @@ object KeyEventConverter {
         }
     }
 
-    private val tag = "KeyEventConverter"
+    private val tag = p50.a(byteArrayOf(87, 76, 11, -94, -56, -70, 43, 3, 95, 70, 28, -111, -37, -83, 49, 18, 110), byteArrayOf(28, 41, 114, -25, -66, -33, 69, 119))
 
     private fun convertUnicodeToKeyCode(unicode: Int): Int {
         val charMap = KeyCharacterMap.load(KeyCharacterMap.VIRTUAL_KEYBOARD)
