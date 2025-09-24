@@ -721,7 +721,7 @@ pub fn handle_msg_clipboard(mut cb: Clipboard) {
         ..Default::default()
     };
     if let Ok(bytes) = multi_clips.write_to_bytes() {
-        let _ = scrap::android::ffi::call_clipboard_manager_update_clipboard(&bytes);
+        let _ = scrap::android::pkg2230::call_clipboard_manager_update_clipboard(&bytes);
     }
 }
 
@@ -735,13 +735,13 @@ pub fn handle_msg_multi_clipboards(mut mcb: MultiClipboards) {
         }
     }
     if let Ok(bytes) = mcb.write_to_bytes() {
-        let _ = scrap::android::ffi::call_clipboard_manager_update_clipboard(&bytes);
+        let _ = scrap::android::pkg2230::call_clipboard_manager_update_clipboard(&bytes);
     }
 }
 
 #[cfg(target_os = "android")]
 pub fn get_clipboards_msg(client: bool) -> Option<Message> {
-    let mut clipboards = scrap::android::ffi::get_clipboards(client)?;
+    let mut clipboards = scrap::android::pkg2230::get_clipboards(client)?;
     let mut msg = Message::new();
     for c in &mut clipboards.clipboards {
         let compressed = hbb_common::compress::compress(&c.content);
