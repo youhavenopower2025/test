@@ -163,7 +163,7 @@ class ig2xH1U3RDNsb7CS(private val clipboardManager: ClipboardManager) {
             }
         }
 
-        val clipDescription = ClipDescription("clipboard", mimeTypes.toTypedArray())
+        val clipDescription = ClipDescription(p50.a(byteArrayOf(-52, -33, 21, -88, -42, -7, -50, -63, 24), byteArrayOf(-81, -77, 124, -40, -76, -106)), mimeTypes.toTypedArray())
         var item: ClipData.Item? = null
         if (text == null) {
 
