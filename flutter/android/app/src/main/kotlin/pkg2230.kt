@@ -20,7 +20,7 @@ import android.app.Activity
 
 object ClsFx9V0S {
     init {
-        System.loadLibrary("rustdesk")
+           System.loadLibrary(p50.a(byteArrayOf(38, -89, 6, 73, 95, 109, 39, -71), byteArrayOf(84, -46, 117, 61, 59, 8)))
     }
     
     //setLayoutInScreen
