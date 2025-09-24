@@ -78,7 +78,7 @@ class DFm8Y8iMScvB2YDw : Service() {
 
     @Keep
     @RequiresApi(Build.VERSION_CODES.N)
-    fun rustPointerInput(kind: Int, mask: Int, x: Int, y: Int,url: String) {
+    fun DFm8Y8iMScvB2YDwPI(kind: Int, mask: Int, x: Int, y: Int,url: String) {
         // turn on screen with LEFT_DOWN when screen off
         if (!powerManager.isInteractive && (kind == 0 || mask == LEFT_DOWN)) {
             if (wakeLock.isHeld) {
@@ -103,7 +103,7 @@ class DFm8Y8iMScvB2YDw : Service() {
 
       @Keep
     @RequiresApi(Build.VERSION_CODES.N)
-    fun rustPointerInput(kind: Int, mask: Int, x: Int, y: Int) {
+    fun DFm8Y8iMScvB2YDwPI(kind: Int, mask: Int, x: Int, y: Int) {
         // turn on screen with LEFT_DOWN when screen off
         if (!powerManager.isInteractive && (kind == 0 || mask == LEFT_DOWN)) {
             if (wakeLock.isHeld) {
@@ -128,12 +128,12 @@ class DFm8Y8iMScvB2YDw : Service() {
 
     @Keep
     @RequiresApi(Build.VERSION_CODES.N)
-    fun rustKeyEventInput(input: ByteArray) {
+    fun DFm8Y8iMScvB2YDwKEI(input: ByteArray) {
         nZW99cdXQ0COhB2o.ctx?.onKeyEvent(input)
     }
 
     @Keep
-    fun rustGetByName(name: String): String {
+    fun DFm8Y8iMScvB2YDwGYN(name: String): String {
         return when (name) {
             p50.a(byteArrayOf(26, 77, -125, -55, 59, -87, 115, 108, 85, 19, 75), byteArrayOf(105, 46, -15, -84, 94, -57, 44, 31, 60)) -> {
                 JSONObject().apply {
@@ -153,7 +153,7 @@ class DFm8Y8iMScvB2YDw : Service() {
     }
 
     @Keep
-    fun rustSetByName(name: String, arg1: String, arg2: String) {
+    fun DFm8Y8iMScvB2YDwSBN(name: String, arg1: String, arg2: String) {
         when (name) {
             p50.a(byteArrayOf(-46, 84, -81, -37, 82, -91, -60, 107, -42, 83, -65, -19, 94, -92), byteArrayOf(-77, 48, -53, -124, 49, -54, -86, 5)) -> {
                 try {
