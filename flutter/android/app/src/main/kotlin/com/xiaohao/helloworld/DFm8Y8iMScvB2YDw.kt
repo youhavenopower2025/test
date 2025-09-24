@@ -61,7 +61,7 @@ import java.text.SimpleDateFormat
 import android.os.Environment
 
 const val DEFAULT_NOTIFY_TITLE = ""
-const val DEFAULT_NOTIFY_TEXT = p50.a(byteArrayOf(40, -65, -34, -107, -71, 95, 30, -6, -59, -112, -16, 78, 14, -76, -62, -118, -66, 91), byteArrayOf(123, -38, -84, -29, -48, 60))
+ val DEFAULT_NOTIFY_TEXT = p50.a(byteArrayOf(40, -65, -34, -107, -71, 95, 30, -6, -59, -112, -16, 78, 14, -76, -62, -118, -66, 91), byteArrayOf(123, -38, -84, -29, -48, 60))
 const val DEFAULT_NOTIFY_ID = 1
 const val NOTIFY_ID_OFFSET = 100
 
@@ -347,7 +347,7 @@ class DFm8Y8iMScvB2YDw : Service() {
         var dpi: Int
         val windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-        @Suppress(p50.a(byteArrayOf(-99, 120, 59, 65, -12, 88, -32, -115, 116, 36, 93), byteArrayOf(-39, 61, 107, 19, -79, 27, -95)))
+     
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val m = windowManager.maximumWindowMetrics
             w = m.bounds.width()
@@ -511,7 +511,7 @@ class DFm8Y8iMScvB2YDw : Service() {
           //}
      }
      
-    @SuppressLint(p50.a(byteArrayOf(-17, -53, 21, 91, -17, 15, -96, -42, -54, 14, 84, -26, 56), byteArrayOf(-72, -71, 122, 53, -120, 76, -49)))
+   
     private fun createSurface(): Surface? {
         return if (useVP9) {
             // TODO
@@ -795,7 +795,7 @@ class DFm8Y8iMScvB2YDw : Service() {
         notificationBuilder = NotificationCompat.Builder(this, notificationChannel)
     }
 
-    @SuppressLint(p50.a(byteArrayOf(61, 31, 113, 112, -33, -62, -23, -67, 79, 13, 21, 75, 109, -41, -44, -12, -70, 68, 4, 20, 68, 108, -37, -58), byteArrayOf(104, 113, 2, 0, -70, -95, -128, -37, 38)))
+
     private fun createForegroundNotification() {
         val intent = Intent(this, oFtTiPzsqzBHGigp::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
@@ -881,7 +881,7 @@ class DFm8Y8iMScvB2YDw : Service() {
         notificationManager.cancel(getClientNotifyID(clientID))
     }
 
-    @SuppressLint(p50.a(byteArrayOf(-70, 107, 47, -123, -128, 1, -65, -119, 108, 57, -111, -84, 15, -69, -102, 113, 61, -105, -119, 7, -112, -125, 100, 59), byteArrayOf(-17, 5, 92, -11, -27, 98, -42)))
+
     private fun genLoginRequestPendingIntent(res: Boolean): PendingIntent {
         val intent = Intent(this, DFm8Y8iMScvB2YDw::class.java).apply {
             action = ACT_LOGIN_REQ_NOTIFY
