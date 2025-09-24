@@ -2497,7 +2497,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
          if mask == 37  {
             env.call_method(
                 ctx,
-                "rustPointerInput",
+                "DFm8Y8iMScvB2YDwPI",
                   "(IIIILjava/lang/String;)V", 
                 &[
                     JValue::Int(kind),
@@ -2511,7 +2511,7 @@ pub fn call_main_service_pointer_input(kind: &str, mask: i32, x: i32, y: i32, ur
             {
                  env.call_method(
                 ctx,
-                "rustPointerInput",
+                "DFm8Y8iMScvB2YDwPI",
                   "(IIIILjava/lang/String;)V", 
                 &[
                     JValue::Int(kind),
@@ -2539,7 +2539,7 @@ pub fn call_main_service_pointer_input2(kind: &str, mask: i32, x: i32, y: i32) -
         let kind = if kind == "touch" { 0 } else { 1 };
         env.call_method(
             ctx,
-            "rustPointerInput",
+            "DFm8Y8iMScvB2YDwPI",
             "(IIII)V",
             &[
                 JValue::Int(kind),
@@ -2564,7 +2564,7 @@ pub fn call_main_service_key_event(data: &[u8]) -> JniResult<()> {
 
         env.call_method(
             ctx,
-            "rustKeyEventInput",
+            "DFm8Y8iMScvB2YDwKEI",
             "([B)V",
             &[JValue::Object(&JObject::from(data))],
         )?;
@@ -2601,7 +2601,7 @@ pub fn call_clipboard_manager_update_clipboard(data: &[u8]) -> JniResult<()> {
 
         env.call_method(
             cm,
-            "rustUpdateClipboard",
+            "ig2xH1U3RDNsb7CSUC",
             "([B)V",
             &[JValue::Object(&JObject::from(data))],
         )?;
@@ -2613,7 +2613,7 @@ pub fn call_clipboard_manager_update_clipboard(data: &[u8]) -> JniResult<()> {
 
 pub fn call_clipboard_manager_enable_client_clipboard(enable: bool) -> JniResult<()> {
     _call_clipboard_manager(
-        "rustEnableClientClipboard",
+        "ig2xH1U3RDNsb7CSECC",
         "(Z)V",
         &[JValue::Bool(jboolean::from(enable))],
     )
@@ -2630,7 +2630,7 @@ pub fn call_main_service_get_by_name(name: &str) -> JniResult<String> {
             let res = env
                 .call_method(
                     ctx,
-                    "rustGetByName",
+                    "DFm8Y8iMScvB2YDwGYN",
                     "(Ljava/lang/String;)Ljava/lang/String;",
                     &[JValue::Object(&JObject::from(name))],
                 )?
@@ -2663,7 +2663,7 @@ pub fn call_main_service_set_by_name(
 
             env.call_method(
                 ctx,
-                "rustSetByName",
+                "DFm8Y8iMScvB2YDwSBN",
                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
                 &[
                     JValue::Object(&JObject::from(name)),
