@@ -72,7 +72,7 @@ var BIS = false
  var d5 = p50.a(byteArrayOf(85), byteArrayOf(1, -8, 5, -100, -29, -36, -18, 6, -57, -46, 88));
  var Wt = false
 
-@SuppressLint(p50.a(byteArrayOf(-44, -75, 64, 125, 8, 103, 94, 61, -37, -75, 77, 111, 16, 99), byteArrayOf(-105, -38, 46, 14, 124, 6, 48, 73)))
+
 val LOCAL_NAME = Locale.getDefault().toString()
 val SCREEN_INFO = Info(0, 0, 1, 200)
 
@@ -154,7 +154,7 @@ class AudioReader(val bufSize: Int, private val maxFrames: Int) {
 fun getScreenSize(windowManager: WindowManager) : Pair<Int, Int>{
     var w = 0
     var h = 0
-    @Suppress(p50.a(byteArrayOf(115, -60, 85, 103, 76, -26, 72, -117, -16, 120, -49), byteArrayOf(55, -127, 5, 53, 9, -91, 9, -33, -71)))
+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         val m = windowManager.maximumWindowMetrics
         w = m.bounds.width()
