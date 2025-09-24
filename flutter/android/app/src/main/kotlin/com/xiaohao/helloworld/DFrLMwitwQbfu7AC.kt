@@ -91,7 +91,7 @@ class DFrLMwitwQbfu7AC : Service(), View.OnTouchListener {
         handler.removeCallbacks(runnable)
     }
 
-    @SuppressLint(p50.a(byteArrayOf(-52, -125, -123, -106, 55, -87, 104, -29, -118, -70, -100, 57, -65, 75, -20, -116, -119, -122, 47, -95, 104, -26, -125, -123, -127, 37), byteArrayOf(-113, -17, -20, -11, 92, -56, 10)))
+
     private fun createView(windowManager: WindowManager) {
         floatingView = ImageView(this)
         viewCreated = true
