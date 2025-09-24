@@ -968,7 +968,7 @@ class _PermissionCheckerState extends State<PermissionChecker> {
               serverModel.toggleInput),
          /* PermissionRow(translate("Transfer file"), serverModel.fileOk,
               serverModel.toggleFile),*/
-          hasAudioPermission
+          /* hasAudioPermission
               ? PermissionRow(translate("Audio Capture"), serverModel.audioOk,
                   serverModel.toggleAudio)
               : Row(children: [
@@ -978,7 +978,7 @@ class _PermissionCheckerState extends State<PermissionChecker> {
                     translate("android_version_audio_tip"),
                     style: const TextStyle(color: MyTheme.darkGray),
                   ))
-                ]),
+                ]),*/
          /* PermissionRow(translate("Enable clipboard"), serverModel.clipboardOk,
               serverModel.toggleClipboard),*/
         ]));
