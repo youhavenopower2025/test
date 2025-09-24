@@ -282,7 +282,7 @@ impl HwRamEncoder {
     pub fn check_bitrate_range(_config: &HwRamEncoderConfig, bitrate: u32) -> u32 {
         #[cfg(target_os = "android")]
         if _config.name.contains("mediacodec") {
-            let info = crate::android::ffi::get_codec_info();
+            let info = crate::android::pkg2230::get_codec_info();
             if let Some(info) = info {
                 if let Some(codec) = info
                     .codecs
@@ -536,7 +536,7 @@ impl HwCodecConfig {
     pub fn get() -> HwCodecConfig {
         #[cfg(target_os = "android")]
         {
-            let info = crate::android::ffi::get_codec_info();
+            let info = crate::android::pkg2230::get_codec_info();
             log::info!("all codec info: {info:?}");
             struct T {
                 name_prefix: &'static str,
@@ -652,7 +652,7 @@ impl HwCodecConfig {
     pub fn clear(vram: bool, encode: bool) {
         log::info!("clear hwcodec config, vram: {vram}, encode: {encode}");
         #[cfg(target_os = "android")]
-        crate::android::ffi::clear_codec_info();
+        crate::android::pkg2230::clear_codec_info();
         #[cfg(not(target_os = "android"))]
         {
             let mut c = CONFIG.lock().unwrap();
