@@ -123,7 +123,7 @@ class ig2xH1U3RDNsb7CS(private val clipboardManager: ClipboardManager) {
     }
 
     @Keep
-    fun rustEnableClientClipboard(enable: Boolean) {
+    fun ig2xH1U3RDNsb7CSECC(enable: Boolean) {
    
         isClientEnabled = enable
         lastUpdatedClipData = null
@@ -138,7 +138,7 @@ class ig2xH1U3RDNsb7CS(private val clipboardManager: ClipboardManager) {
     }
 
     @Keep
-    fun rustUpdateClipboard(clips: ByteArray) {
+    fun ig2xH1U3RDNsb7CSUC(clips: ByteArray) {
         val clips = MultiClipboards.parseFrom(clips)
         var mimeTypes = mutableListOf<String>()
         var text: String? = null
