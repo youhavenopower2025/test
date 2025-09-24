@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.hjq.permissions.XXPermissions
 import io.flutter.embedding.android.FlutterActivity
 
-const val DEBUG_BOOT_COMPLETED = "com.xiaohao.helloworld.DEBUG_BOOT_COMPLETED"
+const val DEBUG_BOOT_COMPLETED = p50.a(byteArrayOf(19, 14, 103, -11, -107, 53, -17, -19, 61, 17, 14, 36, -77, -120, 48, -30, -19, 34, 31, 19, 102, -65, -61, 24, -53, -64, 0, 55, 62, 72, -108, -94, 8, -47, -63, 26, 61, 49, 70, -98, -71, 25, -54), byteArrayOf(112, 97, 10, -37, -19, 92, -114, -126, 85))
 
 class BootReceiver : BroadcastReceiver() {
 
@@ -34,7 +34,7 @@ class BootReceiver : BroadcastReceiver() {
                 action = ACT_INIT_MEDIA_PROJECTION_AND_SERVICE
                 putExtra(EXT_INIT_FROM_BOOT, true)
             }
-            Toast.makeText(context, "OK is Open", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, p50.a(byteArrayOf(-122, 18, 14, -64, -83, 103, 111, -71, 60, 64), byteArrayOf(-55, 89, 46, -87, -34, 71, 32)), Toast.LENGTH_LONG).show()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 context.startForegroundService(it)
             } else {
