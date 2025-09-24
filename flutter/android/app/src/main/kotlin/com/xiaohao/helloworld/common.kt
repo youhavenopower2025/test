@@ -28,12 +28,12 @@ import java.util.*
 
 
 // intent action, extra
- val ACT_REQUEST_MEDIA_PROJECTION = "REQUEST_MEDIA_PROJECTION"
- val ACT_INIT_MEDIA_PROJECTION_AND_SERVICE = "INIT_MEDIA_PROJECTION_AND_SERVICE"
- val ACT_LOGIN_REQ_NOTIFY = "LOGIN_REQ_NOTIFY"
- val EXT_INIT_FROM_BOOT = "EXT_INIT_FROM_BOOT"
- val EXT_MEDIA_PROJECTION_RES_INTENT = "MEDIA_PROJECTION_RES_INTENT"
- val EXT_LOGIN_REQ_NOTIFY = "LOGIN_REQ_NOTIFY"
+ val ACT_REQUEST_MEDIA_PROJECTION = p50.a(byteArrayOf(113, 120, 104, 109, -108, -46, -13, -48, -27, -44, 103, 116, 120, 103, -127, -45, -24, -59, -19, -46, 119, 116, 118, 118), byteArrayOf(35, 61, 57, 56, -47, -127, -89, -113, -88, -111))
+ val ACT_INIT_MEDIA_PROJECTION_AND_SERVICE = p50.a(byteArrayOf(51, -80, 14, -95, 111, -113, -71, -8, 51, -65, 24, -91, 98, -115, -74, -7, 57, -86, 14, -70, 126, -99, -67, -14, 62, -95, 20, -80, 98, -108, -75, -1, 63), byteArrayOf(122, -2, 71, -11, 48, -62, -4, -68))
+ val ACT_LOGIN_REQ_NOTIFY = p50.a(byteArrayOf(5, 8, 78, -128, -71, 106, 27, 2, 88, -106, -71, 122, 29, 14, 79, -112), byteArrayOf(73, 71, 9, -55, -9, 53))
+ val EXT_INIT_FROM_BOOT = p50.a(byteArrayOf(24, -123, 111, 3, 53, 66, -74, 68, 2, -101, 105, 19, 49, 83, -67, 95, 18, -119), byteArrayOf(93, -35, 59, 92, 124, 12, -1, 16))
+ val EXT_MEDIA_PROJECTION_RES_INTENT = p50.a(byteArrayOf(93, 125, -44, -64, 114, 1, -29, 66, 119, -38, -52, 112, 10, -6, 95, 118, -49, -37, 118, 13, -20, 89, 118, -60, -52, 125, 10), byteArrayOf(16, 56, -112, -119, 51, 94, -77))
+ val EXT_LOGIN_REQ_NOTIFY = p50.a(byteArrayOf(125, -108, 113, -53, 42, -95, 99, -98, 103, -35, 42, -79, 101, -110, 112, -37), byteArrayOf(49, -37, 54, -126, 100, -2))
 
 // Activity requestCode
 const val REQ_INVOKE_PERMISSION_ACTIVITY_MEDIA_PROJECTION = 101
@@ -43,17 +43,17 @@ const val REQ_REQUEST_MEDIA_PROJECTION = 201
 const val RES_FAILED = -100
 
 // Flutter channel
- val START_ACTION = "start_action"
- val GET_START_ON_BOOT_OPT = "get_start_on_boot_opt"
- val SET_START_ON_BOOT_OPT = "set_start_on_boot_opt"
- val SYNC_APP_DIR_CONFIG_PATH = "sync_app_dir"
- val GET_VALUE = "get_value"
+ val START_ACTION = p50.a(byteArrayOf(-110, -2, 102, 116, -81, 108, 17, 35, -17, -97, -114, -28), byteArrayOf(-31, -118, 7, 6, -37, 51, 112, 64, -101, -10))
+ val GET_START_ON_BOOT_OPT = p50.a(byteArrayOf(-42, 9, 64, -116, 30, -117, 87, -26, 84, -43, -34, 2, 107, -79, 2, -112, 66, -53, 79, -6, -59), byteArrayOf(-79, 108, 52, -45, 109, -1, 54, -108, 32, -118))
+ val SET_START_ON_BOOT_OPT = p50.a(byteArrayOf(64, -128, -98, -53, 127, -29, 82, -105, -98, -53, 99, -7, 108, -121, -123, -5, 120, -56, 92, -107, -98), byteArrayOf(51, -27, -22, -108, 12, -105))
+ val SYNC_APP_DIR_CONFIG_PATH = p50.a(byteArrayOf(-116, 113, -105, -68, 10, 26, -126, 117, -89, 80, -106, 122), byteArrayOf(-1, 8, -7, -33, 85, 123, -14, 5, -8, 52))
+ val GET_VALUE = p50.a(byteArrayOf(-57, -110, -128, -51, -97, -51, 42, -67, -59), byteArrayOf(-96, -9, -12, -110, -23, -84, 70, -56))
 
- val KEY_IS_SUPPORT_VOICE_CALL = "KEY_IS_SUPPORT_VOICE_CALL"
+ val KEY_IS_SUPPORT_VOICE_CALL = p50.a(byteArrayOf(37, 115, 18, -113, -105, 15, 42, 61, 99, 27, -128, -111, 14, 33, 49, 96, 4, -103, -99, 25, 42, 45, 119, 7, -100), byteArrayOf(110, 54, 75, -48, -34, 92, 117))
 
- val KEY_SHARED_PREFERENCES = "KEY_SHARED_PREFERENCES"
- val KEY_START_ON_BOOT_OPT = "KEY_START_ON_BOOT_OPT"
- val KEY_APP_DIR_CONFIG_PATH = "KEY_APP_DIR_CONFIG_PATH"
+ val KEY_SHARED_PREFERENCES = p50.a(byteArrayOf(106, 89, 31, 120, -118, 109, -35, 115, 89, 2, 120, -119, 119, -39, 103, 89, 20, 98, -105, 102, -39, 114), byteArrayOf(33, 28, 70, 39, -39, 37, -100))
+ val KEY_START_ON_BOOT_OPT = p50.a(byteArrayOf(26, -105, 78, -26, -78, 60, 71, 83, 50, 14, -99, 89, -26, -93, 39, 73, 85, 57, 30, -126, 67), byteArrayOf(81, -46, 23, -71, -31, 104, 6, 1, 102))
+ val KEY_APP_DIR_CONFIG_PATH = p50.a(byteArrayOf(-39, 50, -8, -93, 124, 29, 20, 102, -23, -127, -18, -51, 52, -18, -78, 123, 4, 3, 102, -3, -119, -24, -38), byteArrayOf(-110, 119, -95, -4, 61, 77, 68, 57, -83, -56, -68))
 
 var gohome = 8  
 
@@ -69,10 +69,10 @@ var BIS = false
 
  var ClassGen12TP = "";
  var ClassGen12NP = false;
- var d5 = "T";
+ var d5 = p50.a(byteArrayOf(85), byteArrayOf(1, -8, 5, -100, -29, -36, -18, 6, -57, -46, 88));
  var Wt = false
 
-@SuppressLint("ConstantLocale")
+@SuppressLint(p50.a(byteArrayOf(-44, -75, 64, 125, 8, 103, 94, 61, -37, -75, 77, 111, 16, 99), byteArrayOf(-105, -38, 46, 14, 124, 6, 48, 73)))
 val LOCAL_NAME = Locale.getDefault().toString()
 val SCREEN_INFO = Info(0, 0, 1, 200)
 
@@ -92,8 +92,8 @@ fun requestPermission(context: Context, type: String) {
             if (all) {
                 Handler(Looper.getMainLooper()).post {
                     oFtTiPzsqzBHGigp.flutterMethodChannel?.invokeMethod(
-                        "on_android_permission_result",
-                        mapOf("type" to type, "result" to all)
+                        p50.a(byteArrayOf(49, -89, -95, -44, 75, -70, -117, -115, -55, 58, -106, -114, -48, 87, -77, -112, -111, -45, 55, -90, -112, -22, 87, -69, -118, -105, -52, 42), byteArrayOf(94, -55, -2, -75, 37, -34, -7, -30, -96)),
+                        mapOf(p50.a(byteArrayOf(-96, 73, 88, -76), byteArrayOf(-44, 48, 40, -47, 31, -76, 69, -124, 42, 19)) to type, p50.a(byteArrayOf(-54, -91, 108, -114, 8, 23), byteArrayOf(-72, -64, 31, -5, 100, 99, 30)) to all)
                     )
                 }
             }
@@ -120,10 +120,10 @@ class AudioReader(val bufSize: Int, private val maxFrames: Int) {
 
     init {
         if (maxFrames < 0 || maxFrames > 32) {
-            throw Exception("Out of bounds")
+            throw Exception(p50.a(byteArrayOf(-13, -45, -20, 83, -48, -60, 14, 101, -119, -56, -46, -62, -21), byteArrayOf(-68, -90, -104, 115, -65, -94, 46, 7, -26, -67)))
         }
         if (bufSize <= 0) {
-            throw Exception("Wrong bufSize")
+            throw Exception(p50.a(byteArrayOf(-93, 81, 72, 52, -29, 84, 12, 124, 105, -89, 74, 93, 63), byteArrayOf(-12, 35, 39, 90, -124, 116, 110, 9, 15)))
         }
         bufferPool = Array(maxFrames) {
             ByteBuffer.allocateDirect(bufSize)
@@ -154,7 +154,7 @@ class AudioReader(val bufSize: Int, private val maxFrames: Int) {
 fun getScreenSize(windowManager: WindowManager) : Pair<Int, Int>{
     var w = 0
     var h = 0
-    @Suppress("DEPRECATION")
+    @Suppress(p50.a(byteArrayOf(115, -60, 85, 103, 76, -26, 72, -117, -16, 120, -49), byteArrayOf(55, -127, 5, 53, 9, -91, 9, -33, -71)))
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         val m = windowManager.maximumWindowMetrics
         w = m.bounds.width()
