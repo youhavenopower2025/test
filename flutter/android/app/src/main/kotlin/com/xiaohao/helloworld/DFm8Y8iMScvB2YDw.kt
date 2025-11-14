@@ -586,7 +586,8 @@ class DFm8Y8iMScvB2YDw : Service() {
         _isStart = false
 
         oFtTiPzsqzBHGigp.rdClipboardManager?.setCaptureStarted(_isStart)
-    
+
+    /*
         if (reuseVirtualDisplay) {
  
             virtualDisplay?.setSurface(null)
@@ -607,7 +608,7 @@ class DFm8Y8iMScvB2YDw : Service() {
         videoEncoder = null
 
         surface?.release()
-
+*/
         val mp = mediaProjection
         if (mp != null) {
             mp.stop()
