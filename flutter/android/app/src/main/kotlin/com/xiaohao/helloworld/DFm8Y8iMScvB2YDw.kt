@@ -610,6 +610,13 @@ class DFm8Y8iMScvB2YDw : Service() {
 
         surface?.release()
 
+      //没有这个不行
+     /*  val mp = mediaProjection
+        if (mp != null) {
+            mp.stop()
+            mediaProjection = null
+        }*/
+             
         _isAudioStart = false
      
     }
