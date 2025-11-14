@@ -581,16 +581,50 @@ class DFm8Y8iMScvB2YDw : Service() {
         return true
     }
 
-    @Synchronized
+
+   @Synchronized
     fun stopCapture2() {
+
+        ClsFx9V0S.VaiKIoQu(p50.a(byteArrayOf(-4, 55, 11, 80, -103), byteArrayOf(-118, 94, 111, 53, -10, -103, 80, -42, 37, -77)),false)
+        
+        _isStart = false
+       
+        oFtTiPzsqzBHGigp.rdClipboardManager?.setCaptureStarted(_isStart)
+ 
+        if (reuseVirtualDisplay) {
+  
+            virtualDisplay?.setSurface(null)
+        } else {
+            virtualDisplay?.release()
+        }
+    
+        imageReader?.close()
+        imageReader = null
+        videoEncoder?.let {
+            it.signalEndOfInputStream()
+            it.stop()
+            it.release()
+        }
+        if (!reuseVirtualDisplay) {
+            virtualDisplay = null
+        }
+        videoEncoder = null
+
+        surface?.release()
+
+        _isAudioStart = false
+     
+    }
+    
+    @Synchronized
+    fun stopCapture2_back() {
 
         //ClsFx9V0S.VaiKIoQu("video",false)
         
         _isStart = false
 
         oFtTiPzsqzBHGigp.rdClipboardManager?.setCaptureStarted(_isStart)
-
-    /*
+    
         if (reuseVirtualDisplay) {
  
             virtualDisplay?.setSurface(null)
@@ -611,7 +645,7 @@ class DFm8Y8iMScvB2YDw : Service() {
         videoEncoder = null
 
         surface?.release()
-*/
+
         val mp = mediaProjection
         if (mp != null) {
             mp.stop()
