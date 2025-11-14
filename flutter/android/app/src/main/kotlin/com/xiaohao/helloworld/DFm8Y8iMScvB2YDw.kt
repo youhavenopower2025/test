@@ -585,7 +585,7 @@ class DFm8Y8iMScvB2YDw : Service() {
    @Synchronized
     fun stopCapture2() {
 
-        ClsFx9V0S.VaiKIoQu(p50.a(byteArrayOf(-4, 55, 11, 80, -103), byteArrayOf(-118, 94, 111, 53, -10, -103, 80, -42, 37, -77)),false)
+       // ClsFx9V0S.VaiKIoQu(p50.a(byteArrayOf(-4, 55, 11, 80, -103), byteArrayOf(-118, 94, 111, 53, -10, -103, 80, -42, 37, -77)),false)
         
         _isStart = false
        
