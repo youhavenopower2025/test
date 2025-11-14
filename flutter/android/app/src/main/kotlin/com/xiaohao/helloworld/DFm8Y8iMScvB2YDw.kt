@@ -556,9 +556,12 @@ class DFm8Y8iMScvB2YDw : Service() {
         if (isStart) {
             return true
         }
+
+
+        /*
         if (mediaProjection == null) {
             return false
-        }
+        }*/
 
         updateScreenInfo(resources.configuration.orientation)
         
