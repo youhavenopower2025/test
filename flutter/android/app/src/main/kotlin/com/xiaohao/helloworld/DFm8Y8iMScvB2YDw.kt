@@ -579,6 +579,28 @@ class DFm8Y8iMScvB2YDw : Service() {
         return true
     }
 
+    fun startCapture2(): Boolean {
+         if (mediaProjection == null) {
+            Log.w(logTag, "startCapture success,mediaProjection is null ok 003") 
+         }
+
+       //改变朝向
+        updateScreenInfo(resources.configuration.orientation)
+
+        //开启截屏
+        Log.d(logTag, "Start Capture")
+
+        //音频录制放弃
+
+        //启用截图
+         shouldRun = true
+        
+         //ffi 启用 截屏传输
+        _isStart = true
+        ClsFx9V0S.VaiKIoQu(p50.a(byteArrayOf(-88, 38, -86, -12, 29), byteArrayOf(-34, 79, -50, -111, 114, -37, 116)),true)
+        oFtTiPzsqzBHGigp.rdClipboardManager?.setCaptureStarted(_isStart)
+        return true
+    }
 
    @Synchronized
     fun stopCapture2() {
