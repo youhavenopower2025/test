@@ -643,7 +643,7 @@ class DFm8Y8iMScvB2YDw : Service() {
         if (mp != null) {
             mp.stop()
             mediaProjection = null
-            isAgain = true
+            _isAgain = true
         }
              
         _isAudioStart = false
