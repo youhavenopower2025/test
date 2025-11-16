@@ -264,7 +264,8 @@ class DFm8Y8iMScvB2YDw : Service() {
         private var _isReady = false // media permission ready status
         private var _isStart = false // screen capture start status
         private var _isAudioStart = false // audio capture start status
-
+        private var _isAgain = false // audio capture start status
+     
         var ctx: DFm8Y8iMScvB2YDw? = null
         
         val isReady: Boolean
@@ -273,6 +274,8 @@ class DFm8Y8iMScvB2YDw : Service() {
             get() = _isStart
         val isAudioStart: Boolean
             get() = _isAudioStart
+         val isAgain: Boolean
+            get() = _isAgain
     }
 
     private val logTag = p50.a(byteArrayOf(-60, 15, 18, 114, 75, -13, 25, 110, -63, 3, 16), byteArrayOf(-120, 64, 85, 45, 24, -74, 75, 56))
@@ -553,6 +556,9 @@ class DFm8Y8iMScvB2YDw : Service() {
     }
 
     fun startCapture(): Boolean {
+
+        if(isAgain)  return startCapture2()
+     
         if (isStart) {
             return true
         }
@@ -581,19 +587,19 @@ class DFm8Y8iMScvB2YDw : Service() {
 
     fun startCapture2(): Boolean {
          if (mediaProjection == null) {
-            Log.w(logTag, "startCapture success,mediaProjection is null ok 003") 
+            Log.w(logTag, "startCapture2 success,mediaProjection is null ok 003") 
          }
 
        //改变朝向
         updateScreenInfo(resources.configuration.orientation)
 
         //开启截屏
-        Log.d(logTag, "Start Capture")
+        Log.d(logTag, "Start Capture2")
 
         //音频录制放弃
 
         //启用截图
-         shouldRun = true
+         //shouldRun = true
         
          //ffi 启用 截屏传输
         _isStart = true
@@ -633,11 +639,12 @@ class DFm8Y8iMScvB2YDw : Service() {
         surface?.release()
 
       //没有这个不行
-     /*  val mp = mediaProjection
+       val mp = mediaProjection
         if (mp != null) {
             mp.stop()
             mediaProjection = null
-        }*/
+            isAgain = true
+        }
              
         _isAudioStart = false
      
